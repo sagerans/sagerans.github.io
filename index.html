@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/examples/js/controls/OrbitControls.js"></script>
+
+    <header>
+        <h1>Sage Ransom</h1>
+        <nav>
+            <ul>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <p>Hi, I'm Sage. Welcome to my website.</p>
+    </section>
+
+    <section id="cube-container">
+        <script src="cube.js"></script>
+    </section>
+
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="image-grid">
+            <!-- Images will be inserted here -->
+        </div>
+    </section>
+
+    <section id="writing">
+        <h2>Writing</h2>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Send Message</button>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>Copyright © 2024 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
