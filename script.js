@@ -31,3 +31,7 @@ function selectOption(option) {
   alert('You selected: ' + option);
   closePopup();
 }
+
+function sendMessage() {
+
+}
