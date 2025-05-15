@@ -102,6 +102,7 @@ textarea {
 
 .form-row label {
   width: 8.5%;
+  margin-right: 10px;
 }
 
 .form-row input,
@@ -110,6 +111,24 @@ textarea {
   padding: 8px;
   resize: vertical;
   margin: 0 0 20px;
+}
+
+@media (max-width: 850px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch; /* make inputs fill the container */
+  }
+
+  .form-row label {
+    width: auto; /* let it size to its text */
+    margin: 0 0 5px; /* small gap below the label */
+  }
+
+  .form-row input,
+  .form-row textarea {
+    width: 100%; /* full-width on mobile */
+    margin: 0 0 10px; /* keep bottom spacing */
+  }
 }
 
 button {
