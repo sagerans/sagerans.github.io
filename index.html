@@ -1,91 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sage</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-</head>
-<body>
-
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.140.0/examples/js/controls/OrbitControls.js"></script>
 
     <header>
-        <h1>Sage Ransom</h1>
-        <nav>
-            <ul>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#writing">Writing</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+      <h1>Sage Ransom</h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </header>
 
     <section id="about">
-        <p>Hi, I'm Sage. Welcome to my website.</p>
+      <p>Hi, I'm Sage. Welcome to my website.</p>
     </section>
 
     <section id="cube-container">
-        <script src="scripts/cube.js"></script>
+      <script src="scripts/cube.js"></script>
     </section>
 
     <section id="gallery">
-        <h2>Gallery</h2>
-        <div class="image-grid">
-            <!-- Images will be inserted here -->
-        </div>
+      <h2>Gallery</h2>
+      <div class="image-grid">
+        <!-- Images will be inserted here -->
+      </div>
     </section>
 
     <section>
-        <div class="dropdown">
-            <button onclick="toggleDropdown()" class="dropbtn">Dropdown Menu</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="#section1">Section 1</a>
-                <a href="#section2">Section 2</a>
-                <a href="#section3">Section 3</a>
-            </div>
+      <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn">
+          Dropdown Menu
+        </button>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="#section1">Section 1</a>
+          <a href="#section2">Section 2</a>
+          <a href="#section3">Section 3</a>
         </div>
+      </div>
     </section>
 
     <section>
-        <button onclick="openPopup()">Open Menu</button>
+      <button onclick="openPopup()">Open Menu</button>
 
-        <div class="popup-overlay" id="popupOverlay">
-            <div class="popup-content">
-                <h2>Select an Option</h2>
-                <button onclick="location.href='dominoes.html'">dominoes</button>
-                <button onclick="location.href='rubiks.html'">rubik's cube</button>
-                <button onclick="location.href='tictactoe.html'">tic tac toe</button>
-                <button onclick="closePopup()">Close</button>
-            </div>
+      <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+          <h2>Select an Option</h2>
+          <button onclick="location.href='dominoes.html'">dominoes</button>
+          <button onclick="location.href='rubiks.html'">rubik's cube</button>
+          <button onclick="location.href='tictactoe.html'">tic tac toe</button>
+          <button onclick="closePopup()">Close</button>
         </div>
+      </div>
     </section>
 
     <section id="writing">
-        <h2>Writing</h2>
+      <h2>Writing</h2>
     </section>
 
     <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contact-form" action="contact.php" method="POST">
-            <div class="form-group">
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
+      <h2>Contact Me</h2>
+      <form id="contact-form" action="contact.php" method="POST">
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your Name"
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Your Email"
+            required
+          />
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Your Message"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
     </section>
 
     <footer>
-        <p>Copyright © 2024 Sage Ransom. All rights reserved.</p>
+      <p>Copyright © 2024 Sage Ransom. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
