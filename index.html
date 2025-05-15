@@ -74,21 +74,18 @@
     <section id="contact">
       <h2>Contact Me</h2>
       <form action="https://formspree.io/f/mjkwjzqn" method="POST">
-        <label>
-          Name:
+        <div class="form-row">
+          <label for="name"> Name: </label>
           <input type="text" name="name" />
-        </label>
-        <p></p>
-        <label>
-          Email:
+        </div>
+        <div class="form-row">
+          <label for="email"> Email: </label>
           <input type="email" name="email" />
-        </label>
-        <p></p>
-        <label>
-          Message:
-          <input type="text" name="message"> </input>
-        </label>
-        <p></p>
+        </div>
+        <div class="form-row">
+          <label for="message"> Message: </label>
+          <textarea type="text" id="message" name="message"></textarea>
+        </div>
         <button type="submit">Send</button>
       </form>
     </section>
