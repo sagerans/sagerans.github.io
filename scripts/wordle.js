@@ -67,12 +67,12 @@ function initKeyboard() {
 
       const handler = e => {
         e.preventDefault();
-        handleKey(e);
+        handleKey(key);
       };
 
       btn.addEventListener("click", handler);
 
-      // btn.addEventListener("touchstart", handler);
+      btn.addEventListener("touchstart", handler);
 
       // btn.addEventListener("pointerdown", handler);
 
