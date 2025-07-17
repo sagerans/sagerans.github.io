@@ -38,7 +38,7 @@ function init() {
   initKeyboard();
   document.addEventListener('keydown', handleKey);
 }
-
+/*
 function initKeyboard() {
   const keys = "QWERTYUIOPASDFGHJKLZXCVBNM".split('');
   const kb = document.getElementById('keyboard');
@@ -58,7 +58,39 @@ function initKeyboard() {
     kb.appendChild(btn);
   });
 }
+*/
+function initKeyboard() {
+  const keyboard = document.getElementById("keyboard");
+  // 1) nuke any existing buttons or rows
+  keyboard.innerHTML = "";
 
+  // 2) define your three rows
+  const rows = [
+    ["Q","W","E","R","T","Y","U","I","O","P"],
+    ["A","S","D","F","G","H","J","K","L"],
+    ["ENTER","Z","X","C","V","B","N","M","BACKSPACE"]
+  ];
+
+  // 3) build the rows + keys
+  rows.forEach(keyArray => {
+    const rowDiv = document.createElement("div");
+    rowDiv.classList.add("row");
+    keyArray.forEach(key => {
+      const btn = document.createElement("button");
+      btn.classList.add("key");
+      btn.dataset.key = key;
+      btn.textContent = key === "BACKSPACE" ? "⌫" : key;
+      rowDiv.appendChild(btn);
+    });
+    keyboard.appendChild(rowDiv);
+  });
+
+  // 4) wire up clicks to your existing handler
+  keyboard.addEventListener("click", e => {
+    if (!e.target.matches(".key")) return;
+    handleKey(e.target.dataset.key);
+  });
+}
 function handleKey(e) {
   if (isGameOver) return;
   const key = e.key;

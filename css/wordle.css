@@ -99,19 +99,63 @@ header nav ul li a {
   border: none; 
 }
 
+#keyboard {
+  display: grid;
+  gap: 0.25rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* first row: 10 equal columns */
+#keyboard .row:nth-child(1) {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+/* second row: 9 equal columns */
+#keyboard .row:nth-child(2) {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+}
+
+/* third row: Enter (1.5fr) + 7 letters + Back (1.5fr) */
+#keyboard .row:nth-child(3) {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(7, 1fr) 1.5fr;
+}
+
+.key {
+  padding: 0.75rem 0;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* shrink on phones */
+@media (max-width: 400px) {
+  .key {
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+  }
+}
+
+/*
 #keyboard { 
   display: flex; 
   flex-wrap: wrap;
   justify-content: center;
-  /* grid-template-columns: repeat(10, 1fr); */
+  grid-template-columns: repeat(10, 1fr);
   gap: 0.25rem; 
   max-width: 600px;
   margin: 0 auto;
 }
 
 .key {
-  flex: 1 0 calc(10% - 0.5rem); /* try to get ten keys per “row” */
-  min-width: 2rem;              /* never smaller than this */
+  flex: 1 0 calc(10% - 0.5rem); 
+  min-width: 2rem;              
   padding: 0.75rem 0;
   text-align: center;
   user-select: none;
@@ -120,7 +164,6 @@ header nav ul li a {
   border: 1px solid #999;
   font-size: 1rem;
 }
-/*
 .key { 
   padding: 10px; 
   border: none; 
@@ -129,13 +172,14 @@ header nav ul li a {
   font-size: 1rem; 
   text-transform: uppercase; 
 }
-*/
 @media (max-width: 400px) {
   .key {
     padding: 0.5rem 0;
     font-size: 0.8rem;
   }
 }
+*/
+
 .key.disabled { 
   opacity: 0.5; 
   cursor: default; 
