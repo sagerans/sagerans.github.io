@@ -38,79 +38,89 @@ function init() {
   initKeyboard();
   document.addEventListener('keydown', handleKey);
 }
-/*
-function initKeyboard() {
-  const keys = "QWERTYUIOPASDFGHJKLZXCVBNM".split('');
-  const kb = document.getElementById('keyboard');
-  keys.forEach(k => {
-    const btn = document.createElement('button');
-    btn.textContent = k;
-    btn.className = 'key';
-    btn.onclick = () => handleKey({key: k});
-    kb.appendChild(btn);
-  });
-  // Add Enter and Backspace
-  ['Enter','Backspace'].forEach(k => {
-    const btn = document.createElement('button');
-    btn.textContent = k;
-    btn.className = 'key';
-    btn.onclick = () => handleKey({key: k});
-    kb.appendChild(btn);
-  });
-}
-*/
-function initKeyboard() {
-  const keyboard = document.getElementById("keyboard");
-  // 1) nuke any existing buttons or rows
-  keyboard.innerHTML = "";
 
-  // 2) define your three rows
+function initKeyboard() {
+  console.log("▶ initKeyboard() running");
+  const keyboard = document.getElementById("keyboard");
+  if (!keyboard) {
+    console.error("❌ No #keyboard element found");
+    return;
+  }
+  keyboard.innerHTML = "";  // clear out anything old
+
   const rows = [
     ["Q","W","E","R","T","Y","U","I","O","P"],
     ["A","S","D","F","G","H","J","K","L"],
     ["ENTER","Z","X","C","V","B","N","M","BACKSPACE"]
   ];
 
-  // 3) build the rows + keys
-  rows.forEach(keyArray => {
+  rows.forEach(keys => {
     const rowDiv = document.createElement("div");
     rowDiv.classList.add("row");
-    keyArray.forEach(key => {
+    keyboard.appendChild(rowDiv);
+
+    keys.forEach(key => {
       const btn = document.createElement("button");
       btn.classList.add("key");
       btn.dataset.key = key;
       btn.textContent = key === "BACKSPACE" ? "⌫" : key;
+
+      // add click listener directly, with logging
+      btn.addEventListener("click", () => {
+        console.log("🔑 clicked:", key);
+        handleKey(key);
+      });
+
       rowDiv.appendChild(btn);
     });
-    keyboard.appendChild(rowDiv);
-  });
-
-  // 4) wire up clicks to your existing handler
-  keyboard.addEventListener("click", e => {
-    if (!e.target.matches(".key")) return;
-    handleKey(e.target.dataset.key);
   });
 }
+
+
 function handleKey(e) {
   if (isGameOver) return;
-  const key = e.key;
-  if (key === 'Backspace') {
+
+  // 1) figure out whether `e` is an event or a string
+  let key = typeof e === "string" ? e : e.key;
+
+  // 2) normalize your on‑screen labels to the same names as KeyboardEvent
+  if (key === "ENTER")      key = "Enter";
+  else if (key === "BACKSPACE") key = "Backspace";
+
+  // 3) run your existing logic
+  if (key === "Backspace") {
     currentGuess = currentGuess.slice(0, -1);
-  } else if (key === 'Enter') {
+
+  } else if (key === "Enter") {
     if (currentGuess.length !== WORD_LENGTH) return;
-    if (!validWords.includes(currentGuess)) { alert('Not in word list'); return; }
+    if (!validWords.includes(currentGuess)) {
+      alert("Not in word list");
+      return;
+    }
     const colors = evaluateGuess(currentGuess);
     updateUI(currentRow, currentGuess, colors);
     currentRow++;
-    currentGuess = '';
-    if (colors.every(c => c === 'correct')) { endGame(true); return; }
-    if (currentRow === MAX_GUESSES) { endGame(false); return; }
-    return;
+    currentGuess = "";
+    if (colors.every(c => c === "correct")) {
+      endGame(true);
+      return;
+    }
+    if (currentRow === MAX_GUESSES) {
+      endGame(false);
+      return;
+    }
+    return;   // don’t fall through to updateCurrentRow()
+
   } else if (/^[a-zA-Z]$/.test(key) && currentGuess.length < WORD_LENGTH) {
+    // convert to lowercase if that’s what your JSON/dict expects
     currentGuess += key.toLowerCase();
+
   } else {
+    // anything else (arrows, etc.) – just ignore
     return;
   }
+
+  // 4) after adding/removing a letter, redraw the row
   updateCurrentRow();
 }
 
