@@ -117,7 +117,7 @@ function updateKey(k, color) {
 function endGame(win) {
   isGameOver = true;
   setTimeout(() => {
-    alert(win ? 'You win! :-)': `Game over! Word was: ${solution.toUpperCase()}`);
+    alert(win ? '𓂺 you\'ve won, you filthy slut 𓂺': `Game over! Word was: ${solution.toUpperCase()}`);
   }, 100);
 }
 
