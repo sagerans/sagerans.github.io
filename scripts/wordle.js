@@ -12,7 +12,6 @@ Promise.all([
   fetch("/scripts/valid-guesses.json").then(r => r.json())
 ]).then(([valids]) => {
   validWords = valids;
-  init();
 });
 
 console.log(validWords);
