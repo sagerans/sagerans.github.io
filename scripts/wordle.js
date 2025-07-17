@@ -2,10 +2,22 @@ const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
 // Simple word list (expand or load from JSON)
 const wordList = ["bitch", "cunts", "fucks", "skank", "sluts", "shits", "dummy", "fucky", "ninja", "sigma", "cunty", "clits", "gspot", "chink", "titty", "boobs", "poons", "wanks", "jerks", "blown", "trash", "tramp", "whore", "queef", "tards", "pissa", "shite", "droog", "spank", "daddy", "mommy", "erect", "shart"];
+let validWords = [];
 let solution;
 let currentGuess = "";
 let currentRow = 0;
 let isGameOver = false;
+
+Promise.all([
+  fetch("/scripts/valid-guesses.json").then(r => r.json())
+]).then(([valids]) => {
+  validWords = valids;
+  init();
+  initKeyboard();
+});
+
+console.log(validWords);
+
 
 function pickSolution() {
   solution = wordList[Math.floor(Math.random() * wordList.length)];
@@ -56,7 +68,7 @@ function handleKey(e) {
     currentGuess = currentGuess.slice(0, -1);
   } else if (key === 'Enter') {
     if (currentGuess.length !== WORD_LENGTH) return;
-    if (!wordList.includes(currentGuess)) { alert('Not in word list'); return; }
+    if (!validWords.includes(currentGuess)) { alert('Not in word list'); return; }
     const colors = evaluateGuess(currentGuess);
     updateUI(currentRow, currentGuess, colors);
     currentRow++;
