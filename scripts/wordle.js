@@ -13,7 +13,6 @@ Promise.all([
 ]).then(([valids]) => {
   validWords = valids;
   init();
-  initKeyboard();
 });
 
 console.log(validWords);
