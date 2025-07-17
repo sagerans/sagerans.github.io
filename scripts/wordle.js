@@ -65,11 +65,24 @@ function initKeyboard() {
       btn.dataset.key = key;
       btn.textContent = key === "BACKSPACE" ? "⌫" : key;
 
+      const handler = e => {
+        e.preventDefault();
+        handleKey(e);
+      };
+
+      btn.addEventListener("click", handler);
+
+      // btn.addEventListener("touchstart", handler);
+
+      // btn.addEventListener("pointerdown", handler);
+
+      /*
       // add click listener directly, with logging
       btn.addEventListener("click", () => {
         console.log("🔑 clicked:", key);
         handleKey(key);
       });
+      */
 
       rowDiv.appendChild(btn);
     });

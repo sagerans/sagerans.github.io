@@ -125,6 +125,11 @@ header nav ul li a {
 }
 
 .key {
+  /*
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  */
   padding: 0.75rem 0;
   text-align: center;
   user-select: none;
