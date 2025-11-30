@@ -30,22 +30,47 @@ fetch(DICTIONARY_URL)
   })
   .then(data => {
     /*
-      Expecting: [ { "word1": "def1", "word2": "def2", ... } ]
-      but you can swap this to match whatever you actually have.
+      EXPECTED FORMAT (your file):
+
+      [
+        { "anarchic": "def...", "anopheles": "def...", ... },
+        { "biggest": "def...", "blindstory": "def...", ... },
+        ...
+      ]
+
+      i.e. an array of objects, each object holding many word: definition pairs.
     */
-    if (Array.isArray(data) && typeof data[0] === "object") {
-      const bigObj = data[0];
-      dictionaryEntries = Object.entries(bigObj); // [ [word, definition], ... ]
-    } else if (!Array.isArray(data) && typeof data === "object") {
-      // fallback if it's just {word: def, ...}
-      dictionaryEntries = Object.entries(data);
+
+    const entries = [];
+
+    if (Array.isArray(data)) {
+      for (const chunk of data) {
+        if (chunk && typeof chunk === "object") {
+          // Add all [word, definition] pairs from this chunk
+          for (const [word, def] of Object.entries(chunk)) {
+            // Optional: skip weird empty keys, etc.
+            if (typeof word === "string" && typeof def === "string") {
+              entries.push([word, def]);
+            }
+          }
+        }
+      }
+    } else if (data && typeof data === "object") {
+      // Fallback in case it's just a single big object {word: def, ...}
+      for (const [word, def] of Object.entries(data)) {
+        if (typeof word === "string" && typeof def === "string") {
+          entries.push([word, def]);
+        }
+      }
     } else {
       throw new Error("Unexpected dictionary format");
     }
 
-    if (dictionaryEntries.length === 0) {
+    if (entries.length === 0) {
       throw new Error("Dictionary is empty");
     }
+
+    dictionaryEntries = entries;
 
     buildKeyboard();
     startNewGame();
@@ -144,7 +169,10 @@ function buildKeyboard() {
 function setKeyboardEnabled(enabled) {
   const buttons = keyboardEl.querySelectorAll(".key-btn");
   buttons.forEach(btn => {
-    btn.disabled = !enabled || guessedLetters.has(btn.dataset.letter) || wrongLetters.has(btn.dataset.letter);
+    btn.disabled =
+      !enabled ||
+      guessedLetters.has(btn.dataset.letter) ||
+      wrongLetters.has(btn.dataset.letter);
   });
 }
 
