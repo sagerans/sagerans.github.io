@@ -1,6 +1,6 @@
 // ----- Config -----
 const MAX_GUESSES = 8;
-const DICTIONARY_URL = "dictionary.json"; // same folder as index.html
+const DICTIONARY_URL = "scripts/dictionary.json"; // same folder as index.html
 
 // ----- State -----
 let dictionaryEntries = []; // [ [word, definition], ... ]
