@@ -1,6 +1,17 @@
 // ----- Config -----
 const MAX_GUESSES = 8;
 const DICTIONARY_URL = "scripts/dictionary.json"; // same folder as index.html
+const HANGMAN_IMAGES = [
+  "images/hangman0.png",
+  "images/hangman1.png",
+  "images/hangman2.png",
+  "images/hangman3.png",
+  "images/hangman4.png",
+  "images/hangman5.png",
+  "images/hangman6.png",
+  "images/hangman7.png",
+  "images/hangman8.png"
+];
 
 // ----- State -----
 let dictionaryEntries = []; // [ [word, definition], ... ]
@@ -21,6 +32,10 @@ const defPanelEl = document.getElementById("definition-panel");
 const finalWordEl = document.getElementById("final-word");
 const finalDefEl = document.getElementById("final-definition");
 const newGameBtn = document.getElementById("new-game-btn");
+const hangmanImgEl = document.getElementById("hangman-image");
+hangmanImgEl.addEventListener("error", () => {
+  console.error("Hangman image failed to load:", hangmanImgEl.src);
+});
 
 // ----- Init -----
 fetch(DICTIONARY_URL)
@@ -103,6 +118,7 @@ function startNewGame() {
 
   updateWordDisplay();
   setKeyboardEnabled(true);
+  updateHangmanImage();
 }
 
 function pickRandomEntry(entries) {
@@ -111,6 +127,29 @@ function pickRandomEntry(entries) {
 }
 
 // ----- Rendering -----
+
+/*
+function updateHangmanImage() {
+  const wrongCount = wrongLetters.size;
+
+  // Clamp to valid range just in case
+  const index = Math.min(
+    wrongCount,
+    HANGMAN_IMAGES.length - 1
+  );
+
+  hangmanImgEl.src = HANGMAN_IMAGES[index];
+}
+*/
+
+function updateHangmanImage() {
+  const wrongCount = MAX_GUESSES - remainingGuesses; // 0..MAX_GUESSES
+  const index = Math.min(wrongCount, HANGMAN_IMAGES.length - 1);
+
+  // cache-bust so you can *see* it change even if the browser is sticky
+  hangmanImgEl.src = `${HANGMAN_IMAGES[index]}?v=${index}`;
+}
+
 function updateWordDisplay() {
   const chars = currentWord.split("");
   const displayChars = chars.map(ch => {
@@ -150,16 +189,29 @@ function showEndState(win) {
 }
 
 // ----- Keyboard -----
+const KEYBOARD_ROWS = [
+  "QWERTYUIOP",
+  "ASDFGHJKL",
+  "ZXCVBNM"
+];
+
 function buildKeyboard() {
   keyboardEl.innerHTML = "";
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for (const ch of letters) {
-    const btn = document.createElement("button");
-    btn.className = "key-btn";
-    btn.textContent = ch;
-    btn.dataset.letter = ch.toLowerCase();
-    btn.addEventListener("click", onLetterClick);
-    keyboardEl.appendChild(btn);
+
+  for (const row of KEYBOARD_ROWS) {
+    const rowDiv = document.createElement("div");
+    rowDiv.className = "keyboard-row";
+
+    for (const ch of row) {
+      const btn = document.createElement("button");
+      btn.className = "key-btn";
+      btn.textContent = ch;
+      btn.dataset.letter = ch.toLowerCase();
+      btn.addEventListener("click", onLetterClick);
+      rowDiv.appendChild(btn);
+    }
+
+    keyboardEl.appendChild(rowDiv);
   }
 
   // Optional: listen to physical keyboard as well
@@ -190,6 +242,7 @@ function onPhysicalKey(e) {
 }
 
 // ----- Game Logic -----
+/*
 function handleGuess(letter) {
   if (gameOver) return;
   if (guessedLetters.has(letter) || wrongLetters.has(letter)) return; // already tried
@@ -205,7 +258,29 @@ function handleGuess(letter) {
 
   updateWordDisplay();
   updateKeyboardButtons(letter);
+  updateHangmanImage();
 
+  checkGameState();
+}
+*/
+
+function handleGuess(letter) {
+  if (gameOver) return;
+  if (guessedLetters.has(letter) || wrongLetters.has(letter)) return;
+
+  if (currentWord.includes(letter)) {
+    guessedLetters.add(letter);
+  } else {
+    console.log("WRONG GUESS:", letter, "remaining:", remainingGuesses);
+    wrongLetters.add(letter);
+    remainingGuesses--;
+    remainingEl.textContent = remainingGuesses;
+    updateWrongLettersDisplay();
+    updateHangmanImage(); // <-- move here
+  }
+
+  updateWordDisplay();
+  updateKeyboardButtons(letter);
   checkGameState();
 }
 
