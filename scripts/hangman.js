@@ -273,6 +273,11 @@ function updateHangmanImage() {
 function updateWordDisplay() {
   const chars = currentWord.split("");
   const displayChars = chars.map(ch => {
+    if (ch === " ") {
+      // return " /  ";
+      return "\u00A0\u00A0";
+    }
+
     if (!/^[a-zA-Z]$/.test(ch)) {
       // keep punctuation/hyphen/apostrophe visible
       return ch;

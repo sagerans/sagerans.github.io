@@ -74,6 +74,7 @@
   letter-spacing: 0.25em;
   margin: 10px 0 16px;
   min-height: 2.2em;
+  white-space: pre-wrap;
 }
 
 /* Keyboard layout (QWERTY rows produced by JS) */
