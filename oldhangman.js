@@ -12,12 +12,8 @@ const HANGMAN_IMAGES = [
   "images/hangman7.png",
   "images/hangman8.png"
 ];
-const DAILY_TIMEZONE = "America/New_York";
-const LS_PREFIX = "sage_hangman_daily_v1";
 
 // ----- State -----
-let mode = "daily"; // "daily" | "practice"
-let practiceIndex = null; // store current practice word index
 let dictionaryEntries = []; // [ [word, definition], ... ]
 let currentWord = "";
 let currentDefinition = "";
@@ -27,8 +23,6 @@ let remainingGuesses = MAX_GUESSES;
 let gameOver = false;
 
 // ----- DOM -----
-const dailyBtn = document.getElementById("daily-btn");
-const practiceBtn = document.getElementById("practice-btn");
 const wordDisplayEl = document.getElementById("word-display");
 const remainingEl = document.getElementById("remaining");
 const wrongListEl = document.getElementById("wrong-list");
@@ -39,102 +33,9 @@ const finalWordEl = document.getElementById("final-word");
 const finalDefEl = document.getElementById("final-definition");
 const newGameBtn = document.getElementById("new-game-btn");
 const hangmanImgEl = document.getElementById("hangman-image");
-const modeIndicatorEl = document.getElementById("mode-indicator");
 hangmanImgEl.addEventListener("error", () => {
   console.error("Hangman image failed to load:", hangmanImgEl.src);
 });
-
-updateModeIndicator();
-
-/*
-// -------- Daily Hangman settings --------
-const DAILY_MODE = true; // flip to false to go back to random mode
-const DAILY_TIMEZONE = "America/New_York"; // consistent day boundary for you
-const LS_PREFIX = "sage_hangman_daily_v1";
-*/
-
-// Get YYYY-MM-DD in a chosen timezone (avoids "my timezone vs yours" weirdness)
-function getDateKeyInTZ(timeZone) {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(new Date());
-
-  const y = parts.find(p => p.type === "year").value;
-  const m = parts.find(p => p.type === "month").value;
-  const d = parts.find(p => p.type === "day").value;
-  return `${y}-${m}-${d}`;
-}
-
-// Simple stable string hash -> 32-bit unsigned
-function hashStringToUint32(s) {
-  let h = 2166136261; // FNV-1a-ish
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-function dailyIndexFor(dateKey, count) {
-  // Salt keeps it from being "obvious" and lets you change the sequence later
-  const salt = "hangman_daily_salt_v1";
-  return hashStringToUint32(`${salt}:${dateKey}`) % count;
-}
-
-function saveDailyState(dateKey, index) {
-  const payload = {
-    dateKey,
-    index,
-    guessed: Array.from(guessedLetters),
-    wrong: Array.from(wrongLetters),
-    remainingGuesses,
-    gameOver
-  };
-  localStorage.setItem(`${LS_PREFIX}:state`, JSON.stringify(payload));
-}
-
-function loadDailyState() {
-  const raw = localStorage.getItem(`${LS_PREFIX}:state`);
-  if (!raw) return null;
-  try { return JSON.parse(raw); } catch { return null; }
-}
-
-function clearDailyState() {
-  localStorage.removeItem(`${LS_PREFIX}:state`);
-}
-
-function updateModeIndicator() {
-  modeIndicatorEl.textContent =
-    mode === "daily" ? "Mode: Daily" : "Mode: Practice";
-}
-
-function loadWordByIndex(index) {
-  const [word, definition] = dictionaryEntries[index];
-  currentWord = word.toLowerCase();
-  currentDefinition = definition;
-}
-
-function resetRoundState() {
-  guessedLetters.clear();
-  wrongLetters.clear();
-  remainingGuesses = MAX_GUESSES;
-  gameOver = false;
-
-  remainingEl.textContent = remainingGuesses;
-  wrongListEl.textContent = "None";
-  messageEl.textContent = "";
-  messageEl.className = "";
-  defPanelEl.classList.add("hidden");
-  finalWordEl.textContent = "";
-  finalDefEl.textContent = "";
-
-  updateWordDisplay();
-  setKeyboardEnabled(true);
-  updateHangmanImage();
-}
 
 // ----- Init -----
 fetch(DICTIONARY_URL)
@@ -198,61 +99,26 @@ fetch(DICTIONARY_URL)
 function startNewGame() {
   if (dictionaryEntries.length === 0) return;
 
-  if (mode === "daily") {
-    const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
-    const index = dailyIndexFor(dateKey, dictionaryEntries.length);
+  const [word, definition] = pickRandomEntry(dictionaryEntries);
+  currentWord = word.toLowerCase();
+  currentDefinition = definition;
 
-    loadWordByIndex(index);
+  guessedLetters.clear();
+  wrongLetters.clear();
+  remainingGuesses = MAX_GUESSES;
+  gameOver = false;
 
-    const saved = loadDailyState();
-    const shouldRestore = saved && saved.dateKey === dateKey && saved.index === index;
+  remainingEl.textContent = remainingGuesses;
+  wrongListEl.textContent = "None";
+  messageEl.textContent = "";
+  messageEl.className = "";
+  defPanelEl.classList.add("hidden");
+  finalWordEl.textContent = "";
+  finalDefEl.textContent = "";
 
-    if (shouldRestore) {
-      guessedLetters = new Set(saved.guessed || []);
-      wrongLetters = new Set(saved.wrong || []);
-      remainingGuesses = typeof saved.remainingGuesses === "number" ? saved.remainingGuesses : MAX_GUESSES;
-      gameOver = !!saved.gameOver;
-    } else {
-      guessedLetters.clear();
-      wrongLetters.clear();
-      remainingGuesses = MAX_GUESSES;
-      gameOver = false;
-      clearDailyState();
-    }
-
-    remainingEl.textContent = remainingGuesses;
-    updateWrongLettersDisplay();
-    messageEl.textContent = "";
-    messageEl.className = "";
-    defPanelEl.classList.add("hidden");
-    finalWordEl.textContent = "";
-    finalDefEl.textContent = "";
-
-    updateWordDisplay();
-    updateHangmanImage();
-    setKeyboardEnabled(!gameOver);
-
-    if (gameOver) {
-      finalWordEl.textContent = currentWord;
-      finalDefEl.textContent = currentDefinition || "(No definition available.)";
-      defPanelEl.classList.remove("hidden");
-    }
-
-    // In daily mode, “New Game” is disabled (daily is fixed)
-    newGameBtn.disabled = true;
-    newGameBtn.title = "Daily mode: come back tomorrow for a new word.";
-    return;
-  }
-
-  // practice mode
-  const idx = Math.floor(Math.random() * dictionaryEntries.length);
-  practiceIndex = idx;
-  loadWordByIndex(idx);
-
-  resetRoundState();
-
-  newGameBtn.disabled = false;
-  newGameBtn.title = "New practice word";
+  updateWordDisplay();
+  setKeyboardEnabled(true);
+  updateHangmanImage();
 }
 
 function pickRandomEntry(entries) {
@@ -261,6 +127,20 @@ function pickRandomEntry(entries) {
 }
 
 // ----- Rendering -----
+
+/*
+function updateHangmanImage() {
+  const wrongCount = wrongLetters.size;
+
+  // Clamp to valid range just in case
+  const index = Math.min(
+    wrongCount,
+    HANGMAN_IMAGES.length - 1
+  );
+
+  hangmanImgEl.src = HANGMAN_IMAGES[index];
+}
+*/
 
 function updateHangmanImage() {
   const wrongCount = MAX_GUESSES - remainingGuesses; // 0..MAX_GUESSES
@@ -293,12 +173,6 @@ function updateWrongLettersDisplay() {
 function showEndState(win) {
   gameOver = true;
   setKeyboardEnabled(false);
-
-  if (mode === "daily") {
-    const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
-    const index = dailyIndexFor(dateKey, dictionaryEntries.length);
-    saveDailyState(dateKey, index);
-  }
 
   if (win) {
     messageEl.textContent = "You guessed it! 🎉";
@@ -368,6 +242,28 @@ function onPhysicalKey(e) {
 }
 
 // ----- Game Logic -----
+/*
+function handleGuess(letter) {
+  if (gameOver) return;
+  if (guessedLetters.has(letter) || wrongLetters.has(letter)) return; // already tried
+
+  if (currentWord.includes(letter)) {
+    guessedLetters.add(letter);
+  } else {
+    wrongLetters.add(letter);
+    remainingGuesses--;
+    remainingEl.textContent = remainingGuesses;
+    updateWrongLettersDisplay();
+  }
+
+  updateWordDisplay();
+  updateKeyboardButtons(letter);
+  updateHangmanImage();
+
+  checkGameState();
+}
+*/
+
 function handleGuess(letter) {
   if (gameOver) return;
   if (guessedLetters.has(letter) || wrongLetters.has(letter)) return;
@@ -385,13 +281,6 @@ function handleGuess(letter) {
 
   updateWordDisplay();
   updateKeyboardButtons(letter);
-
-  if (mode === "daily") {
-    const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
-    const index = dailyIndexFor(dateKey, dictionaryEntries.length);
-    saveDailyState(dateKey, index);
-  }
-
   checkGameState();
 }
 
@@ -424,40 +313,6 @@ function checkGameState() {
 }
 
 // ----- Events -----
-
-dailyBtn.addEventListener("click", () => {
-  mode = "daily";
-  updateModeIndicator();
-  startNewGame();
-});
-
-practiceBtn.addEventListener("click", () => {
-  mode = "practice";
-  updateModeIndicator();
-  startNewGame();
-})
-
-/*
-});
-dailyBtn.addEventListener("click", () => {
-  mode = "daily";
-  startNewGame();
-});
-
-practiceBtn.addEventListener("click", () => {
-  mode = "practice";
-  startNewGame();
-});
-*/
-
-// In practice mode, this makes a new random word.
-// In daily mode, it's disabled anyway.
-newGameBtn.addEventListener("click", () => {
-  if (mode === "practice") startNewGame();
-});
-
-/*
 newGameBtn.addEventListener("click", () => {
   startNewGame();
 });
-*/

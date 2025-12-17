@@ -36,10 +36,6 @@
         <div class="game-container">
           <h2>Hangman</h2>
 
-          <div id="mode-indicator" class="mode-indicator">
-            Mode: Daily
-          </div>
-
           <div id="status-bar">
             <div id="tries">Remaining guesses: <span id="remaining">8</span></div>
             <div id="wrong-letters">Wrong letters: <span id="wrong-list">None</span></div>
@@ -60,22 +56,15 @@
           <div id="message"></div>
 
           <div id="definition-panel" class="hidden">
-            <h3>Word &amp; Definition</h3>
+            <h3>Word & Definition</h3>
             <p><strong>Word:</strong> <span id="final-word"></span></p>
             <p><strong>Definition:</strong></p>
             <p id="final-definition"></p>
           </div>
 
-          <div class="hangman-buttons">
-            <button id="daily-btn">Daily</button>
-            <button id="practice-btn">Practice</button>
-            <button id="new-game-btn">New Game</button>
-          </div>
-
+          <button id="new-game-btn">New Game</button>
         </div>
-
       </div>
-
     </section>
 
     <footer>

@@ -40,18 +40,6 @@
   flex-wrap: wrap;
 }
 
-#hangman .mode-indicator {
-  display: inline-block;
-  margin: 6px auto 10px;
-  padding: 4px 12px;
-  border: 1px solid #a9c191;
-  border-radius: 999px;
-  background: #fff8dc;
-  color: #696969;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
 /* Figure */
 #hangman #figure-container {
   display: flex;
@@ -102,18 +90,6 @@
   min-width: 38px;
 }
 
-#hangman .hangman-buttons button {
-  min-width: 140px;       /* makes them same-ish width */
-  text-align: center;
-}
-
-/* optional: keep them from getting huge on desktop */
-@media (min-width: 700px) {
-  #hangman .hangman-buttons button {
-    min-width: 150px;
-  }
-}
-
 #hangman .key-btn:hover {
   background: #e7efdf;
 }
@@ -123,14 +99,6 @@
   color: #777;
   border-color: #ccc;
   cursor: default;
-}
-
-#hangman .hangman-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 16px;
 }
 
 /* Message */
@@ -163,7 +131,8 @@
 /* New Game button: let your global button style rule it,
    just make spacing nice. */
 #hangman #new-game-btn {
-  margin: 0;
+  display: block;
+  margin: 16px auto 0;
 }
 
 /* Responsive tweaks */
