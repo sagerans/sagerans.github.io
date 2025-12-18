@@ -14,6 +14,7 @@ const HANGMAN_IMAGES = [
 ];
 const DAILY_TIMEZONE = "America/New_York";
 const LS_PREFIX = "sage_hangman_daily_v1";
+const STATS_KEY = "sage_hangman_stats_v1";
 
 // ----- State -----
 let mode = "daily"; // "daily" | "practice"
@@ -40,18 +41,38 @@ const finalDefEl = document.getElementById("final-definition");
 const newGameBtn = document.getElementById("new-game-btn");
 const hangmanImgEl = document.getElementById("hangman-image");
 const modeIndicatorEl = document.getElementById("mode-indicator");
+const statsBarEl = document.getElementById("stats-bar");
 hangmanImgEl.addEventListener("error", () => {
   console.error("Hangman image failed to load:", hangmanImgEl.src);
 });
 
 updateModeIndicator();
+renderStatsBar();
 
-/*
-// -------- Daily Hangman settings --------
-const DAILY_MODE = true; // flip to false to go back to random mode
-const DAILY_TIMEZONE = "America/New_York"; // consistent day boundary for you
-const LS_PREFIX = "sage_hangman_daily_v1";
-*/
+function loadStats() {
+  try {
+    return JSON.parse(localStorage.getItem(STATS_KEY)) || {
+      wins: 0,
+      losses: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      days: {} // dateKey -> { win, guessesUsed, word }
+    };
+  } catch {
+    return { wins: 0, losses: 0, currentStreak: 0, bestStreak: 0, days: {} };
+  }
+}
+
+function saveStats(stats) {
+  localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+}
+
+function renderStatsBar() {
+  if (!statsBarEl) return;
+  const s = loadStats();
+  statsBarEl.textContent = 
+    `Wins: ${s.wins}  Losses: ${s.losses}  Percent: ${s.wins/(s.wins+s.losses)*100}%  Streak: ${s.currentStreak}  Best: ${s.bestStreak}`;
+}
 
 // Get YYYY-MM-DD in a chosen timezone (avoids "my timezone vs yours" weirdness)
 function getDateKeyInTZ(timeZone) {
@@ -295,6 +316,31 @@ function updateWrongLettersDisplay() {
   }
 }
 
+function recordDailyResult(win) {
+  if (mode !== "daily") return;
+
+  const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
+  const stats = loadStats();
+
+  // Don’t double-count if they reload and end screen shows again
+  if (stats.days[dateKey]) return;
+
+  const guessesUsed = MAX_GUESSES - remainingGuesses; // wrong guesses used
+  stats.days[dateKey] = { win, guessesUsed, word: currentWord };
+
+  if (win) {
+    stats.wins += 1;
+    stats.currentStreak += 1;
+    stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
+  } else {
+    stats.losses += 1;
+    stats.currentStreak = 0;
+  }
+
+  saveStats(stats);
+  renderStatsBar();
+}
+
 function showEndState(win) {
   gameOver = true;
   setKeyboardEnabled(false);
@@ -317,6 +363,10 @@ function showEndState(win) {
   finalWordEl.textContent = currentWord;
   finalDefEl.textContent = currentDefinition || "(No definition available.)";
   defPanelEl.classList.remove("hidden");
+
+  // Save win / lose state
+  recordDailyResult(win);
+  renderStatsBar();
 }
 
 // ----- Keyboard -----

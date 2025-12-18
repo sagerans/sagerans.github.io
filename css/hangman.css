@@ -31,6 +31,47 @@
   color: #696969;
 }
 
+/* Top bar: mode (left) + stats (right) */
+#hangman .hangman-topbar {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 12px;
+  margin: 6px 0 12px;
+  /* flex-wrap: wrap; allows stacking on small screens */
+}
+
+/* Mode pill (already mostly styled) */
+#hangman .mode-indicator {
+  padding: 4px 12px;
+  border: 1px solid #a9c191;
+  border-radius: 999px;
+  background: #fff8dc;
+  color: #696969;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Stats bar (right-aligned text) */
+#hangman .stats-bar {
+  margin-left: auto;
+  font-size: 0.9rem;
+  color: #696969;
+  /* text-align: right; */
+  white-space: nowrap;
+}
+
+/* Mobile: stack nicely */
+@media (max-width: 520px) {
+  #hangman .hangman-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #hangman .stats-bar {
+    text-align: left;
+  }
+}
 /* Status bar */
 #hangman #status-bar {
   display: flex;
@@ -38,18 +79,6 @@
   gap: 12px;
   margin-bottom: 12px;
   flex-wrap: wrap;
-}
-
-#hangman .mode-indicator {
-  display: inline-block;
-  margin: 6px auto 10px;
-  padding: 4px 12px;
-  border: 1px solid #a9c191;
-  border-radius: 999px;
-  background: #fff8dc;
-  color: #696969;
-  font-size: 0.9rem;
-  text-align: center;
 }
 
 /* Figure */
