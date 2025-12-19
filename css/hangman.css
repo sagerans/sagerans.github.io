@@ -205,6 +205,33 @@
   border-top: 1px solid #a9c191;
 }
 
+/* Ngram Viewer */
+#hangman .ngram-panel {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #a9c191;
+}
+
+#hangman .ngram-panel h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #696969;
+}
+
+#hangman #ngram-canvas {
+  width: 100%;
+  height: auto;
+  background: #fff8dc;
+  border: 1px solid #a9c191;
+  border-radius: 10px;
+}
+
+#hangman .ngram-note {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #696969;
+}
+
 #hangman .hidden {
   display: none;
 }

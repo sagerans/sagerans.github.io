@@ -15,6 +15,7 @@ const HANGMAN_IMAGES = [
 const DAILY_TIMEZONE = "America/New_York";
 const LS_PREFIX = "sage_hangman_daily_v1";
 const STATS_KEY = "sage_hangman_stats_v1";
+const NGRAM_CACHE_PREFIX = "sage_ngram_cache_v1";
 
 // ----- State -----
 let mode = "daily"; // "daily" | "practice"
@@ -42,6 +43,9 @@ const newGameBtn = document.getElementById("new-game-btn");
 const hangmanImgEl = document.getElementById("hangman-image");
 const modeIndicatorEl = document.getElementById("mode-indicator");
 const statsBarEl = document.getElementById("stats-bar");
+const ngramPanelEl = document.getElementById("ngram-panel");
+const ngramCanvasEl = document.getElementById("ngram-canvas");
+const ngramNoteEl = document.getElementById("ngram-note");
 hangmanImgEl.addEventListener("error", () => {
   console.error("Hangman image failed to load:", hangmanImgEl.src);
 });
@@ -137,6 +141,118 @@ function loadWordByIndex(index) {
   currentWord = word.toLowerCase();
   currentDefinition = definition;
 }
+
+// Ngram JS starts here
+function ngramCacheKey(term) {
+  return `${NGRAM_CACHE_PREFIX}:${term.toLowerCase()}:en:1500:2022:s3`;
+}
+
+async function fetchNgramSeries(term) {
+  const cleaned = term.trim();
+  if (!cleaned) throw new Error("Empty term");
+
+  // cache
+  const ck = ngramCacheKey(cleaned);
+  const cached = localStorage.getItem(ck);
+  if (cached) {
+    try { return JSON.parse(cached); } catch {}
+  }
+
+  const params = new URLSearchParams({
+    content: cleaned,          // URLSearchParams handles spaces
+    year_start: "1500",
+    year_end: "2022",
+    corpus: "en",
+    smoothing: "3"
+  });
+
+  const url = `https://books.google.com/ngrams/json?${params.toString()}`;
+
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Ngram HTTP ${resp.status}`);
+
+  const data = await resp.json();
+
+  // data: [ { ngram, timeseries: [...] }, ... ]
+  const first = Array.isArray(data) ? data[0] : null;
+  if (!first || !Array.isArray(first.timeseries)) {
+    // no data for this term
+    const empty = { term: cleaned, years: [], values: [] };
+    localStorage.setItem(ck, JSON.stringify(empty));
+    return empty;
+  }
+
+  const years = [];
+  const values = [];
+  for (let y = 1500; y <= 2022; y++) years.push(y);
+  for (const v of first.timeseries) values.push(v);
+
+  const out = { term: first.ngram || cleaned, years, values };
+  localStorage.setItem(ck, JSON.stringify(out));
+  return out;
+}
+
+function drawNgramChart(canvas, years, values) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  // handle empty/no-data
+  if (!values || values.length === 0 || values.every(v => v === 0)) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "14px Courier New, sans-serif";
+    ctx.fillStyle = "#696969";
+    ctx.fillText("No measurable data for this term in the selected corpus.", 12, 28);
+    return;
+  }
+
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // padding for axes labels
+  const padL = 42, padR = 10, padT = 10, padB = 26;
+
+  const x0 = padL, x1 = W - padR;
+  const y0 = H - padB, y1 = padT;
+
+  const n = values.length;
+  const maxV = Math.max(...values);
+  const minV = 0;
+
+  const xFor = (i) => x0 + (i / (n - 1)) * (x1 - x0);
+  const yFor = (v) => y0 - ((v - minV) / (maxV - minV)) * (y0 - y1);
+
+  // background
+  ctx.clearRect(0, 0, W, H);
+
+  // axes
+  ctx.strokeStyle = "#a9c191";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x0, y1);
+  ctx.lineTo(x0, y0);
+  ctx.lineTo(x1, y0);
+  ctx.stroke();
+
+  // line
+  ctx.strokeStyle = "#696969";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = xFor(i);
+    const y = yFor(values[i]);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  // labels (simple)
+  ctx.fillStyle = "#696969";
+  ctx.font = "12px Courier New, sans-serif";
+  ctx.fillText("1500", x0, H - 8);
+  ctx.fillText("2022", x1 - 30, H - 8);
+  ctx.fillText(maxV.toExponential(2), 6, y1 + 10);
+}
+// Ngram JS ends here
 
 function resetRoundState() {
   guessedLetters.clear();
@@ -367,6 +483,31 @@ function showEndState(win) {
   // Save win / lose state
   recordDailyResult(win);
   renderStatsBar();
+
+  // Ngram view
+  showNgramForCurrentWord().catch(err => {
+    console.warn("Ngram fetch failed:", err);
+    if (ngramPanelEl) ngramPanelEl.classList.add("hidden");
+  });
+}
+
+async function showNgramForCurrentWord() {
+  if (!ngramPanelEl || !ngramCanvasEl || !ngramNoteEl) return;
+
+  ngramNoteEl.textContent = "Loading usage chart...";
+  ngramPanelEl.classList.remove("hidden");
+
+  try {
+    const { term, years, values } = await fetchNgramSeries(currentWord);
+
+    drawNgramChart(ngramCanvasEl, years, values);
+
+    ngramNoteEl.textContent = 
+      `Source: Google Books Ngram Viewer (English corpus), smoothing 3.`;
+  } catch (e) {
+    ngramPanelEl.classList.add("hidden");
+    throw e;
+  }
 }
 
 // ----- Keyboard -----
