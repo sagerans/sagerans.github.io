@@ -166,7 +166,10 @@ async function fetchNgramSeries(term) {
     smoothing: "3"
   });
 
+  /*
   const url = `https://books.google.com/ngrams/json?${params.toString()}`;
+  */
+  const url = `https://ngram-viewer.sage-r-stew.workers.dev/ngrams?${params.toString()}`;
 
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Ngram HTTP ${resp.status}`);
@@ -248,8 +251,26 @@ function drawNgramChart(canvas, years, values) {
   // labels (simple)
   ctx.fillStyle = "#696969";
   ctx.font = "12px Courier New, sans-serif";
-  ctx.fillText("1500", x0, H - 8);
-  ctx.fillText("2022", x1 - 30, H - 8);
+
+  const startYear = 1500;
+  const endYear = 2022;
+
+  for (let year = 1500; year < 2000; year += 100) {
+    const t = (year - startYear) / (endYear - startYear);
+    const x = x0 + t * (x1 - x0);
+
+    ctx.strokeStyle = "#a9c191";
+    ctx.beginPath();
+    ctx.moveTo(x, y0);
+    ctx.lineTo(x, y0 + 4);
+    ctx.stroke();
+
+    ctx.fillText(String(year), x - 14, y0 + 18);
+  }
+
+  ctx.fillText("2022", x1 - 30, y0 + 18);
+  // ctx.fillText("1500", x0, H - 8);
+  // ctx.fillText("2022", x1 - 30, H - 8);
   ctx.fillText(maxV.toExponential(2), 6, y1 + 10);
 }
 // Ngram JS ends here
