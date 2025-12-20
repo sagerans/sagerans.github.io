@@ -94,6 +94,13 @@ textarea {
   vertical-align: middle;
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
 .form-row {
   display: flex;
   align-items: safe center;

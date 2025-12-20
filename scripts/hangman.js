@@ -12,6 +12,74 @@ const HANGMAN_IMAGES = [
   "images/hangman7.png",
   "images/hangman8.png"
 ];
+const GALLOWS_WIN = [
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+⬜️🧥⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+💪🧥⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+💪🧥🤳🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+💪🧥🤳🟫⬜️
+🦵⬜️⬜️🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️☹️⬜️🟫⬜️
+💪🧥🤳🟫⬜️
+🦵⬜️🦿🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`,
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️😵⬜️🟫⬜️
+💪🧥🤳🟫⬜️
+🦵⬜️🦿🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`
+]
+
+const GALLOWS_LOSE = 
+`⬜️🟫🟫🟫⬜️
+⬜️🟫⬜️🟫⬜️
+⬜️💀⬜️🟫⬜️
+💪🧥🤳🟫⬜️
+🦵⬜️🦿🟫⬜️
+⬜️⬜️⬜️🟫⬜️
+🟫🟫🟫🟫🟫`;
+
 const DAILY_TIMEZONE = "America/New_York";
 const LS_PREFIX = "sage_hangman_daily_v1";
 const STATS_KEY = "sage_hangman_stats_v1";
@@ -31,6 +99,9 @@ let gameOver = false;
 // ----- DOM -----
 const dailyBtn = document.getElementById("daily-btn");
 const practiceBtn = document.getElementById("practice-btn");
+const shareBtn = document.getElementById("share-btn");
+shareBtn.textContent = "Share";
+const shareStatusEl = document.getElementById("share-status");
 const wordDisplayEl = document.getElementById("word-display");
 const remainingEl = document.getElementById("remaining");
 const wrongListEl = document.getElementById("wrong-list");
@@ -116,7 +187,8 @@ function saveDailyState(dateKey, index) {
     guessed: Array.from(guessedLetters),
     wrong: Array.from(wrongLetters),
     remainingGuesses,
-    gameOver
+    gameOver,
+    lastWin // ADDED LAST WIN RECALL
   };
   localStorage.setItem(`${LS_PREFIX}:state`, JSON.stringify(payload));
 }
@@ -124,12 +196,99 @@ function saveDailyState(dateKey, index) {
 function loadDailyState() {
   const raw = localStorage.getItem(`${LS_PREFIX}:state`);
   if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+/* old load
+function loadDailyState() {
+  const raw = localStorage.getItem(`${LS_PREFIX}:state`);
+  lastWin = (typeof saved.lastWin === "boolean") ? saved.lastWin : lastWin;
+  if (!raw) return null;
   try { return JSON.parse(raw); } catch { return null; }
 }
+*/
 
 function clearDailyState() {
   localStorage.removeItem(`${LS_PREFIX}:state`);
 }
+
+// begin added share text functions
+function buildDailyShareText() {
+  const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
+
+  const wrongUsed = Math.max(0, Math.min(MAX_GUESSES, MAX_GUESSES - remainingGuesses));
+  const won = (mode === "daily") && gameOver && (remainingGuesses > 0); 
+  // NOTE: if you store win/loss explicitly, use that instead.
+  // Alternative: track lastWin in showEndState(win) (recommended below).
+
+  const resultLabel = (lastWin === true) ? "WIN" : "LOSS";
+  const gallows = (lastWin === true)
+    ? GALLOWS_WIN[Math.min(wrongUsed, 7)]
+    : GALLOWS_LOSE;
+
+  // Wordle-ish header line
+  // Example: "Sage Hangman (Daily) 2025-12-20 WIN 3/8"
+  return [
+    `Hangmandle ${dateKey}\nGuesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
+    ``,
+    gallows
+  ].join("\n");
+}
+
+async function copyTextToClipboard(text) {
+  // Modern async clipboard API (works on https)
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  // Fallback for older browsers
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.position = "fixed";
+  ta.style.top = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+}
+
+function setShareEnabled(enabled) {
+  if (!shareBtn) return;
+  shareBtn.disabled = !enabled;
+  shareBtn.title = enabled ? "Copy your result to clipboard" : "Finish today's game to share";
+  shareBtn.textContent = "Share";
+}
+
+if (shareBtn) {
+  shareBtn.addEventListener("click", async () => {
+    if (mode !== "daily") {
+      shareStatusEl.textContent = "Sharing is only enabled for Daily mode.";
+      return;
+    }
+    if (!gameOver) {
+      shareStatusEl.textContent = "Finish today's game first, then share.";
+      return;
+    }
+
+    try {
+      const text = buildDailyShareText();
+      await copyTextToClipboard(text);
+      shareStatusEl.textContent = "Copied to clipboard!";
+      setTimeout(() => { shareStatusEl.textContent = ""; }, 2000);
+    } catch (e) {
+      console.warn("Share failed:", e);
+      shareStatusEl.textContent = "Couldn’t copy automatically — your browser blocked it.";
+    }
+  });
+}
+
+// end share text functions
 
 function updateModeIndicator() {
   modeIndicatorEl.textContent =
@@ -370,11 +529,14 @@ function startNewGame() {
       wrongLetters = new Set(saved.wrong || []);
       remainingGuesses = typeof saved.remainingGuesses === "number" ? saved.remainingGuesses : MAX_GUESSES;
       gameOver = !!saved.gameOver;
+      
+      if (typeof saved.lastWin === "boolean") lastWin = saved.lastWin; // REMEMBER FOR SHARING
     } else {
       guessedLetters.clear();
       wrongLetters.clear();
       remainingGuesses = MAX_GUESSES;
       gameOver = false;
+      lastWin = null;
       clearDailyState();
     }
 
@@ -390,10 +552,13 @@ function startNewGame() {
     updateHangmanImage();
     setKeyboardEnabled(!gameOver);
 
+    setShareEnabled(gameOver);
+
     if (gameOver) {
       finalWordEl.textContent = currentWord;
       finalDefEl.textContent = currentDefinition || "(No definition available.)";
       defPanelEl.classList.remove("hidden");
+      setShareEnabled(gameOver); // ADDED GAME OVER SHARE LINE
     }
 
     // In daily mode, “New Game” is disabled (daily is fixed)
@@ -411,6 +576,7 @@ function startNewGame() {
 
   newGameBtn.disabled = false;
   newGameBtn.title = "New practice word";
+  setShareEnabled(false);
 }
 
 function pickRandomEntry(entries) {
@@ -510,6 +676,9 @@ function showEndState(win) {
     console.warn("Ngram fetch failed:", err);
     if (ngramPanelEl) ngramPanelEl.classList.add("hidden");
   });
+
+  lastWin = !!win;
+  setShareEnabled(mode === "daily");
 }
 
 async function showNgramForCurrentWord() {
