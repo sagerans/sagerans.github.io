@@ -233,7 +233,7 @@ function buildDailyShareText() {
   // Wordle-ish header line
   // Example: "Sage Hangman (Daily) 2025-12-20 WIN 3/8"
   return [
-    `Hangmandle ${dateKey}\nGuesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
+    `Hangmandle ${dateKey}\nWrong Guesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
     ``,
     gallows
   ].join("\n");
