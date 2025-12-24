@@ -203,15 +203,6 @@ function loadDailyState() {
   }
 }
 
-/* old load
-function loadDailyState() {
-  const raw = localStorage.getItem(`${LS_PREFIX}:state`);
-  lastWin = (typeof saved.lastWin === "boolean") ? saved.lastWin : lastWin;
-  if (!raw) return null;
-  try { return JSON.parse(raw); } catch { return null; }
-}
-*/
-
 function clearDailyState() {
   localStorage.removeItem(`${LS_PREFIX}:state`);
 }
@@ -327,9 +318,6 @@ async function fetchNgramSeries(term) {
     smoothing: "3"
   });
 
-  /*
-  const url = `https://books.google.com/ngrams/json?${params.toString()}`;
-  */
   const url = `https://ngram-viewer.sage-r-stew.workers.dev/ngrams?${params.toString()}`;
 
   const resp = await fetch(url);
@@ -589,7 +577,6 @@ function pickRandomEntry(entries) {
 }
 
 // ----- Rendering -----
-
 function updateHangmanImage() {
   const wrongCount = MAX_GUESSES - remainingGuesses; // 0..MAX_GUESSES
   const index = Math.min(wrongCount, HANGMAN_IMAGES.length - 1);
@@ -830,27 +817,8 @@ practiceBtn.addEventListener("click", () => {
   startNewGame();
 })
 
-/*
-});
-dailyBtn.addEventListener("click", () => {
-  mode = "daily";
-  startNewGame();
-});
-
-practiceBtn.addEventListener("click", () => {
-  mode = "practice";
-  startNewGame();
-});
-*/
-
 // In practice mode, this makes a new random word.
 // In daily mode, it's disabled anyway.
 newGameBtn.addEventListener("click", () => {
   if (mode === "practice") startNewGame();
 });
-
-/*
-newGameBtn.addEventListener("click", () => {
-  startNewGame();
-});
-*/
