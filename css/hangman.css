@@ -62,19 +62,6 @@
 }
 
 /* Mobile: stack nicely */
-/*
-@media (max-width: 520px) {
-  #hangman .hangman-topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  #hangman .stats-bar {
-    text-align: left;
-  }
-}
-*/
-
 @media (max-width: 520px) {
   #hangman .hangman-topbar {
     flex-direction: column;
@@ -300,10 +287,4 @@
     font-size: 0.95rem;
     letter-spacing: 0.04em;
   }
-  /*
-  #hangman .key-btn {
-    min-width: 32px;
-    padding: 7px 8px;
-  }
-  */
 }
