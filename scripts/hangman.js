@@ -221,12 +221,14 @@ function buildDailyShareText() {
   const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
 
   const wrongUsed = Math.max(0, Math.min(MAX_GUESSES, MAX_GUESSES - remainingGuesses));
-  const won = (mode === "daily") && gameOver && (remainingGuesses > 0); 
+  // **old won** const won = (mode === "daily") && gameOver && (remainingGuesses > 0); 
+  const won = !!gameOver && remainingGuesses > 0;
   // NOTE: if you store win/loss explicitly, use that instead.
   // Alternative: track lastWin in showEndState(win) (recommended below).
 
-  const resultLabel = (lastWin === true) ? "WIN" : "LOSS";
-  const gallows = (lastWin === true)
+  // **old resultLabel** const resultLabel = (lastWin === true) ? "WIN" : "LOSS";
+  const resultLabel = won ? "WIN" : "LOSS";
+  const gallows = won // (lastWin === true)
     ? GALLOWS_WIN[Math.min(wrongUsed, 7)]
     : GALLOWS_LOSE;
 
@@ -553,6 +555,7 @@ function startNewGame() {
     setKeyboardEnabled(!gameOver);
 
     setShareEnabled(gameOver);
+    // setShareEnabled(mode ==="daily" && gameOver);
 
     if (gameOver) {
       finalWordEl.textContent = currentWord;
@@ -679,6 +682,7 @@ function showEndState(win) {
 
   lastWin = !!win;
   setShareEnabled(mode === "daily");
+  saveDailyState(dateKey, index);
 }
 
 async function showNgramForCurrentWord() {
