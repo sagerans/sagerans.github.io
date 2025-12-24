@@ -562,6 +562,7 @@ function startNewGame() {
       finalDefEl.textContent = currentDefinition || "(No definition available.)";
       defPanelEl.classList.remove("hidden");
       setShareEnabled(gameOver); // ADDED GAME OVER SHARE LINE
+      showNgramForCurrentWord();
     }
 
     // In daily mode, “New Game” is disabled (daily is fixed)
@@ -693,6 +694,8 @@ async function showNgramForCurrentWord() {
 
   try {
     const { term, years, values } = await fetchNgramSeries(currentWord);
+
+    // saveDailyNgramCache(getDateKeyInTZ(DAILY_TIMEZONE), { term, years, values });
 
     drawNgramChart(ngramCanvasEl, years, values);
 
