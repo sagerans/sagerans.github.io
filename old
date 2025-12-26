@@ -1,0 +1,164 @@
+
+/* --- Desktop keyboard realism: row indents + key proportions --- */
+@media (min-width: 700px) {
+  /* Let it be a bit wider on desktop */
+  #hangman .keyboard-row {
+    max-width: 560px;
+  }
+
+  /* Indent row 2 and 3 like a real QWERTY keyboard FOLLOWING REMOVED FOR ABOVE
+  #hangman .keyboard-row:nth-child(2) {
+    padding-left: 4.5%;
+    padding-right: 4.5%;
+  }
+
+  #hangman .keyboard-row:nth-child(3) {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+  */
+
+  /* Key feel: slightly taller, more “keycap” vibe */
+  #hangman .key-btn {
+    padding: 10px 0;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    letter-spacing: 0.02em;
+  }
+}
+
+
+
+HERE WE HAVE EVERYTHING FROM 
+/* Keyboard layout (QWERTY rows produced by JS) */
+#hangman #keyboard { ... }
+...
+@media (max-width: 520px) { ... }
+
+
+
+/* Keyboard layout (QWERTY rows produced by JS) */
+#hangman #keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* replacing to fix mobile
+#hangman .keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+*/
+
+/* Keyboard rows as responsive grids FOR DELETION
+#hangman .keyboard-row {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 520px; /* keeps it from getting too wide on desktop */
+  margin: 0 auto;
+}
+*/
+
+/* latest change incoming below
+#hangman .keyboard-row:nth-child(1) { grid-template-columns: repeat(10, 1fr); }
+#hangman .keyboard-row:nth-child(2) { grid-template-columns: repeat(9, 1fr);  }
+#hangman .keyboard-row:nth-child(3) { grid-template-columns: repeat(7, 1fr);  }
+*/
+
+@media (min-width: 700px) {
+  #hangman {
+    --key-w: 44px;
+    --key-h: 44px;
+    --key-gap: 6px;
+  }
+
+  #hangman .keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--key-gap);
+  }
+
+  #hangman .key-btn {
+    width: var(--key-w);
+    height: var(--key-h);
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #hangman .keyboard-row:nth-child(2) {
+    padding-left: calc((var(--key-w) + var(--key-gap)) * 0.5);
+  }
+
+  #hangman .keyboard-row:nth-child(3) {
+    padding-left: calc((var(--key-w) + var(--key-gap)) * 1.5);
+  }
+}
+
+
+
+/* Responsive tweaks */
+@media (max-width: 520px) {
+  #hangman #keyboard {
+    gap: 6px;
+  }
+
+  #hangman .keyboard-row {
+    gap: 4px;
+    max-width: 100%;
+  }
+  
+  #hangman #word-display {
+    font-size: 1.5rem;
+    letter-spacing: 0.18em;
+  }
+
+  #hangman .key-btn {
+    padding: 7px 0;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+
+
+I DON"T THINK THIS IS NECESSARY
+
+
+/* --- Desktop: “real keyboard” stagger + bigger keys --- */
+@media (min-width: 2000px) {
+  #hangman {
+    --key-w: 52px;   /* bigger so it doesn’t look tiny */
+    --key-h: 48px;
+    --key-gap: 8px;
+  }
+
+  #hangman .keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--key-gap);
+  }
+
+  #hangman .key-btn {
+    width: var(--key-w);
+    height: var(--key-h);
+    min-width: 0;        /* don’t fight width */
+    font-size: 1.05rem;
+    border-radius: 10px;
+  }
+
+  /* Stagger: half-key + one-and-a-half-key */
+  #hangman .keyboard-row:nth-child(2) {
+    padding-left: calc((var(--key-w) + var(--key-gap)) * 0.5);
+  }
+
+  #hangman .keyboard-row:nth-child(3) {
+    padding-left: calc((var(--key-w) + var(--key-gap)) * 1.5);
+  }
+}

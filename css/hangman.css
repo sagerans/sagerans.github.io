@@ -112,65 +112,75 @@
   white-space: pre-wrap;
 }
 
-/* Keyboard layout (QWERTY rows produced by JS) */
+
+/* =========================
+   Keyboard (clean + stable)
+   ========================= */
+
 #hangman #keyboard {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 10px;
+  margin: 10px 0 10px;
 }
 
-/* replacing to fix mobile
+/* Base: flex rows centered (so it never becomes "unstyled") */
 #hangman .keyboard-row {
   display: flex;
   justify-content: center;
   gap: 6px;
-}
-*/
-
-/* Keyboard rows as responsive grids */
-#hangman .keyboard-row {
-  display: grid;
-  gap: 6px;
   width: 100%;
-  max-width: 520px; /* keeps it from getting too wide on desktop */
-  margin: 0 auto;
 }
 
-#hangman .keyboard-row:nth-child(1) { grid-template-columns: repeat(10, 1fr); }
-#hangman .keyboard-row:nth-child(2) { grid-template-columns: repeat(9, 1fr);  }
-#hangman .keyboard-row:nth-child(3) { grid-template-columns: repeat(7, 1fr);  }
-
-/* Keys fill their grid cell */
-#hangman .key-btn {
-  width: 100%;
-  min-width: 0;      /* critical: allows shrinking inside grid */
-  padding: 8px 0;
-  font-size: 1rem;
-}
-
-/* Important: your global button styles apply to ALL buttons.
-   We style only hangman keys more subtly. */
+/* Base key styling */
 #hangman .key-btn {
   background: #fff8dc;
   color: #696969;
   border: 1px solid #a9c191;
-/*  padding: 8px 10px; */
   border-radius: 8px;
   cursor: pointer;
-/*  min-width: 38px; */
+
+  font-family: inherit;
+  font-size: 1rem;
+
+  /* reasonable default size */
+  min-width: 34px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* --- Mobile: switch to grid so it ALWAYS fits --- */
+@media (max-width: 480px) {
+  #hangman #keyboard { gap: 6px; }
+
+  #hangman .keyboard-row {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  #hangman .keyboard-row:nth-child(1) { grid-template-columns: repeat(10, 1fr); }
+  #hangman .keyboard-row:nth-child(2) { grid-template-columns: repeat(9, 1fr); }
+  #hangman .keyboard-row:nth-child(3) { grid-template-columns: repeat(7, 1fr); }
+
+  #hangman .key-btn {
+    width: 100%;
+    min-width: 0;    /* critical for grid shrinking */
+    height: 38px;
+    font-size: 0.95rem;
+    border-radius: 7px;
+  }
+}
+
 
 #hangman .hangman-buttons button {
-  min-width: 140px;       /* makes them same-ish width */
+  min-width: 140px;       
   text-align: center;
-}
-
-/* optional: keep them from getting huge on desktop */
-@media (min-width: 700px) {
-  #hangman .hangman-buttons button {
-    min-width: 150px;
-  }
 }
 
 #hangman .key-btn:hover {
@@ -265,26 +275,3 @@
   margin: 0;
 }
 
-/* Responsive tweaks */
-@media (max-width: 520px) {
-  #hangman #keyboard {
-    gap: 6px;
-  }
-
-  #hangman .keyboard-row {
-    gap: 4px;
-    max-width: 100%;
-  }
-  
-  #hangman #word-display {
-    font-size: 1.5rem;
-    letter-spacing: 0.18em;
-  }
-
-  #hangman .key-btn {
-    padding: 7px 0;
-    border-radius: 7px;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-  }
-}
