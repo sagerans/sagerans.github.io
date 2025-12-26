@@ -208,6 +208,35 @@ function clearDailyState() {
 }
 
 // begin added share text functions
+
+// for mobile sharing
+async function smartShare(text) {
+  // Prefer native share sheet when available
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Sage Hangman",
+        text
+      });
+      return { ok: true, method: "share" };
+    } catch (err) {
+      // User cancelled share sheet = not an error you need to warn about
+      if (err && err.name === "AbortError") {
+        return { ok: false, method: "share", cancelled: true };
+      }
+      // If share fails for any reason, fall back to clipboard
+    }
+  }
+
+  // Fallback: clipboard copy
+  try {
+    await copyTextToClipboard(text);
+    return { ok: true, method: "clipboard" };
+  } catch (err) {
+    return { ok: false, method: "clipboard" };
+  }
+}
+
 function buildDailyShareText() {
   const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
 
@@ -269,6 +298,22 @@ if (shareBtn) {
       return;
     }
 
+    const text = buildDailyShareText();
+
+    const res = await smartShare(text);
+
+    if (res.ok && res.method === "share") {
+        shareStatusEl.textContent = ""; // share sheet handled it
+      } else if (res.ok && res.method === "clipboard") {
+        shareStatusEl.textContent = "Copied to clipboard!";
+        setTimeout(() => (shareStatusEl.textContent = ""), 2000);
+      } else if (res.cancelled) {
+        shareStatusEl.textContent = ""; // user dismissed share menu
+      } else {
+        shareStatusEl.textContent = "Couldn’t share or copy on this browser.";
+      }
+
+    /*
     try {
       const text = buildDailyShareText();
       await copyTextToClipboard(text);
@@ -278,10 +323,13 @@ if (shareBtn) {
       console.warn("Share failed:", e);
       shareStatusEl.textContent = "Couldn’t copy automatically — your browser blocked it.";
     }
+    */
   });
 }
 
 // end share text functions
+
+
 
 function updateModeIndicator() {
   modeIndicatorEl.textContent =
