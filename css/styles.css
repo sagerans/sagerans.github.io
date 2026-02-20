@@ -224,3 +224,273 @@ button {
 .popup-content button:hover {
   background: #0056b3;
 }
+
+/* Dominoes Page Styles */
+#canvas-container {
+  width: 100%;
+  height: 60vh;
+  border: 2px solid #a9c191;
+  background-color: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: crosshair;
+}
+
+#domino-controls button {
+  margin: 5px;
+  font-size: 16px;
+}
+
+/* --- Writing / Blog Page Styles --- */
+
+.blog-container {
+  max-width: 900px;
+  margin: 0 auto; /* Centers the whole container */
+  padding: 20px;
+  text-align: center; /* Centers all text inside */
+}
+
+.blog-container h2 {
+  color: #a9c191; /* Uses your sage green */
+  margin-bottom: 20px;
+}
+
+.post-date {
+  font-size: 0.9em;
+  font-style: italic;
+  margin-bottom: 10px;
+  color: #888;
+}
+
+.post-excerpt {
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+/* Featured Post (Top) */
+.featured-card {
+  background: white; /* Stands out slightly from the #fff8dc background */
+  border: 2px solid #a9c191;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 40px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.featured-card a {
+  color: #696969; /* Overrides global link color */
+  text-decoration: none;
+  display: block; /* Makes the whole box clickable */
+}
+
+.featured-card h3 {
+  font-size: 1.8em;
+  margin-top: 0;
+}
+
+.read-more {
+  font-weight: bold;
+  color: #a9c191;
+}
+
+.featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider Line */
+.blog-divider {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  width: 50%;
+  margin: 40px auto;
+}
+
+/* Grid for Older Posts */
+.blog-grid {
+  display: grid;
+  /* This automatically makes it mobile responsive.
+     Cards will be at least 250px wide, and fill the space. */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Individual Cards */
+.blog-card {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  color: #696969; /* Overrides global link color */
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.blog-card h4 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.blog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-color: #a9c191;
+}
+
+/* --- Individual Story Page Styles --- */
+
+.post-container {
+  max-width: 800px; /* Constrains width for comfortable reading */
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.post-content {
+  background: white; /* Pops off the #fff8dc background */
+  border: 2px solid #a9c191; /* Uses your sage green */
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #a9c191; /* Overrides the global white link color */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #79a171; /* Slightly darker green on hover */
+}
+
+.post-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.post-header h2 {
+  margin: 0 0 10px 0;
+  color: #696969;
+  font-size: 2.2em;
+}
+
+.post-body {
+  line-height: 1.8; /* Taller line height for easier reading */
+  color: #444; /* Slightly darker than your base gray for contrast */
+  font-size: 1.1em;
+}
+
+.post-body p {
+  margin-bottom: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .post-content {
+    padding: 20px;
+  }
+}
+
+/* --- Photography Gallery Styles --- */
+
+.gallery-page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.gallery-page-container h2 {
+  text-align: center;
+  color: #a9c191;
+  margin-bottom: 5px;
+}
+
+.gallery-subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* Enhancing your existing .image-grid */
+.image-grid img {
+  width: 100%;
+  height: 250px; /* Forces all thumbnails to be the same height */
+  object-fit: cover; /* Crops rather than squishes photos to fit the box */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-grid img:hover {
+  transform: scale(1.03); /* Slight zoom on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Lightbox Modal Styles */
+.lightbox {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Dark background makes photos pop */
+  display: flex; /* Hidden by JS initially, but flex handles centering */
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-lightbox:hover {
+  color: #a9c191; /* Your sage green */
+}
+
+/* Mobile responsiveness for the grid */
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+    grid-template-columns: 1fr; /* 1 column on phones */
+  }
+}
