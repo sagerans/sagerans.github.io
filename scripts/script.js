@@ -39,84 +39,80 @@ function sendMessage() {
 }
 
 // --- Photography Gallery Lightbox Logic ---
-/*
 document.addEventListener("DOMContentLoaded", () => {
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
-  const galleryImages = document.querySelectorAll(".gallery-img");
+  // Convert NodeList to an Array so we can easily find the index of the images
+  const galleryImages = Array.from(document.querySelectorAll(".gallery-img"));
   const closeBtn = document.querySelector(".close-lightbox");
+
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
+
+  let currentIndex = 0; // Keeps track of which image is currently open
 
   // If we are on the gallery page, initialize the lightbox
   if (lightbox && galleryImages.length > 0) {
 
-    // Open Lightbox when an image is clicked
-    galleryImages.forEach(img => {
-      img.addEventListener("click", () => {
-        lightboxImg.src = img.src; // Copy the clicked image source
-        lightbox.classList.add("show");
-      });
-    });
-
-    // Close Lightbox on 'X' click
-    closeBtn.addEventListener("click", () => {
-      lightbox.classList.remove("show");
-    });
-
-    // Close Lightbox if the user clicks the dark background
-    lightbox.addEventListener("click", (e) => {
-      if (e.target !== lightboxImg) {
-        lightbox.classList.remove("show");
-      }
-    });
-
-    lightbox.addEventListener("click", (e) => {
-      if (e.key === "Escape" && lightbox.classList.contains("show")) {
-        lightbox.classList.remove("show");
-      }
-    }):
-  }
-});
-*/
-// --- Photography Gallery Lightbox Logic ---
-document.addEventListener("DOMContentLoaded", () => {
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const galleryImages = document.querySelectorAll(".gallery-img");
-  const closeBtn = document.querySelector(".close-lightbox");
-
-  // If we are on the gallery page, initialize the lightbox
-  if (lightbox && galleryImages.length > 0) {
+    // Helper function to update the image source
+    function updateImage(index) {
+      lightboxImg.src = galleryImages[index].src;
+    }
 
     // 1. Open Lightbox when an image is clicked
-    galleryImages.forEach(img => {
+    galleryImages.forEach((img, index) => {
       img.addEventListener("click", () => {
-        lightboxImg.src = img.src;
+        currentIndex = index; // Remember which image we clicked
+        updateImage(currentIndex);
         lightbox.classList.add("show");
       });
     });
 
-    // 2. Close Lightbox on 'X' click
+    // 2. Navigation Functions (loops back to start/end if you go past the edge)
+    function showNext() {
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      updateImage(currentIndex);
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      updateImage(currentIndex);
+    }
+
+    // 3. Arrow Click Event Listeners
+    if (leftArrow && rightArrow) {
+      leftArrow.addEventListener("click", showPrev);
+      rightArrow.addEventListener("click", showNext);
+    }
+
+    // 4. Close Lightbox on 'X' click
     closeBtn.addEventListener("click", () => {
       lightbox.classList.remove("show");
     });
 
-    // 3. Close Lightbox if the user clicks the dark background
+    // 5. Close Lightbox if the user clicks the dark background
     lightbox.addEventListener("click", (e) => {
-      if (e.target !== lightboxImg) {
+      // e.target === lightbox ensures it ONLY closes if you click the dark background itself
+      if (e.target === lightbox) {
         lightbox.classList.remove("show");
       }
     });
 
-    // 4. Close Lightbox on 'ESC' key press
+    // 6. Keyboard Controls (ESC, Left Arrow, Right Arrow)
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && lightbox.classList.contains("show")) {
+      // If the lightbox isn't open, ignore keyboard presses
+      if (!lightbox.classList.contains("show")) return;
+
+      if (e.key === "Escape") {
         lightbox.classList.remove("show");
+      } else if (e.key === "ArrowRight") {
+        showNext();
+      } else if (e.key === "ArrowLeft") {
+        showPrev();
       }
     });
-
-  } // <-- It is very easy to accidentally delete this bracket!
+  }
 });
-
 
 // 1. Your Mini-Database
 // Always add your newest post to the VERY TOP of this list.

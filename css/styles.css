@@ -252,7 +252,7 @@ button {
 }
 
 .blog-container h2 {
-  color: #a9c191; /* Uses your sage green */
+  color: #696969; /* Uses your sage green */
   margin-bottom: 20px;
 }
 
@@ -387,7 +387,7 @@ button {
 .post-body {
   line-height: 1.8; /* Taller line height for easier reading */
   color: #444; /* Slightly darker than your base gray for contrast */
-  font-size: 1.1em;
+  font-size: 1.0em;
 }
 
 .post-body p {
@@ -402,7 +402,14 @@ button {
 }
 
 /* --- Photography Gallery Styles --- */
+.gallery-subtitle {
+  text-align: center;
+  margin-bottom: 30px;
+  font-style: italic;
+  font-size: 0.9em;
+}
 
+/* --- Refined Gallery Section Headers --- */
 .gallery-page-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -411,15 +418,34 @@ button {
 
 .gallery-page-container h2 {
   text-align: center;
-  color: #a9c191;
-  margin-bottom: 5px;
+  color: #696969;
+  font-size: 1.8em;
+  text-transform: uppercase; /* Gives a clean, architectural look */
+  letter-spacing: 4px; /* Spreads the letters out slightly */
+  margin-top: 70px; /* Creates a large visual break from the previous grid */
+  margin-bottom: 30px; /* Space between the title and its own grid */
 }
 
-.gallery-subtitle {
-  text-align: center;
-  margin-bottom: 30px;
-  font-style: italic;
-  font-size: 0.9em;
+/* Creates a subtle divider line underneath each location */
+.gallery-page-container h2::after {
+  content: "";
+  display: block;
+  width: 60px; /* Width of the line */
+  height: 2px; /* Thickness of the line */
+  background-color: #ccc; /* A soft gray so it doesn't overpower the green */
+  margin: 15px auto 0; /* Centers the line and spaces it from the text */
+}
+
+/* Prevents the very first title ("Upstate") from having a massive gap at the top */
+.gallery-page-container h2:first-of-type {
+  margin-top: 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 15px; /* Space between the images */
+  margin-bottom: 40px;
 }
 
 /* Enhancing your existing .image-grid */
@@ -430,6 +456,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 20px;
 }
 
 .image-grid img:hover {
@@ -480,6 +507,41 @@ button {
 
 .close-lightbox:hover {
   color: #a9c191; /* Your sage green */
+}
+
+/* Lightbox Navigation Arrows */
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  user-select: none; /* Prevents accidentally highlighting the arrow text */
+  padding: 20px;
+  transition: color 0.2s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+.lightbox-arrow:hover {
+  color: #a9c191; /* Highlights in your Sage Green */
+  transform: translateY(-50%) scale(1.1); /* Slight pop effect */
+}
+
+.left-arrow {
+  left: 20px;
+}
+
+.right-arrow {
+  right: 20px;
+}
+
+/* Update: Shrink the max-width slightly so the image doesn't touch the arrows */
+.lightbox-content {
+  max-width: 80%; /* Changed from 90% */
+  max-height: 85vh;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 /* Mobile responsiveness for the grid */
