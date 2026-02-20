@@ -78,55 +78,64 @@
   border-color: #787c7e;
 }
 
-/* 5. Minimalist Keyboard */
+/* 5. Keyboard (Matched to Hangmandle Style) */
 #wordle #keyboard {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin: 10px 0 10px;
 }
 
 #wordle #keyboard .row {
   display: flex;
   justify-content: center;
   gap: 6px;
+  width: 100%;
 }
 
 #wordle .key {
-  background: #e2e2e2; /* Soft neutral gray */
-  color: #444;
-  border: none; /* Removed the heavy border */
-  border-radius: 4px;
-  padding: 16px 0; /* Taller keys for better clicking/tapping */
-  min-width: 42px;
-  font-family: inherit; /* Uses your site's font instead of Courier */
+  background: #fff8dc;       /* Hangmandle base color */
+  color: #696969;            /* Hangmandle text color */
+  border: 1px solid #a9c191; /* Hangmandle border */
+  border-radius: 8px;        /* Hangmandle rounding */
+  cursor: pointer;
+  font-family: inherit;
   font-size: 1rem;
   font-weight: bold;
-  cursor: pointer;
+  min-width: 34px;           /* Hangmandle sizing */
+  height: 40px;
+  padding: 0 8px;            /* Slight padding for the wider action keys */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
 #wordle .key:hover {
-  background: #d8e5cc; /* Sage hover effect */
+  background: #e7efdf;       /* Hangmandle hover color */
 }
 
-/* Adds a nice little 'press' animation when clicking a key */
 #wordle .key:active {
   transform: scale(0.95);
 }
 
+/* Wordle-specific state colors (Overriding the base colors when guessed) */
 #wordle .key.correct {
   background: #79a171;
   color: #fff;
+  border-color: #79a171;
 }
 
 #wordle .key.present {
   background: #c9b458;
   color: #fff;
+  border-color: #c9b458;
 }
 
 #wordle .key.absent {
   background: #787c7e;
   color: #fff;
+  border-color: #787c7e;
 }
 
 #wordle .key.disabled {
@@ -142,9 +151,29 @@
     font-size: 1.5rem;
   }
 
+  #wordle #keyboard { gap: 6px; }
+
+  #wordle #keyboard .row {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
   #wordle .key {
-    min-width: 32px;
-    padding: 14px 0;
-    font-size: 0.85rem;
+    flex: 1; /* Lets keys dynamically shrink to share space evenly */
+    min-width: 0;
+    height: 38px;
+    font-size: 0.95rem;
+    border-radius: 7px;
+    padding: 0;
+  }
+
+  /* Gives ENTER and BACKSPACE slightly more width than standard letters */
+  #wordle .key[data-key="Enter"],
+  #wordle .key[data-key="Backspace"] {
+    flex: 1.5;
+    font-size: 0.8rem; /* Shrinks the text slightly so it fits the button */
   }
 }
