@@ -270,7 +270,7 @@ button {
 
 /* Featured Post (Top) */
 .featured-card {
-  background: white; /* Stands out slightly from the #fff8dc background */
+  background: #fffdf2; /* Stands out slightly from the #fff8dc background */
   border: 2px solid #a9c191;
   border-radius: 8px;
   padding: 30px;
@@ -319,7 +319,7 @@ button {
 
 /* Individual Cards */
 .blog-card {
-  background: white;
+  background: #fffdf2;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
@@ -351,7 +351,7 @@ button {
 }
 
 .post-content {
-  background: white; /* Pops off the #fff8dc background */
+  background: #fffdf2; /* Pops off the #fff8dc background */
   border: 2px solid #a9c191; /* Uses your sage green */
   border-radius: 8px;
   padding: 40px;
@@ -598,13 +598,13 @@ button {
 
 .info-block a:hover {
   color: #79a171;
-  text-decoration: underline;
+  text-decoration: bold;
 }
 
 /* Right Column (Form) Styling */
 .contact-form-wrapper {
   flex: 1.5;
-  background: white;
+  background: #fffdf2;
   padding: 40px;
   border-radius: 8px;
   border: 2px solid #a9c191;
@@ -622,17 +622,7 @@ button {
   font-weight: bold;
   color: #696969;
 }
-/*
-.form-row-stacked input,
-.form-row-stacked textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
-  font-family: inherit;
-  background-color: #fafafa;
-}
-*/
+
 .form-row-stacked input,
 .form-row-stacked textarea {
   width: 100%; /* Forces them to stretch across the container */
@@ -742,7 +732,7 @@ button {
 
 .inline-link:hover {
   color: #79a171; /* Darker green on hover */
-  text-decoration: underline;
+  text-decoration: bold;
 }
 
 /* Call to action button */

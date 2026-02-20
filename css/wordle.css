@@ -53,7 +53,7 @@
   align-items: center;
   font-size: 2rem;
   text-transform: uppercase;
-  background: #fafafa; /* Clean white interior */
+  background: #fffdf2; /* Clean white interior */
   color: #444; /* Darker gray for better text contrast */
   font-weight: bold;
   border-radius: 4px; /* Slight rounding to match your contact form */
