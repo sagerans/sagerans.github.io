@@ -1,10 +1,37 @@
+// --- Contact Form AJAX Submit ---
 const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+
 if (contactForm) {
-  contactForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    alert('Thank you for your message!');
+  contactForm.addEventListener('submit', async function(event) {
+    event.preventDefault(); // Stops the page from refreshing
+
+    const data = new FormData(event.target);
+
+    try {
+      const response = await fetch(event.target.action, {
+        method: contactForm.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        formStatus.innerHTML = "Thanks for reaching out! I'll get back to you soon.";
+        formStatus.style.color = "#a9c191";
+        contactForm.reset(); // Clears the input fields
+      } else {
+        formStatus.innerHTML = "Oops! There was a problem submitting your form.";
+        formStatus.style.color = "red";
+      }
+    } catch (error) {
+      formStatus.innerHTML = "Oops! There was a problem submitting your form.";
+      formStatus.style.color = "red";
+    }
   });
 }
+
 function toggleDropdown() {
   document.getElementById("myDropdown").classList.toggle("show");
 }

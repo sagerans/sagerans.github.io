@@ -5,79 +5,80 @@
 #wordle {
   display: flex;
   justify-content: center;
-  padding: 30px 20px;
+  padding: 40px 20px;
 }
 
 #wordle .wordle-wrapper {
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
 }
 
-/* Card */
+/* 1. Remove the bulky card to match the site's integrated feel */
 #wordle #game {
-  background: #fffdf2;
-  border: 2px solid #a9c191;
-  border-radius: 12px;
-  padding: 22px 26px 26px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
   text-align: center;
 }
 
-/* Title */
+/* 2. Title styling to match your Gallery/About headers */
 #wordle h2 {
   color: #696969;
-  margin-bottom: 16px;
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-top: 0;
+  margin-bottom: 40px;
 }
 
-/* Grid */
+/* 3. Grid Enhancements */
 #wordle #grid {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 8px; /* Slightly wider gap for breathing room */
+  margin-bottom: 40px;
+  justify-content: center;
 }
 
 #wordle .row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
-/* Tiles */
+/* 4. Cleaner Tiles */
 #wordle .tile {
-  width: 58px;
-  height: 58px;
-  border: 2px solid #a9c191;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #a9c191; /* Your signature sage green */
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
   text-transform: uppercase;
-  background: #fff8dc;
-  color: #696969;
+  background: #fafafa; /* Clean white interior */
+  color: #444; /* Darker gray for better text contrast */
   font-weight: bold;
+  border-radius: 4px; /* Slight rounding to match your contact form */
 }
 
-/* Tile states */
+/* Tile states (Kept standard Wordle colors, but matched text to white) */
 #wordle .correct {
   background: #79a171;
-  color: #fffff0;
+  color: #fff;
   border-color: #79a171;
 }
 
 #wordle .present {
   background: #c9b458;
-  color: #fffff0;
+  color: #fff;
   border-color: #c9b458;
 }
 
 #wordle .absent {
   background: #787c7e;
-  color: #fffff0;
+  color: #fff;
   border-color: #787c7e;
 }
 
-/* Keyboard */
+/* 5. Minimalist Keyboard */
 #wordle #keyboard {
   display: flex;
   flex-direction: column;
@@ -90,35 +91,42 @@
   gap: 6px;
 }
 
-/* Keys */
 #wordle .key {
-  background: #e7efdf;
-  color: #4f6b46;
-  border: 1px solid #a9c191;
-  border-radius: 6px;
-  padding: 10px 0;
-  min-width: 38px;
-  font-family: Courier New, sans-serif;
+  background: #e2e2e2; /* Soft neutral gray */
+  color: #444;
+  border: none; /* Removed the heavy border */
+  border-radius: 4px;
+  padding: 16px 0; /* Taller keys for better clicking/tapping */
+  min-width: 42px;
+  font-family: inherit; /* Uses your site's font instead of Courier */
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 #wordle .key:hover {
-  background: #d8e5cc;
+  background: #d8e5cc; /* Sage hover effect */
+}
+
+/* Adds a nice little 'press' animation when clicking a key */
+#wordle .key:active {
+  transform: scale(0.95);
 }
 
 #wordle .key.correct {
   background: #79a171;
-  color: #fffff0;
+  color: #fff;
 }
 
 #wordle .key.present {
   background: #c9b458;
-  color: #fffff0;
+  color: #fff;
 }
 
 #wordle .key.absent {
   background: #787c7e;
-  color: #fffff0;
+  color: #fff;
 }
 
 #wordle .key.disabled {
@@ -126,17 +134,17 @@
   cursor: default;
 }
 
-/* Responsive */
-@media (max-width: 420px) {
+/* Responsive adjustments for mobile phones */
+@media (max-width: 480px) {
   #wordle .tile {
-    width: 48px;
-    height: 48px;
-    font-size: 1.4rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
   }
 
   #wordle .key {
     min-width: 32px;
-    padding: 8px 0;
-    font-size: 0.9rem;
+    padding: 14px 0;
+    font-size: 0.85rem;
   }
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sage Ransom</title>
+    <title>About & Contact | Sage Ransom</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   </head>
@@ -17,14 +17,91 @@
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="writing.html">Writing</a></li>
           <li><a href="wordle.html">Naughty Wordle</a></li>
-          <li><a href="hangman.html">Hangmandle</a><li>
+          <li><a href="hangman.html">Hangmandle</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+          </ul>
       </nav>
     </header>
+
+    <main class="page-wrapper">
+
+      <section class="about-container">
+        <div class="about-image">
+          <img src="images/bruno.JPG" alt="Portrait of Sage Ransom" />
+        </div>
+
+        <div class="about-text">
+          <h2>Hi, I'm Sage.</h2>
+          <p>
+            Welcome to my website. I am a writer, photographer, and creator based in Philadelphia.
+            This is a collection of my creative pursuits&mdash;a place where I can share my thoughts,
+            photos, and silly word games.
+          </p>
+          <p>
+            When I'm not doing this stuff, you can usually find me trying to keep up with way too many hobbies—music, reading, cooking, coding, and playing with my cat, Moira.
+          </p>
+          <p>
+            Feel free to explore my <a href="gallery.html" class="inline-link">photography</a>,
+            read my latest <a href="writing.html" class="inline-link">writing</a>, or try your
+            luck at <a href="hangman.html" class="inline-link">Hangmandle</a>. If you'd like to
+            collaborate or just say hello, drop a message below!
+          </p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <section class="contact-page-container" id="contact">
+        <div class="contact-info">
+          <h2>Get in Touch</h2>
+          <p>I am always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+
+          <div class="info-block">
+            <strong>Email:</strong><br>
+            <a href="mailto:sage.r.stew@gmail.com">sage.r.stew@gmail.com</a>
+          </div>
+
+          <div class="info-block">
+            <strong>Location:</strong><br>
+            <span>Philadelphia</span>
+          </div>
+
+          <div class="info-block">
+            <strong>Socials:</strong><br>
+            <a href="https://instagram.com/gregnant" target="_blank">Instagram</a> |
+            <a href="https://twitter.com/kaoskringle" target="_blank">Twitter / X</a>
+          </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+          <form id="contact-form" action="https://formspree.io/f/mjkwjzqn" method="POST">
+            <div class="form-row-stacked">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required placeholder="Lyndon Baines Johnson" />
+            </div>
+
+            <div class="form-row-stacked">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required placeholder="your.email@example.com" />
+            </div>
+
+            <div class="form-row-stacked">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="What's up?"></textarea>
+            </div>
+
+            <button type="submit" id="submit-btn" class="submit-btn">Send Message</button>
+            <p id="form-status"></p>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
     <footer>
-      <p>&copy; 2025 Sage Ransom. All rights reserved.</p>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
     </footer>
+
+    <script src="scripts/script.js"></script>
   </body>
 </html>

@@ -556,3 +556,245 @@ button {
     grid-template-columns: 1fr; /* 1 column on phones */
   }
 }
+
+/* --- Contact Page Styles --- */
+
+.contact-page-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 60px;
+}
+
+/* Left Column Styling */
+.contact-info {
+  flex: 1;
+  color: #696969;
+}
+
+.contact-info h2 {
+  color: #a9c191;
+  font-size: 2.2em;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.info-block {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.info-block a {
+  color: #a9c191;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.info-block a:hover {
+  color: #79a171;
+  text-decoration: underline;
+}
+
+/* Right Column (Form) Styling */
+.contact-form-wrapper {
+  flex: 1.5;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  border: 2px solid #a9c191;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-row-stacked {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-row-stacked label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #696969;
+}
+/*
+.form-row-stacked input,
+.form-row-stacked textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: inherit;
+  background-color: #fafafa;
+}
+*/
+.form-row-stacked input,
+.form-row-stacked textarea {
+  width: 100%; /* Forces them to stretch across the container */
+  box-sizing: border-box; /* Prevents padding from breaking the width */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: inherit;
+  background-color: #fafafa;
+}
+
+.form-row-stacked input:focus,
+.form-row-stacked textarea:focus {
+  outline: none;
+  border-color: #a9c191;
+  background-color: #fff;
+}
+
+.submit-btn {
+  background: #a9c191;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background: #79a171;
+}
+
+#form-status {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .contact-page-container {
+    flex-direction: column;
+    gap: 40px;
+    margin: 40px auto;
+  }
+
+  .contact-form-wrapper {
+    padding: 20px;
+  }
+}
+
+/* --- About Page Styles --- */
+
+.about-container {
+  max-width: 900px;
+  margin: 60px auto; /* Centers the container with some vertical breathing room */
+  padding: 0 20px;
+  display: flex;
+  align-items: center; /* Vertically centers the text with the image */
+  gap: 50px; /* Space between the image and the text */
+}
+
+.about-image {
+  flex: 1; /* Takes up 1 part of the available space */
+  min-width: 0; /* The magic fix: prevents the image from breaking the flex container */
+  text-align: center; /* Keeps the image centered in its column */
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 8px; /* Softens the corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle drop shadow */
+  /* border: 3px solid #a9c191; Your sage green framing the photo */
+}
+
+.about-text {
+  flex: 1.5; /* Takes up 1.5 parts of the available space (slightly wider than the image) */
+  color: #444; /* Slightly darker gray for readability */
+  line-height: 1.8;
+  font-size: 1.1em;
+}
+
+.about-text h2 {
+  color: #a9c191;
+  font-size: 2.5em;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  margin-bottom: 20px;
+}
+
+/* Styled inline links for the bio */
+.inline-link {
+  color: #a9c191;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.inline-link:hover {
+  color: #79a171; /* Darker green on hover */
+  text-decoration: underline;
+}
+
+/* Call to action button */
+.about-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #a9c191;
+  color: #fff;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.about-btn:hover {
+  background-color: #79a171;
+  transform: translateY(-2px);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column; /* Stacks the image on top of the text */
+    text-align: center;
+    margin: 40px auto;
+  }
+
+  .about-image img {
+    max-width: 250px; /* Slightly smaller image on mobile */
+  }
+}
+
+
+/* --- Unified About/Contact Page Adjustments --- */
+.page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Overriding the previous margins so they stack neatly */
+.about-container,
+.contact-page-container {
+  margin: 20px 0; /* Removes the auto centering margins since the wrapper handles it */
+  padding: 0;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  width: 50%;
+  margin: 60px auto; /* Creates a nice wide gap between Bio and Contact */
+}
