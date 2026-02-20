@@ -788,3 +788,116 @@ button {
   width: 50%;
   margin: 60px auto; /* Creates a nice wide gap between Bio and Contact */
 }
+
+/* --- Landing Page Styles --- */
+.landing-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.hero {
+  margin-bottom: 60px;
+}
+
+.hero h2 {
+  color: #a9c191;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #696969;
+  font-size: 1.2em;
+}
+
+/* Container for your 3D Dominoes game */
+#dominoes-container {
+  width: 100%;
+  height: 300px; /* Adjust based on your game's size */
+  margin-top: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* border: 2px solid #a9c191; Uncomment if you want it framed! */
+}
+
+/* The Bento Box Grid */
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 60px;
+}
+
+.portal-card {
+  background: #fffdf2;
+  border: 2px solid #a9c191;
+  border-radius: 8px;
+  padding: 30px 20px;
+  text-decoration: none;
+  color: #444;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.portal-card h3 {
+  color: #696969;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.portal-card p {
+  margin: 0;
+  font-size: 0.95em;
+  color: #777;
+}
+
+.portal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+  background: #f5f1df;
+}
+
+/* Specific styling for the games card since it has buttons inside */
+.games-card {
+  cursor: default;
+}
+
+.games-card:hover {
+  transform: none; /* Disables the float effect on the container */
+  box-shadow: none;
+  background: #fffdf2;
+}
+
+.game-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.game-btn {
+  background: #e7efdf;
+  border: 1px solid #a9c191;
+  color: #696969;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.game-btn:hover {
+  background: #c7d6b8;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .portal-grid {
+    grid-template-columns: 1fr; /* Stacks the cards vertically */
+  }
+}
