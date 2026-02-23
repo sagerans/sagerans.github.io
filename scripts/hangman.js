@@ -149,7 +149,7 @@ function renderStatsBar() {
     `Wins: ${s.wins}  Losses: ${s.losses}  Percent: ${s.wins/(s.wins+s.losses)*100}%  Streak: ${s.currentStreak}  Best: ${s.bestStreak}`;
 }
 
-// Get YYYY-MM-DD in a chosen timezone (avoids "my timezone vs yours" weirdness)
+// Get YYYY-MM-DD in chosen timezone
 function getDateKeyInTZ(timeZone) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
@@ -175,7 +175,6 @@ function hashStringToUint32(s) {
 }
 
 function dailyIndexFor(dateKey, count) {
-  // Salt keeps it from being "obvious" and lets you change the sequence later
   const salt = "hangman_daily_salt_v1";
   return hashStringToUint32(`${salt}:${dateKey}`) % count;
 }
@@ -206,8 +205,6 @@ function loadDailyState() {
 function clearDailyState() {
   localStorage.removeItem(`${LS_PREFIX}:state`);
 }
-
-// begin added share text functions
 
 // for mobile sharing
 async function smartShare(text) {
@@ -241,17 +238,12 @@ function buildDailyShareText() {
   const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
 
   const wrongUsed = Math.max(0, Math.min(MAX_GUESSES, MAX_GUESSES - remainingGuesses));
-  // **old won** const won = (mode === "daily") && gameOver && (remainingGuesses > 0);
   const won = !!gameOver && remainingGuesses > 0;
-  // NOTE: if you store win/loss explicitly, use that instead.
-
-  // **old resultLabel** const resultLabel = (lastWin === true) ? "WIN" : "LOSS";
   const resultLabel = won ? "WIN" : "LOSS";
   const gallows = won // (lastWin === true)
     ? GALLOWS_WIN[Math.min(wrongUsed, 7)]
     : GALLOWS_LOSE;
 
-  // Example: "Sage Hangman (Daily) 2025-12-20 WIN 3/8"
   return [
     `Hangmandle ${dateKey}\nWrong Guesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
     ``,
@@ -311,18 +303,6 @@ if (shareBtn) {
       } else {
         shareStatusEl.textContent = "Couldn’t share or copy on this browser.";
       }
-
-    /*
-    try {
-      const text = buildDailyShareText();
-      await copyTextToClipboard(text);
-      shareStatusEl.textContent = "Copied to clipboard!";
-      setTimeout(() => { shareStatusEl.textContent = ""; }, 2000);
-    } catch (e) {
-      console.warn("Share failed:", e);
-      shareStatusEl.textContent = "Couldn’t copy automatically — your browser blocked it.";
-    }
-    */
   });
 }
 
@@ -465,8 +445,6 @@ function drawNgramChart(canvas, years, values) {
   }
 
   ctx.fillText("2022", x1 - 30, y0 + 18);
-  // ctx.fillText("1500", x0, H - 8);
-  // ctx.fillText("2022", x1 - 30, H - 8);
   ctx.fillText(maxV.toExponential(2), 6, y1 + 10);
 }
 // Ngram JS ends here
@@ -498,7 +476,7 @@ fetch(DICTIONARY_URL)
   })
   .then(data => {
     /*
-      EXPECTED FORMAT (your file):
+      EXPECTED FORMAT:
 
       [
         { "anarchic": "def...", "anopheles": "def...", ... },
@@ -506,7 +484,6 @@ fetch(DICTIONARY_URL)
         ...
       ]
 
-      i.e. an array of objects, each object holding many word: definition pairs.
     */
 
     const entries = [];
@@ -590,7 +567,6 @@ function startNewGame() {
     setKeyboardEnabled(!gameOver);
 
     setShareEnabled(gameOver);
-    // setShareEnabled(mode ==="daily" && gameOver);
 
     if (gameOver) {
       finalWordEl.textContent = currentWord;
@@ -636,7 +612,6 @@ function updateWordDisplay() {
   const chars = currentWord.split("");
   const displayChars = chars.map(ch => {
     if (ch === " ") {
-      // return " /  ";
       return "\u00A0\u00A0";
     }
 
@@ -729,8 +704,6 @@ async function showNgramForCurrentWord() {
   try {
     const { term, years, values } = await fetchNgramSeries(currentWord);
 
-    // saveDailyNgramCache(getDateKeyInTZ(DAILY_TIMEZONE), { term, years, values });
-
     drawNgramChart(ngramCanvasEl, years, values);
 
     ngramNoteEl.textContent =
@@ -767,7 +740,7 @@ function buildKeyboard() {
     keyboardEl.appendChild(rowDiv);
   }
 
-  // Optional: listen to physical keyboard as well
+  // listen to physical keyboard as well
   window.addEventListener("keydown", onPhysicalKey);
 }
 
