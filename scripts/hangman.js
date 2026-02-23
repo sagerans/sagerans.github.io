@@ -71,7 +71,7 @@ const GALLOWS_WIN = [
 🟫🟫🟫🟫🟫`
 ]
 
-const GALLOWS_LOSE = 
+const GALLOWS_LOSE =
 `⬜️🟫🟫🟫⬜️
 ⬜️🟫⬜️🟫⬜️
 ⬜️💀⬜️🟫⬜️
@@ -145,7 +145,7 @@ function saveStats(stats) {
 function renderStatsBar() {
   if (!statsBarEl) return;
   const s = loadStats();
-  statsBarEl.textContent = 
+  statsBarEl.textContent =
     `Wins: ${s.wins}  Losses: ${s.losses}  Percent: ${s.wins/(s.wins+s.losses)*100}%  Streak: ${s.currentStreak}  Best: ${s.bestStreak}`;
 }
 
@@ -241,10 +241,9 @@ function buildDailyShareText() {
   const dateKey = getDateKeyInTZ(DAILY_TIMEZONE);
 
   const wrongUsed = Math.max(0, Math.min(MAX_GUESSES, MAX_GUESSES - remainingGuesses));
-  // **old won** const won = (mode === "daily") && gameOver && (remainingGuesses > 0); 
+  // **old won** const won = (mode === "daily") && gameOver && (remainingGuesses > 0);
   const won = !!gameOver && remainingGuesses > 0;
   // NOTE: if you store win/loss explicitly, use that instead.
-  // Alternative: track lastWin in showEndState(win) (recommended below).
 
   // **old resultLabel** const resultLabel = (lastWin === true) ? "WIN" : "LOSS";
   const resultLabel = won ? "WIN" : "LOSS";
@@ -252,12 +251,12 @@ function buildDailyShareText() {
     ? GALLOWS_WIN[Math.min(wrongUsed, 7)]
     : GALLOWS_LOSE;
 
-  // Wordle-ish header line
   // Example: "Sage Hangman (Daily) 2025-12-20 WIN 3/8"
   return [
     `Hangmandle ${dateKey}\nWrong Guesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
     ``,
-    gallows
+    gallows,
+    `https://sagerans.com/hangman`
   ].join("\n");
 }
 
@@ -567,7 +566,7 @@ function startNewGame() {
       wrongLetters = new Set(saved.wrong || []);
       remainingGuesses = typeof saved.remainingGuesses === "number" ? saved.remainingGuesses : MAX_GUESSES;
       gameOver = !!saved.gameOver;
-      
+
       if (typeof saved.lastWin === "boolean") lastWin = saved.lastWin; // REMEMBER FOR SHARING
     } else {
       guessedLetters.clear();
@@ -734,7 +733,7 @@ async function showNgramForCurrentWord() {
 
     drawNgramChart(ngramCanvasEl, years, values);
 
-    ngramNoteEl.textContent = 
+    ngramNoteEl.textContent =
       `Source: Google Books Ngram Viewer (English corpus), smoothing 3.`;
   } catch (e) {
     ngramPanelEl.classList.add("hidden");
