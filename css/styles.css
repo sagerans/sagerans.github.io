@@ -932,12 +932,13 @@ button {
 
 #lens-canvas {
   width: 100%;
-  height: auto;
-  background: #1a1a1a; /* Dark background to make the light rays pop */
+  height: auto; /* Automatically scales based on the internal orientation */
+  background: #1a1a1a;
   border-radius: 8px;
   border: 1px solid #ccc;
   cursor: grab;
   display: block;
+  touch-action: none; /* CRITICAL: Prevents page scrolling when dragging on mobile */
 }
 
 #lens-canvas:active {

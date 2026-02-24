@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctx = canvas.getContext('2d');
 
   // --- Simulation State ---
+  let isVertical = false; // Tracks current orientation
   let lensX = 400;
   let screenX = 150;
   let subjectHeight = 80;
@@ -16,10 +17,27 @@ document.addEventListener('DOMContentLoaded', () => {
   let lensType = 'convex';
   let sourceType = 'point';
 
-  // --- Constants ---
-  const centerY = canvas.height / 2;
+  // --- Constants (Internal Horizontal Map) ---
+  const centerY = 200;
   const subjectX = 700;
   const rayColors = ['#ff3366', '#ff9933', '#ffff66', '#66ff66', '#33ccff', '#cc66ff'];
+
+  // --- Responsive Resizing ---
+  function resizeCanvas() {
+    if (window.innerWidth <= 768) {
+      isVertical = true;
+      canvas.width = 400;  // Tall and narrow for mobile
+      canvas.height = 800;
+    } else {
+      isVertical = false;
+      canvas.width = 800;  // Wide and short for desktop
+      canvas.height = 400;
+    }
+    drawScene();
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas(); // Call immediately on load
 
   // Listeners for Dropdowns
   document.getElementById('lens-type').addEventListener('change', (e) => {
@@ -40,17 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    return {
-      x: (clientX - rect.left) * scaleX,
-      y: (clientY - rect.top) * scaleY
-    };
+    // Visual coordinates on the actual screen
+    const vx = (clientX - rect.left) * scaleX;
+    const vy = (clientY - rect.top) * scaleY;
+
+    // If on mobile, translate the vertical touches into horizontal data for the math engine
+    if (isVertical) {
+      return { x: 800 - vy, y: vx };
+    } else {
+      return { x: vx, y: vy };
+    }
   }
 
-  canvas.addEventListener('mousedown', (e) => checkDragStart(getMousePos(e)));
-  canvas.addEventListener('touchstart', (e) => checkDragStart(getMousePos(e)), {passive: true});
+  // Use {passive: false} to allow e.preventDefault() to stop page scrolling
+  canvas.addEventListener('mousedown', (e) => { checkDragStart(getMousePos(e)); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); checkDragStart(getMousePos(e)); }, {passive: false});
 
-  window.addEventListener('mousemove', (e) => handleDrag(getMousePos(e)));
-  window.addEventListener('touchmove', (e) => handleDrag(getMousePos(e)), {passive: true});
+  window.addEventListener('mousemove', (e) => { handleDrag(getMousePos(e)); });
+  window.addEventListener('touchmove', (e) => { if(isDraggingLens || isDraggingScreen || isDraggingSubject) e.preventDefault(); handleDrag(getMousePos(e)); }, {passive: false});
 
   window.addEventListener('mouseup', endDrag);
   window.addEventListener('touchend', endDrag);
@@ -64,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isDraggingSubject = true;
     } else if (Math.abs(x - lensX) < 40 && Math.abs(y - centerY) < 120) {
       isDraggingLens = true;
-    } else if (Math.abs(x - screenX) < 30) {
+    } else if (Math.abs(x - screenX) < 40) {
       isDraggingScreen = true;
     }
   }
@@ -89,11 +114,35 @@ document.addEventListener('DOMContentLoaded', () => {
     isDraggingSubject = false;
   }
 
+  // --- Helper to keep text readable on Mobile ---
+  function drawUprightText(text, x, y, color, font) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.font = font;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Move to the coordinate, and rotate the text back upright if the canvas is vertical
+    ctx.translate(x, y);
+    if (isVertical) {
+      ctx.rotate(Math.PI / 2);
+    }
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+  }
+
   // --- Drawing & Physics Logic ---
   function drawScene() {
+    // Reset transform matrix and clear canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. Determine Focal Length (Negative for Concave/Diverging!)
+    // Apply the magic orientation rotation if on mobile
+    if (isVertical) {
+      ctx.translate(0, 800);
+      ctx.rotate(-Math.PI / 2);
+    }
+
     let focalLength = 100;
     if (lensType === 'convex') focalLength = 100;
     else if (lensType === 'plano') focalLength = 150;
@@ -108,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Draw Optical Axis
     ctx.beginPath();
     ctx.moveTo(0, centerY);
-    ctx.lineTo(canvas.width, centerY);
+    ctx.lineTo(800, centerY);
     ctx.strokeStyle = '#444';
     ctx.setLineDash([5, 5]);
     ctx.stroke();
@@ -131,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         di_dist = 1 / ((1 / focalLength) - (1 / do_dist));
         imageX = lensX - di_dist;
         magnification = -di_dist / do_dist;
-        isVirtual = di_dist < 0; // True if diverging OR if object is inside convex focal length!
+        isVirtual = di_dist < 0;
       }
 
       const imageTipY = centerY - (subjectHeight * magnification);
@@ -141,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let i = 0; i < rayColors.length; i++) {
         const hitY = (centerY - lensRadius + 15) + (i * 30);
 
-        // Ray from subject to lens
         ctx.beginPath();
         ctx.moveTo(tipX, tipY);
         ctx.lineTo(lensX, hitY);
@@ -154,13 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const slope = (imageTipY - hitY) / (imageX - lensX);
           const leftEdgeY = hitY + slope * (0 - lensX);
 
-          // Draw real refracted ray (Always travels to the left)
           ctx.beginPath();
           ctx.moveTo(lensX, hitY);
           ctx.lineTo(0, leftEdgeY);
           ctx.stroke();
 
-          // Draw dashed virtual ray (Tracing back to the right)
           if (isVirtual) {
             ctx.beginPath();
             ctx.moveTo(lensX, hitY);
@@ -177,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Draw the Draggable Point Subject
+      // Draw the Subject
       ctx.lineWidth = 4;
       ctx.strokeStyle = '#fff';
       ctx.beginPath();
@@ -191,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fill();
       ctx.stroke();
 
-      // Draw the Projected Image Arrow (Real or Ghostly Virtual)
+      // Draw Projected Image Arrow
       if (di_dist !== Infinity) {
         ctx.strokeStyle = isVirtual ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.6)';
         if (isVirtual) ctx.setLineDash([4, 4]);
@@ -209,8 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
     } else {
-      // COHERENT SOURCE MATH (Parallel Rays)
-      const focalX = lensX - focalLength; // Shifts to the right if focal length is negative
+      // COHERENT SOURCE MATH
+      const focalX = lensX - focalLength;
 
       for (let i = 0; i < rayColors.length; i++) {
         const hitY = (centerY - lensRadius + 15) + (i * 30);
@@ -226,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const slope = (centerY - hitY) / (focalX - lensX);
         const leftEdgeY = hitY + slope * (0 - lensX);
 
-        // Real refracted ray
         ctx.beginPath();
         ctx.moveTo(lensX, hitY);
         ctx.lineTo(0, leftEdgeY);
@@ -235,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const screenHitY = hitY + slope * (screenX - lensX);
         screenHits.push(screenHitY);
 
-        // Virtual dashed ray for diverging lenses
         if (focalLength < 0) {
           ctx.beginPath();
           ctx.moveTo(lensX, hitY);
@@ -248,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Draw the Coherent "Laser" Emitter Box
+      // Draw Coherent Source Box
       ctx.fillStyle = '#444';
       ctx.fillRect(subjectX - 10, centerY - lensRadius, 20, lensRadius * 2);
       ctx.strokeStyle = '#696969';
@@ -292,10 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.lineTo(screenX, centerY + 140);
     ctx.stroke();
 
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 14px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText("Screen", screenX, centerY - 150);
+    // Dynamically place the "Screen" label
+    // If vertical: shift it 20px ABOVE the line, and center it
+    // If horizontal: keep it at the top of the line
+    const screenLabelX = isVertical ? screenX + 20 : screenX;
+    const screenLabelY = isVertical ? centerY : centerY - 160;
+    // drawUprightText("Screen", screenLabelX, screenLabelY, '#fff', 'bold 14px sans-serif');
 
     // --- Draw Light Impacts & Check Focus ---
     if (screenHits.length > 0) {
@@ -306,7 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
       });
 
-      // Strict logic for "IN FOCUS" (Prevents false positives when pushed up against lens)
       let inFocus = false;
       if (sourceType === 'point' && !isVirtual && Math.abs(screenX - imageX) < 5) {
         inFocus = true;
@@ -314,18 +359,17 @@ document.addEventListener('DOMContentLoaded', () => {
         inFocus = true;
       }
 
+      // Dynamically place the Focus text
+      // If vertical: shift it 25px BELOW the line, and center it
+      // If horizontal: keep it at the bottom of the line
+      const focusTextX = isVertical ? screenX - 25 : screenX;
+      const focusTextY = isVertical ? centerY : centerY + 165;
+
       if (inFocus) {
-        ctx.fillStyle = '#a9c191';
-        ctx.font = 'bold 16px sans-serif';
-        ctx.fillText("IN FOCUS", screenX, centerY + 165);
+        drawUprightText("IN FOCUS", focusTextX, focusTextY, '#a9c191', 'bold 16px sans-serif');
       } else {
-        ctx.fillStyle = '#ff6b6b';
-        ctx.font = 'bold 14px sans-serif';
-        ctx.fillText("Out of Focus", screenX, centerY + 165);
+        drawUprightText("Out of Focus", focusTextX, focusTextY, '#ff6b6b', 'bold 14px sans-serif');
       }
     }
   }
-
-  // Initial draw
-  drawScene();
 });
