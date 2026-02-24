@@ -24,6 +24,18 @@ header {
   text-align: center;
 }
 
+/* 1. Target the links in your header nav */
+header nav a {
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+/* 2. Add the hover effect */
+header nav a:hover {
+  transform: scale(1.1); /* Makes it 10% larger */
+  text-shadow: 0 0 1px #fffff0; /* Simulates a bold font weight */
+}
+
 header nav ul {
   list-style-type: none;
   padding: 0;
