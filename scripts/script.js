@@ -141,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 1. Your Mini-Database
 // Always add your newest post to the VERY TOP of this list.
 const blogPosts = [
   {

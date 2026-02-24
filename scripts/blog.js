@@ -1,11 +1,27 @@
 // 1. Your Mini-Database
-// Always add your newest post to the VERY TOP of this list.
+// ALWAYS add your newest post to the VERY TOP of this list.
 const blogPosts = [
   {
+    title: "Word of the Week: dunno yet",
+    date: "March 1, 2026",
+    excerpt: "Preview here.",
+    link: "posts/2026-03-01_word-of-the-week.html",
+    category: "wotw"
+  },
+  {
     title: "Word of the Week: Prosecution",
-    date: "February 21, 2026",
-    excerpt: "This is a short preview or excerpt of your most recent piece of writing. It catches the reader's attention and makes them want to click to read the rest.",
-    link: "posts/2026-02-21_word-of-the-week.html"
+    date: "February 22, 2026",
+    excerpt: "Preview here.",
+    link: "posts/2026-02-22_word-of-the-week.html",
+    category: "wotw"
+  },
+  {
+    title: "Regular title",
+    date: "regular date",
+    excerpt: "regular excerpt",
+    link: "posts/template.html",
+    category: "essay",
+    customIntro: "custom intro could go here"
   }
 ];
 
@@ -43,11 +59,33 @@ async function renderBlogPosts() {
     // Inject the title, date, and full story into the page
     //       <div class="post-content" style="text-align: left; max-width: 800px; margin: 0 auto; border-color: #ccc;">
 
+    let specialDescription = "";
+
+    if (newestPost.category === "wotw") {
+      specialDescription = `
+          <p style="font-style: italic; font-size: 0.95em;">
+            Thanks to the ridiculous dictionary I found to fuel
+            <a href="../hangman.html" class="inline-link">Hangmandle</a>, the game is full of archaic
+            words with sometimes frustrating spellings and defintions. Fortunately for me, this means
+            lots of little rabbit holes. Fortunately for you, this means reading about my choice for
+            word of the week every Sunday. Feel free to argue in the
+            <a href="../about.html#contact" class="inline-link">comments</a>!
+          </p>
+        `
+    } else if (newestPost.customIntro) {
+      specialDescription = `
+        <p style="font-style: italic; font-size: 0.95em; color: #666; margin-top: 15px; text-align: left;">
+          ${newestPost.customIntro}
+        </p>
+        `
+    }
+
     featuredContainer.innerHTML = `
       <div style="text-align: left; max-width: 800px; margin: 0 auto; padding: 0 20px;">
-        <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+        <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
           <h2 style="color: #696969; font-size: 2.2em; margin-bottom: 10px; margin-top: 0;">${newestPost.title}</h2>
-          <p class="post-date" style="color: #888;">${newestPost.date}</p>
+          <p class="post-date" style="color: #888; margin: 0;">${newestPost.date}</p>
+            ${specialDescription}
         </div>
         <div class="post-body" style="line-height: 1.8; color: #444; font-size: 1.1em;">
           ${storyContent}
