@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let lensType = 'convex';
   let sourceType = 'point';
 
-  // --- Constants (Internal Horizontal Map) ---
+  // Constants (Internal Horizontal Map)
   const centerY = 200;
   const subjectX = 700;
   const rayColors = ['#ff3366', '#ff9933', '#ffff66', '#66ff66', '#33ccff', '#cc66ff'];
 
-  // --- Responsive Resizing ---
+  // Responsive Resizing
   function resizeCanvas() {
     if (window.innerWidth <= 768) {
       isVertical = true;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     drawScene();
   });
 
-  // --- Mouse & Touch Listeners ---
+  // Mouse & Touch Listeners
   function getMousePos(e) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const vx = (clientX - rect.left) * scaleX;
     const vy = (clientY - rect.top) * scaleY;
 
-    // If on mobile, translate the vertical touches into horizontal data for the math engine
+    // If on mobile, translate the vertical touches into horizontal data for math
     if (isVertical) {
       return { x: 800 - vy, y: vx };
     } else {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isDraggingSubject = false;
   }
 
-  // --- Helper to keep text readable on Mobile ---
+  // Helper for readable mobile text
   function drawUprightText(text, x, y, color, font) {
     ctx.save();
     ctx.fillStyle = color;
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.restore();
   }
 
-  // --- Drawing & Physics Logic ---
+  // Drawing & Physics
   function drawScene() {
     // Reset transform matrix and clear canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.beginPath(); ctx.arc(lensX - Math.abs(focalLength), centerY, 3, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.arc(lensX + Math.abs(focalLength), centerY, 3, 0, Math.PI * 2); ctx.fill();
 
-    // --- RAY TRACING MATH ---
+    // RAY TRACING MATH
     if (sourceType === 'point') {
       const do_dist = subjectX - lensX;
       let di_dist = 0;
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.strokeRect(subjectX - 10, centerY - lensRadius, 20, lensRadius * 2);
     }
 
-    // --- Draw the Lens ---
+    // Draw the Lens
     ctx.fillStyle = 'rgba(169, 193, 145, 0.4)';
     ctx.strokeStyle = '#a9c191';
     ctx.lineWidth = 2;
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fill();
     ctx.stroke();
 
-    // --- Draw the Draggable Projection Screen ---
+    // Draw the Draggable Projection Screen
     ctx.strokeStyle = '#ddd';
     ctx.lineWidth = 4;
     ctx.beginPath();
@@ -336,14 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.lineTo(screenX, centerY + 140);
     ctx.stroke();
 
-    // Dynamically place the "Screen" label
-    // If vertical: shift it 20px ABOVE the line, and center it
-    // If horizontal: keep it at the top of the line
-    const screenLabelX = isVertical ? screenX + 20 : screenX;
-    const screenLabelY = isVertical ? centerY : centerY - 160;
-    // drawUprightText("Screen", screenLabelX, screenLabelY, '#fff', 'bold 14px sans-serif');
-
-    // --- Draw Light Impacts & Check Focus ---
+    // Draw Light Impacts & Check Focus
     if (screenHits.length > 0) {
       screenHits.forEach((hitY, index) => {
         ctx.fillStyle = rayColors[index];
@@ -359,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inFocus = true;
       }
 
-      // Dynamically place the Focus text
+      // Dynamically place Focus text
       // If vertical: shift it 25px BELOW the line, and center it
       // If horizontal: keep it at the bottom of the line
       const focusTextX = isVertical ? screenX - 25 : screenX;
