@@ -894,3 +894,52 @@ button {
     grid-template-columns: 1fr; /* Stacks the cards vertically */
   }
 }
+
+/* --- 2D Optics Simulation --- */
+#lens-sim-wrapper {
+  background: #fffdf2;
+  border: 2px solid #a9c191;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 auto 40px auto;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.lens-dropdown {
+  padding: 8px 12px;
+  border: 1px solid #a9c191;
+  border-radius: 6px;
+  background: #fff;
+  color: #696969;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lens-dropdown:focus {
+  outline: none;
+  border-color: #79a171;
+}
+
+#lens-canvas {
+  width: 100%;
+  height: auto;
+  background: #1a1a1a; /* Dark background to make the light rays pop */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: grab;
+  display: block;
+}
+
+#lens-canvas:active {
+  cursor: grabbing;
+}

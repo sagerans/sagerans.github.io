@@ -33,6 +33,29 @@
           <p>I have a lot of hobbies.</p>
       </section>
 
+      <section id="lens-sim-wrapper">
+        <div class="sim-header">
+          <div>
+            <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Some Lenses</h3>
+            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">Drag the lens back and forth.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <select id="source-type" class="lens-dropdown">
+              <option value="point">Point Source</option>
+              <option value="coherent">Coherent Source</option>
+            </select>
+            <select id="lens-type" class="lens-dropdown">
+                <option value="convex">Biconvex</option>
+                <option value="plano">Plano-Convex</option>
+                <option value="concave">Biconcave</option>
+                <option value="plano-concave">Plano-Concave</option>
+            </select>
+          </div>
+        </div>
+
+        <canvas id="lens-canvas" width="800" height="400"></canvas>
+      </section>
+
       <section class="portal-grid">
         <a href="gallery.html" class="portal-card">
           <h3>Photography</h3>
@@ -61,5 +84,6 @@
     </footer>
 
     <script src="scripts/script.js"></script>
+    <script src="scripts/lens.js"></script>
   </body>
 </html>
