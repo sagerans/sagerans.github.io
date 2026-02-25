@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 2. Create the Engine & Renderer ---
   const engine = Engine.create();
-  engine.world.gravity.y = 0.4;
+  engine.world.gravity.y = 0.33;
 
   const render = Render.create({
     element: container,
@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Pre-fill the screen with a few leaves immediately so it isn't empty on load
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 7; i++) {
     // Spread the initial spawn vertically so they don't all clump together
     setTimeout(spawnLeaf, i * 200);
   }
 
   // Spawn a new leaf every 600 milliseconds infinitely
-  setInterval(spawnLeaf, 400);
+  setInterval(spawnLeaf, 450);
 
 
   // --- 5. The Garbage Collector (Despawning) ---
