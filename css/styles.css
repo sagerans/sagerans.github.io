@@ -993,10 +993,10 @@ button {
 /* The horizontal drift and rotation */
 @keyframes sway {
   0% { transform: translateX(-35px) rotate(-15deg); }
-  100% { transform: translateX(15px) rotate(45deg); }
+  100% { transform: translateX(25px) rotate(45deg); }
 }
 
-/* --- Layering Fixes for Existing Content --- */
+/* Layering Fixes */
 /* Add this to force your existing elements to sit IN FRONT of the leaves */
 
 header,
