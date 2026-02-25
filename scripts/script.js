@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
 
     // Randomize the start delay so they don't all drop at once
-    const fallDelay = Math.random() * 12;
-    const swayDelay = Math.random() * 3;
+    const fallDelay = Math.random() * -30;
+    const swayDelay = Math.random() * -10;
     leaf.style.animationDelay = `${fallDelay}s, ${swayDelay}s`;
 
     // Randomize the scale and starting rotation for maximum variety
