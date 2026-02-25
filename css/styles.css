@@ -1039,6 +1039,8 @@ body.physics-page {
   color: inherit; /* Forces the link to use the exact same color as the surrounding text */
   text-decoration: none; /* Removes underline */
   cursor: text; /* CRITICAL: Keeps the mouse as an I-beam text selector instead of a pointing hand */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Optional: Remove any outline if they happen to tab-select it */

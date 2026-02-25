@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Pre-fill the screen with a few leaves immediately so it isn't empty on load
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 10; i++) {
     // Spread the initial spawn vertically so they don't all clump together
     setTimeout(spawnLeaf, i * 200);
   }
 
   // Spawn a new leaf every 600 milliseconds infinitely
-  setInterval(spawnLeaf, 300);
+  setInterval(spawnLeaf, 400);
 
 
   // --- 5. The Garbage Collector (Despawning) ---
