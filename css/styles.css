@@ -1012,3 +1012,36 @@ footer,
   position: relative;
   z-index: 10;
 }
+
+/* easter egg physics */
+body.physics-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; /* Prevents scrolling when dragging leaves */
+}
+
+#physics-container {
+  flex-grow: 1; /* Takes up all remaining space */
+  position: relative;
+  width: 100%;
+}
+
+#physics-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* link disguise */
+.secret-link {
+  color: inherit; /* Forces the link to use the exact same color as the surrounding text */
+  text-decoration: none; /* Removes underline */
+  cursor: text; /* CRITICAL: Keeps the mouse as an I-beam text selector instead of a pointing hand */
+}
+
+/* Optional: Remove any outline if they happen to tab-select it */
+.secret-link:focus {
+  outline: none;
+}
