@@ -1,3 +1,48 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('leaves-container');
+  if (!container) return; // Only runs if the container exists on the page
+
+  const leafCount = 24; // Adjust for more or fewer leaves
+
+  // 1. Array of your different SVG leaf files
+  const leafImages = [
+    'images/sageleafone.svg',
+    'images/sageleaftwo.svg',
+    'images/sageleafthree.svg'
+  ];
+
+  for (let i = 0; i < leafCount; i++) {
+    const leaf = document.createElement('img');
+
+    // 2. Pick a random image from the array
+    const randomImage = leafImages[Math.floor(Math.random() * leafImages.length)];
+    leaf.src = randomImage;
+    leaf.classList.add('leaf');
+
+    // Randomize starting position (from 0% to 100% of the screen width)
+    leaf.style.left = (Math.random() * 100) + 'vw';
+
+    // Randomize falling and swaying speeds
+    const fallDuration = (Math.random() * 6) + 8;
+    const swayDuration = (Math.random() * 3) + 3;
+    leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+
+    // Randomize the start delay so they don't all drop at once
+    const fallDelay = Math.random() * 12;
+    const swayDelay = Math.random() * 3;
+    leaf.style.animationDelay = `${fallDelay}s, ${swayDelay}s`;
+
+    // Randomize the scale and starting rotation for maximum variety
+    const scale = (Math.random() * 0.4) + 0.8;
+    const startRotation = Math.floor(Math.random() * 360); // Random tilt!
+
+    leaf.style.filter = `drop-shadow(0px 4px 6px rgba(0,0,0,0.1))`;
+    leaf.style.transform = `scale(${scale}) rotate(${startRotation}deg)`;
+
+    container.appendChild(leaf);
+  }
+});
+
 // --- Contact Form AJAX Submit ---
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');

@@ -956,3 +956,57 @@ button {
 #lens-canvas:active {
   cursor: grabbing;
 }
+
+/* --- Falling Sage Leaves --- */
+#leaves-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Crucial: lets clicks pass through the leaves! */
+  z-index: 0; /* Puts the container behind your content */
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  top: -10%; /* Starts just above the visible screen */
+  width: 76px; /* Adjust this based on your SVG size */
+  height: auto;
+  opacity: 0.6; /* Slight transparency so they aren't distracting */
+  /* We apply two animations: one for dropping, one for swaying */
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-direction: normal, alternate;
+}
+
+/* The vertical drop */
+@keyframes fall {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+/* The horizontal drift and rotation */
+@keyframes sway {
+  0% { transform: translateX(0px) rotate(0deg); }
+  100% { transform: translateX(40px) rotate(45deg); }
+}
+
+/* --- Layering Fixes for Existing Content --- */
+/* Add this to force your existing elements to sit IN FRONT of the leaves */
+
+header,
+footer,
+.hero,
+#lens-sim-wrapper,
+#hangman,
+#wordle,
+#contact-page-container,
+.about-container,
+.contact-page-container,
+.portal-card {
+  position: relative;
+  z-index: 10;
+}
