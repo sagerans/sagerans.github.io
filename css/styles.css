@@ -990,8 +990,8 @@ button {
 
 /* The horizontal drift and rotation */
 @keyframes sway {
-  0% { transform: translateX(-25px) rotate(-15deg); }
-  100% { transform: translateX(20px) rotate(45deg); }
+  0% { transform: translateX(-35px) rotate(-15deg); }
+  100% { transform: translateX(15px) rotate(45deg); }
 }
 
 /* --- Layering Fixes for Existing Content --- */
