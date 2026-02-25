@@ -1,7 +1,10 @@
 body {
   font-family:
     Courier New,
-    sans-serif;
+    Monaco,
+    system-ui,
+    sans-serif,
+    serif;
   color: #696969;
   margin: 0;
   padding: 0;

@@ -66,7 +66,7 @@ async function renderBlogPosts() {
           <p style="font-style: italic; font-size: 0.95em;">
             Thanks to the ridiculous dictionary I found to fuel
             <a href="../hangman.html" class="inline-link">Hangmandle</a>, the game is full of archaic
-            words with sometimes frustrating spellings and defintions. Fortunately for me, this means
+            words with sometimes frustrating spellings and definitions. Fortunately for me, this means
             lots of little rabbit holes. Fortunately for you, this means reading about my choice for
             word of the week every Sunday. Feel free to argue in the
             <a href="../about.html#contact" class="inline-link">comments</a>!
