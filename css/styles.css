@@ -972,10 +972,9 @@ button {
 .leaf {
   position: absolute;
   top: -10%; /* Starts just above the visible screen */
-  width: 76px; /* Adjust this based on your SVG size */
+  width: 76px; /* Adjust this based on SVG size */
   height: auto;
-  opacity: 0.6; /* Slight transparency so they aren't distracting */
-  /* We apply two animations: one for dropping, one for swaying */
+  opacity: 0.33; /* Slight transparency so they aren't distracting */
   animation-name: fall, sway;
   animation-timing-function: linear, ease-in-out;
   animation-iteration-count: infinite, infinite;
@@ -985,7 +984,7 @@ button {
 /* The vertical drop */
 @keyframes fall {
   0% { top: -30%; }
-  100% { top: 110%; }
+  100% { top: 130%; }
 }
 
 /* The horizontal drift and rotation */
