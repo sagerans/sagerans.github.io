@@ -984,14 +984,14 @@ button {
 
 /* The vertical drop */
 @keyframes fall {
-  0% { top: -10%; }
+  0% { top: -30%; }
   100% { top: 110%; }
 }
 
 /* The horizontal drift and rotation */
 @keyframes sway {
-  0% { transform: translateX(0px) rotate(0deg); }
-  100% { transform: translateX(40px) rotate(45deg); }
+  0% { transform: translateX(-25px) rotate(-15deg); }
+  100% { transform: translateX(20px) rotate(45deg); }
 }
 
 /* --- Layering Fixes for Existing Content --- */
