@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+
+    <div id="leaves-container"></div>
+
+    <header>
+      <h1><a href="index.html">Sage Ransom</a></h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="wordle.html">Naughty Wordle</a></li>
+          <li><a href="hangman.html">Hangmandle</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="landing-container">
+
+      <section id="optics" style="margin-bottom: 80px; padding-top: 40px;">
+        <div class="sim-header">
+          <div>
+            <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Optics</h3>
+            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">Adjust the lens, light source, or screen.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <select id="source-type" class="lens-dropdown">
+              <option value="point">Point Source</option>
+              <option value="coherent">Coherent Source</option>
+            </select>
+            <select id="lens-type" class="lens-dropdown">
+                <option value="convex">Biconvex</option>
+                <option value="plano">Plano-Convex</option>
+                <option value="concave">Biconcave</option>
+                <option value="plano-concave">Plano-Concave</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="lens-canvas" width="800" height="400"></canvas>
+      </section>
+
+      <hr style="border: 0; border-top: 1px solid #dcdcdc; margin-bottom: 80px;">
+
+      <section id="waves" style="margin-bottom: 80px; padding-top: 40px;">
+        <div class="sim-header">
+          <div>
+            <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Wave Interference</h3>
+            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="wave-instructions">Click above the ocean to drop water.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button id="reset-waves" class="lens-dropdown">Reset</button>
+            <select id="wave-mode" class="lens-dropdown">
+              <option value="side">Side-On View</option>
+              <option value="top">Top-Down View</option>
+            </select>
+          </div>
+        </div>
+        <canvas id="wave-canvas" width="400" height="200"></canvas>
+      </section>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/lens.js"></script>
+    <script src="scripts/waves.js"></script>
+  </body>
+</html>
