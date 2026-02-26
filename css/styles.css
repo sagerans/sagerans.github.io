@@ -1052,11 +1052,11 @@ body.physics-page {
   outline: none;
 }
 
-/* Wave Sim specifics */
+/* Wave Sim specifics
 #wave-canvas {
   width: 100%;
   height: auto;
-  background: #fffdf2; /* Cornsilk sky for side-on, base for top-down */
+  background: #fffdf2;
   border-radius: 8px;
   border: 1px solid #ccc;
   cursor: crosshair;
@@ -1072,4 +1072,94 @@ body.physics-page {
 #reset-waves:hover {
   background: #a9c191;
   color: #fff;
+}
+*/
+
+/* --- Dual Canvas Layout for Waves --- */
+.waves-dual-container {
+  display: flex;
+  flex-direction: column; /* Mobile: Stack vertically! */
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.wave-view {
+  flex: 1; /* Makes sure both canvases take up equal width */
+  display: flex;
+  flex-direction: column;
+}
+
+.wave-canvas {
+  width: 100%;
+  height: auto;
+  background: #fffdf2;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  cursor: crosshair;
+  display: block;
+  touch-action: none;
+}
+
+.view-label {
+  text-align: center;
+  font-size: 0.85em;
+  color: #888;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* Desktop View: Side-by-Side
+@media (min-width: 768px) {
+  .waves-dual-container {
+    flex-direction: row;
+  }
+}
+*/
+
+/* --- Games & Project Grid --- */
+.games-grid {
+  display: grid;
+  /* This automatically creates as many 300px columns as will fit on the screen */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  background: #fffdf2;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  overflow: hidden; /* Clips the image so it respects the rounded corners */
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px); /* Gentle lift on hover */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.game-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover; /* Prevents image distortion */
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.game-info {
+  padding: 20px;
+}
+
+.game-info h3 {
+  margin: 0 0 10px 0;
+  color: #696969;
+}
+
+.game-info p {
+  margin: 0;
+  color: #888;
+  font-size: 0.95em;
+  line-height: 1.4;
 }

@@ -18,7 +18,7 @@
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="writing.html">Writing</a></li>
           <li><a href="interactive.html">Interactive</a></li>
-          <li><a href="wordle.html">Naughty Wordle</a></li>
+          <li><a href="games.html">Games</a></li>
           <li><a href="hangman.html">Hangmandle</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
@@ -55,17 +55,23 @@
         <div class="sim-header">
           <div>
             <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Wave Interference</h3>
-            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="wave-instructions">Click above the ocean to drop water.</p>
+            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">Play with waves!</p>
           </div>
-          <div style="display: flex; gap: 10px;">
+          <div>
             <button id="reset-waves" class="lens-dropdown">Reset</button>
-            <select id="wave-mode" class="lens-dropdown">
-              <option value="side">Side-On View</option>
-              <option value="top">Top-Down View</option>
-            </select>
           </div>
         </div>
-        <canvas id="wave-canvas" width="400" height="200"></canvas>
+
+        <div class="waves-dual-container">
+          <div class="wave-view">
+            <canvas id="wave-canvas-side" class="wave-canvas" width="400" height="200"></canvas>
+            <p class="view-label">Side-On View (Drop water)</p>
+          </div>
+          <div class="wave-view">
+            <canvas id="wave-canvas-top" class="wave-canvas" width="400" height="200"></canvas>
+            <p class="view-label">Top-Down View (Place sources)</p>
+          </div>
+        </div>
       </section>
 
     </main>
