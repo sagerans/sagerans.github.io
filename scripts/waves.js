@@ -99,12 +99,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const x = (clientX - rect.left) * scaleX;
     const y = (clientY - rect.top) * scaleY;
 
-    if (sources.length < MAX_SOURCES) {
+    // Check if the user clicked an existing source
+    const hitRadius = 10;
+    let clickedExisting = false;
+
+    // Loop backwards so if two sources overlap, we delete the top one
+    for (let i = sources.length - 1; i >= 0; i--) {
+      let s = sources[i];
+      let distance = Math.sqrt((x - s.x)**2 + (y - s.y)**2);
+
+      if (distance < hitRadius) {
+        sources.splice(i, 1);
+        clickedExisting = true;
+        break;
+      }
+    }
+
+    // If they didn't click an existing source, spawn a new one
+    if (!clickedExisting && sources.length < MAX_SOURCES) {
       sources.push({ x: x, y: y, startTime: time });
     }
   }
-  canvasTop.addEventListener('mousedown', handleTopInput);
-  canvasTop.addEventListener('touchstart', handleTopInput, { passive: false });
+
+    canvasTop.addEventListener('mousedown', handleTopInput);
+    canvasTop.addEventListener('touchstart', handleTopInput, { passive: false });
 
   // --- Master Animation Loop ---
   function animate() {
