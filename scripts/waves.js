@@ -29,6 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBtn = document.getElementById('reset-waves');
   const slateBlue = { r: 136, g: 162, b: 181 };
 
+  // Load sound effect
+  const bloops = [
+    new Audio('sounds/bloop1.mp3'),
+    new Audio('sounds/bloop2.mp3'),
+    new Audio('sounds/bloop3.mp3'),
+    new Audio('sounds/bloop4.mp3'),
+    new Audio('sounds/bloop5.mp3')
+  ];
+
+  bloops.forEach(sound => sound.volume = 0.4);
+
   // --- Side-On State ---
   const SPRING_COUNT = 400;
   let springs = new Float32Array(SPRING_COUNT);
@@ -122,6 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ctxSide.fill();
 
       if (d.y >= waterLevel) {
+        const randomBloop = bloops[Math.floor(Math.random() * bloops.length)];
+
+        randomBloop.cloneNode(true).play().catch(err => {});
+
         const springIndex = Math.floor((d.x / W) * SPRING_COUNT);
         const splashRadius = 5;
         for (let j = -splashRadius; j <= splashRadius; j++) {
