@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Platformer | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+
+    <header>
+      <h1><a href="index.html">Sage Ransom</a></h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="hangman.html">Hangmandle</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="landing-container" style="max-width: 1200px;">
+
+      <div style="margin-bottom: 20px; text-align: left;">
+        <a href="games.html" class="back-link">&larr; Back to Games</a>
+      </div>
+
+      <div class="sim-header">
+        <div>
+          <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Super Sagio Bros.</h3>
+          <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">WASD / Arrows to move. Space to jump. P or ESC to pause.</p>
+        </div>
+        <div style="display: flex; gap: 20px; font-weight: bold; font-size: 1.1em;">
+          <div style="color: #696969;" id="score-display">Score: 0</div>
+          <div style="color: #e8c374;" id="item-display">Items: 0</div>
+          <div style="color: #c48b8b;" id="death-display">Deaths: 0</div>
+          <div style="color: #a9c191;" id="level-display">Level 1</div>
+        </div>
+      </div>
+
+      <div id="game-ui-wrapper">
+        <canvas id="game-canvas" width="1200" height="600"></canvas>
+
+        <div id="pause-menu" class="hidden">
+          <h2>Paused</h2>
+          <button id="resume-btn" class="menu-btn">Resume</button>
+          <a href="games.html" class="menu-btn">Back to Games</a>
+        </div>
+      </div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/platformer.js"></script>
+  </body>
+</html>

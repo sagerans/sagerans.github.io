@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     leaf.classList.add('leaf');
 
     // Randomize starting position (from 0% to 100% of the screen width)
-    leaf.style.left = (Math.random() * 100) + 'vw';
+    leaf.style.left = ((Math.random() * 100) - 2) + 'vw';
 
     // Randomize falling and swaying speeds
     const fallDuration = (Math.random() * 6) + 8;
