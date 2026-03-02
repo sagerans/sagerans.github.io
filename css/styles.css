@@ -18,6 +18,18 @@ body {
   background: #fff8dc;
 }
 
+/* --- Global Layout Rules --- */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Forces the body to be at least 100% of the viewport height */
+  margin: 0; /* Removes default browser margins */
+}
+
+main {
+  flex: 1; /* This is the magic line! It tells the main content to stretch and push the footer down */
+}
+
 a {
   text-decoration: none;
   color: #fffff0;
@@ -86,8 +98,8 @@ cube-container {
 footer {
   text-align: center;
   padding: 10px;
-  background: #333;
-  color: white;
+  background: #696969;
+  color: #fffdf2;
 }
 
 label {
@@ -1194,3 +1206,152 @@ body.physics-page {
   background: #a9c191;
   color: #fffdf2;
 }
+
+/* --- Factbook Game Styles --- */
+
+/* Native HTML5 Accordion Styling */
+details.fact-category {
+  background: #fffdf2;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+details.fact-category > summary {
+  padding: 15px;
+  font-weight: bold;
+  color: #696969;
+  cursor: pointer;
+  background: #fdfcee;
+  list-style: none; /* Hides default arrow in some browsers */
+}
+
+details.fact-category > summary::-webkit-details-marker {
+  display: none; /* Hides default arrow in Safari/Chrome */
+}
+
+details.fact-category > summary::before {
+  content: "►";
+  color: #a9c191;
+  display: inline-block;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+details.fact-category[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.fact-content {
+  padding: 15px;
+  border-top: 1px solid #dcdcdc;
+  font-size: 0.9em;
+  color: #444;
+  line-height: 1.6;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Factbook Game Styles --- */
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Force strict identical height */
+#country-guess, #guess-btn {
+  height: 48px;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#country-guess {
+  flex: 1;
+  padding: 0 15px;
+  font-size: 1.1em;
+  font-family: inherit;
+  border: 2px solid #dcdcdc;
+  border-radius: 4px;
+  background: #fffdf2;
+  color: #696969;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#country-guess:focus {
+  border-color: #a9c191;
+}
+
+#guess-btn {
+  height: 48px;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 25px; /* Gives the button a nice, wide click area */
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.1em;
+
+  /* --- The Portal Card Colors --- */
+  background: #e7efdf;
+  border: 1px solid #a9c191;
+  color: #696969;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+#guess-btn:hover {
+  background: #c7d6b8;
+}
+
+/* Past Guess Pills */
+.guess-pill {
+  background: #fdfcee;
+  color: #c48b8b;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.9em;
+  border: 1px solid #c48b8b;
+  font-weight: bold;
+}
+
+.clue-card {
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  animation: fadeInDown 0.4s ease forwards;
+}
+
+.clue-meta {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #a9c191;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.clue-text {
+  margin: 0;
+  color: #444;
+  line-height: 1.5;
+}
+
+#feedback-msg {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#feedback-msg.error { color: #c48b8b; }
+#feedback-msg.success { color: #a9c191; }

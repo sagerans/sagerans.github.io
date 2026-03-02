@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Factbook Sleuth | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+
+    <div id="leaves-container"></div>
+
+    <header>
+      <h1><a href="index.html">Sage Ransom</a></h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="hangman.html">Hangmandle</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="landing-container" style="max-width: 800px;">
+
+      <div style="margin-bottom: 20px; text-align: left;">
+        <a href="games.html" class="back-link">&larr; Back to Games</a>
+      </div>
+
+      <div class="sim-header">
+        <div>
+          <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">From the Factbook</h3>
+          <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="game-instructions">You have 6 guesses.</p>
+        </div>
+        <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
+      </div>
+
+      <!--
+      <div style="text-align: right; margin-bottom: 10px;">
+        <button id="test-next-btn" class="guess-pill" style="cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff;">Test Next Country &rarr;</button>
+      </div>
+      -->
+
+      <div id="game-ui">
+        <div class="input-row">
+          <input type="text" id="country-guess" placeholder="Enter country name..." autocomplete="off" />
+          <button id="guess-btn" <!--class="menu-btn"-->Guess</button>
+        </div>
+
+        <div id="past-guesses-container" class="hidden" style="margin-bottom: 20px;">
+          <span style="font-size: 0.85em; color: #888; text-transform: uppercase; font-weight: bold;">Past Guesses:</span>
+          <div id="past-guesses" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;"></div>
+        </div>
+
+        <p id="feedback-msg" class="hidden"></p>
+      </div>
+
+      <div id="clues-container"></div>
+
+      <div id="end-screen" class="hidden">
+        <h2 id="end-title" style="color: #a9c191; text-align: center;"></h2>
+
+        <div id="reveal-data" class="clue-card" style="background: #fffdf2; border-color: #a9c191;">
+          <h3 style="margin-top: 0; color: #696969;">Entity: <span id="reveal-country-name" style="color: #a9c191;"></span></h3>
+          <div id="reveal-names"></div>
+          <hr style="border: 0; border-top: 1px solid #dcdcdc; margin: 15px 0;">
+          <h4 style="margin: 0 0 5px 0; color: #696969;">Background</h4>
+        <!-- <p id="reveal-background" style="margin: 0; font-size: 0.95em; color: #444; line-height: 1.5;"></p> -->
+          <p id="reveal-background" style="margin: 0; font-size: 0.95em; color: #444; line-height: 1.5; text-align: justify;"></p>
+        </div>
+
+        <h3 style="color: #696969; margin-top: 40px; border-bottom: 2px solid #dcdcdc; padding-bottom: 10px;">Full Factbook Data (2025)</h3>
+        <div id="full-data-accordion"></div>
+      </div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/factbook.js"></script>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
