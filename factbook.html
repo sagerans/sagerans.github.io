@@ -25,7 +25,7 @@
       </nav>
     </header>
 
-    <main class="landing-container" style="max-width: 800px;">
+    <main class="landing-container" style="width: 100%; max-width: 800px; margin: 0 auto;">
 
       <div style="margin-bottom: 20px; text-align: left;">
         <a href="games.html" class="back-link">&larr; Back to Games</a>
@@ -37,6 +37,10 @@
           <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="game-instructions">You have 6 guesses.</p>
         </div>
         <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
+      </div>
+
+      <div style="text-align: right; margin-bottom: 10px;">
+        <button id="test-next-btn" class="guess-pill" style="cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff;">Test Next Country &rarr;</button>
       </div>
 
       <div id="game-ui">
@@ -67,6 +71,12 @@
 
         <div id="reveal-data" class="clue-card" style="background: #fffdf2; border-color: #a9c191;">
           <h3 style="margin-top: 0; color: #696969;">Entity: <span id="reveal-country-name" style="color: #a9c191;"></span></h3>
+
+          <div id="reveal-visuals" style="display: flex; gap: 20px; margin-bottom: 20px; align-items: center; justify-content: center;">
+            <img id="reveal-flag" src="" alt="Country Flag" style="max-width: 45%; max-height: 120px; border: 1px solid #dcdcdc; border-radius: 4px; display: none;" />
+            <img id="reveal-map" src="" alt="Country Map" style="max-width: 45%; max-height: 150px; display: none;" />
+          </div>
+
           <div id="reveal-names"></div>
           <hr style="border: 0; border-top: 1px solid #dcdcdc; margin: 15px 0;">
           <h4 style="margin: 0 0 5px 0; color: #696969;">Background</h4>
@@ -83,6 +93,10 @@
     <footer>
       <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
     </footer>
+
+    <div id="image-modal" class="lightbox-overlay hidden">
+      <img id="modal-img" src="" alt="Full Resolution" />
+    </div>
 
     <script src="scripts/factbook.js"></script>
     <script src="scripts/script.js"></script>

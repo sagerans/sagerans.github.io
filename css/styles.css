@@ -1324,6 +1324,8 @@ details.fact-category[open] > summary::before {
 }
 
 .clue-card {
+  width: 100%;
+  box-sizing: border-box;
   background: #fff;
   border: 1px solid #dcdcdc;
   border-radius: 8px;
@@ -1355,3 +1357,115 @@ details.fact-category[open] > summary::before {
 
 #feedback-msg.error { color: #c48b8b; }
 #feedback-msg.success { color: #a9c191; }
+
+/* --- Image Lightbox Modal --- */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+/* This guarantees it completely disappears when the hidden class is attached */
+.lightbox-overlay.hidden {
+  display: none !important;
+}
+
+#modal-img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+#reveal-visuals img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+#reveal-visuals img:hover {
+  transform: scale(1.05);
+}
+
+/* --- Image Lightbox Modal ---
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#modal-img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+
+#reveal-visuals img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+#reveal-visuals img:hover {
+  transform: scale(1.05);
+}
+*/
+/* --- Image Lightbox Modal --- */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+/* This guarantees it completely disappears when the hidden class is attached */
+.lightbox-overlay.hidden {
+  display: none !important;
+}
+
+#modal-img {
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+#reveal-visuals img {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+#reveal-visuals img:hover {
+  transform: scale(1.05);
+}

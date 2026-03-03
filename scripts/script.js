@@ -227,16 +227,18 @@ function renderBlogPosts() {
 
   // Build the Featured Post (Index 0)
   const newestPost = blogPosts[0];
-  featuredContainer.innerHTML = `
-    <div class="featured-card">
-      <a href="${newestPost.link}">
-        <h3>${newestPost.title}</h3>
-        <p class="post-date">${newestPost.date}</p>
-        <p class="post-excerpt">${newestPost.excerpt}</p>
-        <span class="read-more">Read Full Story &rarr;</span>
-      </a>
-    </div>
-  `;
+  if (featuredContainer){
+    featuredContainer.innerHTML = `
+      <div class="featured-card">
+        <a href="${newestPost.link}">
+          <h3>${newestPost.title}</h3>
+          <p class="post-date">${newestPost.date}</p>
+          <p class="post-excerpt">${newestPost.excerpt}</p>
+          <span class="read-more">Read Full Story &rarr;</span>
+        </a>
+      </div>
+    `;
+  }
 
   // Build the Older Posts Grid (Everything after Index 0)
   if (blogPosts.length > 1) {

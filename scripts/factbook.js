@@ -258,9 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'zi.json'
   ];
 
+  const globalDictionary = ["afghanistan","akrotiri","alarabiyahassuudiyah","albahrayn","albania","algeria","alimaratalarabiyahalmuttahidah","aliraqeraq","aljazair","aljumhuriyahalarabiyahassuriyah","aljumhuriyahalislamiyahalmuritaniyah","aljumhuriyahaljazairiyahaddimuqratiyahashshabiyah","aljumhuriyahallubnaniyah","aljumhuriyahalyamaniyah","aljumhuriyahattunisiyah","alkuwayt","almaghrib","almamlakahalarabiyahassuudiyah","almamlakahalmaghribiyah","almamlakahalurduniyahalhashimiyah","alurdun","alyaman","americansamoa","andorra","angola","anguilla","antarctica","antiguaandbarbuda","arabrepublicofegypt","argentina","argentinerepublic","armenia","aruba","ashmoreandcartierislands","assudan","australia","austria","azarbaycan","azarbaycanrespublikasi","azerbaijan","bahrain","bailiwickofguernsey","bailiwickofjersey","bakerislandhowlandislandjarvisislandjohnstonatollkingmanreefmidwayislandspalmyraatoll","bangladesh","barbados","belarus","belau","belgiquebelgiebelgien","belgium","belize","beluuerabelau","benin","bermuda","bhutan","bolivarianrepublicofvenezuela","bolivia","bosnaihercegovina","bosniaandherzegovina","botswana","bouvetisland","brasil","brazil","britishindianoceanterritory","britishvirginislands","brunei","bruneidarussalam","bulgaria","bundesrepublikdeutschland","burkinafaso","burma","burundi","byelarusbelarusianbelarusrussian","caboverde","cambodia","cameroon","camerouncameroon","canada","caymanislands","centralafricanrepublic","ceskarepublika","cesko","chad","chile","china","choson","chosonminjujuuiinminkonghwaguk","christmasisland","clippertonisland","cocirctedivoire","cocoskeelingislands","collectiviteacutedoutremerdesaintbartheacutelemy","collectiviteacutedoutremerdesaintmartin","colombia","commonwealthofaustralia","commonwealthofdominica","commonwealthofpuertorico","commonwealthofthebahamas","commonwealthofthenorthernmarianaislands","comoros","conghoaxahoichunghiavietnam","congo","congobrazzaville","cookislands","cooperativerepublicofguyana","coralseaislands","coralseaislandsterritory","costarica","cotedivoire","countryofaruba","countryofcuracao","countryofsintmaarten","crnagora","croatia","cuba","curacao","curacaodutchkorsoupapiamento","cyprus","czechia","czechrepublic","danmark","dawlatalkuwayt","dawlatlibiya","dawlatqatar","deacutepartementdesaintpierreetmiquelon","democraticpeoplesrepublicofkorea","democraticrepublicofsaotomeandprincipe","democraticrepublicofthecongo","democraticrepublicoftimorleste","democraticsocialistrepublicofsrilanka","denmark","deutschland","dhekelia","dhivehiraajje","dhivehiraajjeygejumhooriyyaa","djibouti","djiboutifrenchjibutiarabic","dominica","dominicanrepublic","drc","drukgyalkhap","drukyul","dzikolamalawi","ecuador","eesti","eestivabariik","egypt","eire","ellanvannin","ellasorellada","ellinikidimokratia","elsalvador","equatorialguinea","eritrea","ertra","espantildea","estadoplurinacionaldebolivia","estadosunidosmexicanos","estonia","eswatini","ethiopia","falklandislandsislasmalvinas","faroeislands","federaldemocraticrepublicofethiopia","federalrepublicofgermany","federalrepublicofnigeria","federalrepublicofsomalia","federatedstatesofmicronesia","federationofsaintkittsandnevis","federativerepublicofbrazil","fiji","fijienglishvitifijian","finland","foroyar","france","frenchpolynesia","frenchrepublic","frenchsouthernandantarcticlands","fuerstentumliechtenstein","gabon","gaboneserepublic","ganaprajatantribangladesh","gazagazastrip","georgia","germany","ghana","gibraltar","grandducheacutedeluxembourg","grandduchyofluxembourg","greece","greenland","grenada","guahan","guam","guatemala","guernsey","guinea","guineabissau","guineacutee","guineaecuatorialspanishguineacuteeeacutequatorialefrench","guinebissau","guyana","hagereertra","haiti","haiumltifrenchayitihaitiancreole","hanguk","hashemitekingdomofjordan","hayastan","hayastanihanrapetutyun","heardislandandmcdonaldislands","hellenicrepublic","heungkongeiteldyerball","heungkongtakpithangchingkueiteldyerball","holyseevaticancity","honduras","hongkong","hongkongspecialadministrativeregion","hrvatska","hungary","iceland","ileclipperton","independentstateofpapuanewguinea","independentstateofsamoa","india","indiaenglishbharathindi","indonesia","iran","iraq","ireland","islamicrepublicofafghanistanpriortoaugustcurrentcountrynamedisputed","islamicrepublicofiran","islamicrepublicofmauritania","islamicrepublicofpakistan","island","isleofman","israel","italia","italianrepublic","italy","ityopiya","jamaica","jamhuriyamuunganowatanzania","jamhuriyeislamiyeafghanistanpriortoaugustcurrentcountrynameisdisputed","jamhuryatislamipakistan","jamhuuriyaddafederaalkasoomaaliyasomalijumhuriyatassumalalfidiraliyaharabic","janmayen","japan","jersey","jomhuriyeeslamiyeiran","jordan","jumhuriitojikiston","jumhuriyataliraqkomarieraq","jumhuriyatassudan","jumhuriyatmisralarabiyah","kalaallitnunaat","kampuchea","kazakhstan","kenya","kingdomofbahrain","kingdomofbelgium","kingdomofbhutan","kingdomofcambodia","kingdomofdenmark","kingdomofeswatini","kingdomoflesotho","kingdomofmorocco","kingdomofnorway","kingdomofsaudiarabia","kingdomofspain","kingdomofsweden","kingdomofthailand","kingdomofthenetherlands","kingdomoftonga","kiribati","komoricomorianlescomoresfrenchjuzuralqamararabic","kongerigetdanmark","kongeriketnorge","koninkrijkdernederlanden","konungariketsverige","kosovealbaniankosovoserbian","kosovo","kuwait","kypriakidimokratiagreekkibriscumhuriyetiturkish","kyprosgreekkibristurkish","kyrgyzrepublic","kyrgyzrespublikasy","kyrgyzstan","ladominicana","landarubadutchpaisarubapapiamento","landcuracaodutchpaiskorsoupapiamento","landsintmaartendutchcountryofsintmaartenenglish","laopeoplesdemocraticrepublic","laos","lasantasedestatodellacittadelvaticano","latvia","latvija","latvijasrepublika","lebaneserepublic","lebanon","lesotho","liberia","libiya","libya","liechtenstein","lietuva","lietuvosrespublika","lithuania","lubnan","luxembourg","macau","macauspecialadministrativeregion","madagascar","madagascarmadagasikara","magyarorszag","malawi","malaysia","maldives","mali","malosaolototutoatasiosamoa","malta","mamlakatalbahrayn","marshallislands","mauritania","mauritius","medinatyisrael","mexico","misr","mocambique","moldova","monaco","mongolia","mongoluls","montenegro","montserrat","morocco","mozambique","mueanglaounofficial","muritaniyah","myanmanaingngandaw","namibia","nauru","navassaisland","nederland","negarabruneidarussalam","nepal","netherlands","newcaledonia","newzealand","nicaragua","niger","nigeria","nihonkokunipponkoku","nihonnippon","niue","norfolkisland","norge","northernmarianaislands","northkorea","northmacedonia","norway","nouvellecaleacutedonie","oesterreich","oman","orientalrepublicofuruguay","overseascollectivityofsaintbarthelemy","overseascollectivityofsaintmartin","overseaslandsoffrenchpolynesia","ozbekiston","ozbekistonrespublikasi","pakistan","palau","panama","papuanewguinea","papuaniugini","paracelislands","paraguay","paysdoutremerdelapolyneacutesiefranccedilaise","peoplesdemocraticrepublicofalgeria","peoplesrepublicofbangladesh","peoplesrepublicofchina","peru","peruacute","philippines","pilipinas","pitcairnhendersonducieandoenoislands","pitcairnislands","plurinationalstateofbolivia","poland","polska","polyneacutesiefranccedilaise","portugal","portugueserepublic","prathetthai","preahreacheanachakrkampucheaphonetictransliteration","principalityofandorra","principalityofliechtenstein","principalityofmonaco","principatdandorra","principauteacutedemonaco","puertorico","puleangafakatuiotonga","pyidaungzuthammadamyanmanaingngandawtranslatedastherepublicoftheunionofmyanmar","qatar","qazaqstan","qazaqstanrespublikasy","qitaghazzah","ratchaanachakthai","rdc","reacutepubliquecentrafricaine","reacutepubliquedeacutemocratiqueducongo","reacutepubliquedecocirctedivoire","reacutepubliquededjiboutifrenchjumhuriyatjibutiarabic","reacutepubliquedeguineacutee","reacutepubliquedemadagascarrepoblikanimadagasikara","reacutepubliquedemali","reacutepubliquedhaiumltifrenchrepiblikdayitihaitiancreole","reacutepubliquedubenin","reacutepubliqueduburundifrenchrepublikayuburundikirundi","reacutepubliqueducamerounfrenchrepublicofcameroonenglish","reacutepubliqueducongo","reacutepubliqueduniger","reacutepubliqueduseacuteneacutegal","reacutepubliquedutchadjumhuriyattshad","reacutepubliquefranccedilaise","reacutepubliquegabonaise","reacutepubliquetogolaise","reinodeespantildea","repuacuteblicaargentina","repuacuteblicabolivarianadevenezuela","repuacuteblicadechile","repuacuteblicadecolombia","repuacuteblicadecostarica","repuacuteblicadecuba","repuacuteblicadeelsalvador","repuacuteblicadeguatemala","repuacuteblicadehonduras","repuacuteblicadelecuador","repuacuteblicadelparaguay","repuacuteblicadelperuacute","repuacuteblicadenicaragua","repuacuteblicadepanama","repuacuteblicadominicana","repuacuteblicafederativadobrasil","repuacuteblicaorientaldeluruguay","repubblicadisanmarino","repubblicaitaliana","repubblikatamalta","republicadaguinebissau","republicadeangola","republicadecaboverde","republicadeguineaecuatorialspanishreacutepubliquedeguineacuteeeacutequatorialefrench","republicademocambique","republicademocraticadesaotomeeprincipe","republicamoldova","republicaportuguesa","republicofalbania","republicofangola","republicofarmenia","republicofaustria","republicofazerbaijan","republicofbelarus","republicofbenin","republicofbotswana","republicofbulgaria","republicofburundi","republicofcaboverde","republicofcameroon","republicofchad","republicofchile","republicofcocirctedivoire","republicofcolombia","republicofcostarica","republicofcroatia","republicofcuba","republicofcyprus","republicofdjibouti","republicofecuador","republicofelsalvador","republicofequatorialguinea","republicofestonia","republicoffiji","republicoffijienglishmatanitukovitifijian","republicoffinland","republicofgeorgia","republicofghana","republicofguatemala","republicofguinea","republicofguineabissau","republicofhaiti","republicofhonduras","republicofindia","republicofindiaenglishbharatiyaganarajyahindi","republicofindonesia","republicofiraq","republicofkazakhstan","republicofkenya","republicofkenyaenglishjamhuriyakenyaswahili","republicofkiribati","republicofkorea","republicofkosovo","republicoflatvia","republicofliberia","republicoflithuania","republicofmadagascar","republicofmalawi","republicofmaldives","republicofmali","republicofmalta","republicofmauritius","republicofmoldova","republicofmozambique","republicofnamibia","republicofnauru","republicofnicaragua","republicofniger","republicofnorthmacedonia","republicofpalau","republicofpanama","republicofparaguay","republicofperu","republicofpoland","republicofrwanda","republicofsanmarino","republicofsenegal","republicofserbia","republicofseychelles","republicofsierraleone","republicofsingapore","republicofslovenia","republicofsouthafrica","republicofsouthsudan","republicofsuriname","republicoftajikistan","republicofthecongo","republicofthegambia","republicofthemarshallislands","republicofthephilippines","republicofthesudan","republicoftrinidadandtobago","republicoftunisia","republicofturkey","republicofuganda","republicofuzbekistan","republicofvanuatu","republicofyemen","republicofzambia","republicofzimbabwe","republieksuriname","republikabulgaria","republikademokratikatimorlorosaetetumrepublicademocraticadetimorlesteportuguese","republikaekosovesalbanianrepublikakosovoserbian","republikaeshqiperise","republikahrvatska","republikangpilipinas","republikasevernamakedonija","republikaslovenija","republikasrbija","republikayurwanda","republikindonesia","republikoesterreich","respublikabyelarusbelarusianrespublikabelarusrussian","ripablikblongvanuatu","romania","rossiya","rossiyskayafederatsiya","royaumedebelgiquefrenchkoninkrijkbelgiedutchkoenigreichbelgiengerman","russia","russianfederation","rwanda","rzeczpospolitapolska","saintbartheacutelemy","saintbarthelemy","sainthelenaascensionandtristandacunha","saintkittsandnevis","saintlucia","saintmartin","saintpierreandmiquelon","saintpierreetmiquelon","saintvincentandthegrenadines","sakartvelo","saltanatuman","samoa","sanmarino","santasedecittadelvaticano","saotomeandprincipe","saotomeeprincipe","sathalanalatpaxathipataipaxaxonlao","saudiarabia","schweizerischeeidgenossenschaftgermanconfederationsuissefrenchconfederazionesvizzeraitalianconfederaziunsvizraromansh","schweizgermansuissefrenchsvizzeraitaliansvizraromansh","seacuteneacutegal","senegal","serbia","severnamakedonija","seychelles","shqiperia","shrilankaprajatantrikasamajavadijanarajayasinhalailankaijananayakachoshalichakkutiyarachutamil","shrilankasinhalailankaitamil","sierraleone","singapore","sintmaarten","sintmaartendutchandenglish","slovakia","slovakrepublic","slovenia","slovenija","slovenskarepublika","slovensko","socialistrepublicofvietnam","solomonislands","somalia","soomaaliyasomaliassumalarabic","southafrica","southgeorgiaandsouthsandwichislands","southgeorgiaandthesouthsandwichislands","southkorea","southsudan","spain","spratlyislands","srbija","srilanka","stateoferitrea","stateofisrael","stateofkuwait","stateoflibya","stateofqatar","sudan","sultanateofoman","suomentasavaltafinnishrepublikenfinlandswedish","suomifinnishfinlandswedish","suriname","suriyah","svalbardsometimesreferredtoasspitsbergenthelargestislandinthearchipelago","sverige","sweden","swissconfederation","switzerland","syria","syrianarabrepublic","taehanminguk","taiwan","tajikistan","tanzania","tchadtshad","terresaustralesetantarctiquesfranccedilaises","territoiredesileswallisetfutuna","territoiredesnouvellecaleacutedonieetdeacutependances","territorialcollectivityofsaintpierreandmiquelon","territoryofashmoreandcartierislands","territoryofchristmasisland","territoryofcocoskeelingislands","territoryofheardislandandmcdonaldislands","territoryofnewcaledoniaanddependencies","territoryofnorfolkisland","territoryofthefrenchsouthernandantarcticlands","territoryofthewallisandfutunaislands","thailand","thebahamas","thedominican","thegambia","theholyseevaticancitystate","timorleste","timorlorosaetetumtimorlesteportuguese","togo","togoleserepublic","tojikiston","tokelau","tonga","trinidadandtobago","tunis","tunisia","turkey","turkeycumhuriyeti","turkmenistan","turksandcaicosislands","tuvalu","udzimawakomoricomorianuniondescomoresfrenchalittihadalqumuriarabic","uganda","ukraina","ukraine","uman","umbusoweswatini","unionofburma","unionofthecomoros","unitedarabemirates","unitedkingdom","unitedkingdomofgreatbritainandnorthernirelandnotetheislandofgreatbritainincludesenglandscotlandandwales","unitedmexicanstates","unitedrepublicoftanzania","unitedstates","unitedstatesofamerica","uruguay","uzbekistan","vanuatu","venezuela","vietnam","virginislands","wakeisland","wallisandfutuna","wallisetfutuna","westbank","westernsahara","yeityopiyafederalawidemokrasiyawiripeblik","yemen","yisrael","zambia","zhongguo","zhonghuarenmingongheguo","zimbabwe"];
+
   let currentIndex = Math.floor(Date.now() / 86400000) % countryFiles.length;
 
   // Game State Variables
+  let currentTargetFile = "";
   let countryData = null;
   let validNames = [];
   let rawNamesForRedaction = [];
@@ -280,6 +283,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const pastGuessesContainer = document.getElementById('past-guesses-container');
   const pastGuessesDiv = document.getElementById('past-guesses');
   const testNextBtn = document.getElementById('test-next-btn');
+  const imageModal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-img');
+  const flagImg = document.getElementById('reveal-flag'); // Moving these up here!
+  const mapImg = document.getElementById('reveal-map');
 
   // Case-Insensitive Helper
   function getCaseInsensitive(obj, keyName) {
@@ -290,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- NEW: Reusable Load Function ---
   function loadGame(index) {
-    const targetFile = countryFiles[index];
+    currentTargetFile = countryFiles[index];
 
     // Reset all state variables for the new round
     countryData = null;
@@ -314,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     guessesDisplay.innerText = `Remaining Guesses: ${guessesLeft}`;
     document.getElementById('full-data-accordion').innerHTML = "";
 
-    fetch(`factbook/${targetFile}`)
+    fetch(`factbook/${currentTargetFile}`)
       .then(response => response.json())
       .then(data => {
         countryData = data;
@@ -449,6 +456,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // --- NEW: Dictionary Validation ---
+    if (!globalDictionary.includes(normalizedGuess)) {
+      feedbackMsg.innerText = "Invalid guess. Please try a valid country or territory.";
+      feedbackMsg.className = "error";
+      feedbackMsg.classList.remove('hidden');
+      return; // Stop the function here so they don't lose a guess!
+    }
+
     pastGuesses.push(normalizedGuess);
     if (pastGuessesContainer) pastGuessesContainer.classList.remove('hidden');
 
@@ -461,12 +476,12 @@ document.addEventListener('DOMContentLoaded', () => {
       endGame(true);
     } else {
       guessesLeft--;
-      guessesDisplay.innerText = `Remaining Guesses: ${guessesLeft}`;
+      guessesDisplay.innerText = `Guesses: ${guessesLeft}`;
 
       if (guessesLeft <= 0) {
         endGame(false);
       } else {
-        feedbackMsg.innerText = "Nope!";
+        feedbackMsg.innerText = "Incorrect. Here's a new clue.";
         feedbackMsg.className = "error";
         feedbackMsg.classList.remove('hidden');
         revealNextClue();
@@ -477,6 +492,35 @@ document.addEventListener('DOMContentLoaded', () => {
   guessBtn.addEventListener('click', handleGuess);
   guessInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleGuess();
+  });
+
+  // --- Lightbox Click Listeners ---
+  if (flagImg) {
+    flagImg.addEventListener('click', () => {
+      modalImg.src = flagImg.src;
+      imageModal.classList.remove('hidden'); // Show the modal
+    });
+  }
+
+  if (mapImg) {
+    mapImg.addEventListener('click', () => {
+      modalImg.src = mapImg.src;
+      imageModal.classList.remove('hidden'); // Show the modal
+    });
+  }
+
+  // Clicking anywhere on the dark background closes it
+  if (imageModal) {
+    imageModal.addEventListener('click', () => {
+      imageModal.classList.add('hidden'); // Hide the modal
+    });
+  }
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+      imageModal.classList.add('hidden'); // Hide the modal
+    }
   });
 
   function endGame(isWin) {
@@ -491,6 +535,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const endTitle = document.getElementById('end-title');
     endTitle.innerText = isWin ? "Success!" : "Failure :(";
     endTitle.style.color = isWin ? "#a9c191" : "#c48b8b";
+
+    // --- NEW: Visual Reveal (Flags and Maps) ---
+    // Extract the base name without the '.json' (e.g., 'anguilla.json' becomes 'anguilla')
+    const baseFileName = currentTargetFile.replace('.json', '');
+    // const flagImg = document.getElementById('reveal-flag');
+    // const mapImg = document.getElementById('reveal-map');
+
+    const validExtensions = ['webp', 'gif', 'svg', 'png', 'jpg', 'jpeg'];
+
+    function findAndLoadImage(imgElement, folder) {
+      let currentExtIndex = 0;
+
+      imgElement.onload = null;
+      imgElement.onerror = null;
+
+      const tryNextExtension = () => {
+        if (currentExtIndex >= validExtensions.length) {
+          imgElement.style.display = 'none';
+          return;
+        }
+
+        imgElement.onload = () => {
+          imgElement.style.display = 'block';
+        };
+
+        imgElement.onerror = () => {
+          currentExtIndex++;
+          tryNextExtension();
+        };
+
+        imgElement.src = `images/${folder}/${baseFileName}.${validExtensions[currentExtIndex]}`;
+      };
+
+      tryNextExtension();
+    }
+
+    findAndLoadImage(flagImg, '../images/flags');
+    findAndLoadImage(mapImg, '../images/maps');
 
     document.getElementById('reveal-country-name').innerText = displayCountryName;
 
