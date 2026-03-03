@@ -260,24 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const globalDictionary = ["afghanistan","akrotiri","alarabiyahassuudiyah","albahrayn","albania","algeria","alimaratalarabiyahalmuttahidah","aliraqeraq","aljazair","aljumhuriyahalarabiyahassuriyah","aljumhuriyahalislamiyahalmuritaniyah","aljumhuriyahaljazairiyahaddimuqratiyahashshabiyah","aljumhuriyahallubnaniyah","aljumhuriyahalyamaniyah","aljumhuriyahattunisiyah","alkuwayt","almaghrib","almamlakahalarabiyahassuudiyah","almamlakahalmaghribiyah","almamlakahalurduniyahalhashimiyah","alurdun","alyaman","americansamoa","andorra","angola","anguilla","antarctica","antiguaandbarbuda","arabrepublicofegypt","argentina","argentinerepublic","armenia","aruba","ashmoreandcartierislands","assudan","australia","austria","azarbaycan","azarbaycanrespublikasi","azerbaijan","bahrain","bailiwickofguernsey","bailiwickofjersey","bakerislandhowlandislandjarvisislandjohnstonatollkingmanreefmidwayislandspalmyraatoll","bangladesh","barbados","belarus","belau","belgiquebelgiebelgien","belgium","belize","beluuerabelau","benin","bermuda","bhutan","bolivarianrepublicofvenezuela","bolivia","bosnaihercegovina","bosniaandherzegovina","botswana","bouvetisland","brasil","brazil","britishindianoceanterritory","britishvirginislands","brunei","bruneidarussalam","bulgaria","bundesrepublikdeutschland","burkinafaso","burma","burundi","byelarusbelarusianbelarusrussian","caboverde","cambodia","cameroon","camerouncameroon","canada","caymanislands","centralafricanrepublic","ceskarepublika","cesko","chad","chile","china","choson","chosonminjujuuiinminkonghwaguk","christmasisland","clippertonisland","cocirctedivoire","cocoskeelingislands","collectiviteacutedoutremerdesaintbartheacutelemy","collectiviteacutedoutremerdesaintmartin","colombia","commonwealthofaustralia","commonwealthofdominica","commonwealthofpuertorico","commonwealthofthebahamas","commonwealthofthenorthernmarianaislands","comoros","conghoaxahoichunghiavietnam","congo","congobrazzaville","cookislands","cooperativerepublicofguyana","coralseaislands","coralseaislandsterritory","costarica","cotedivoire","countryofaruba","countryofcuracao","countryofsintmaarten","crnagora","croatia","cuba","curacao","curacaodutchkorsoupapiamento","cyprus","czechia","czechrepublic","danmark","dawlatalkuwayt","dawlatlibiya","dawlatqatar","deacutepartementdesaintpierreetmiquelon","democraticpeoplesrepublicofkorea","democraticrepublicofsaotomeandprincipe","democraticrepublicofthecongo","democraticrepublicoftimorleste","democraticsocialistrepublicofsrilanka","denmark","deutschland","dhekelia","dhivehiraajje","dhivehiraajjeygejumhooriyyaa","djibouti","djiboutifrenchjibutiarabic","dominica","dominicanrepublic","drc","drukgyalkhap","drukyul","dzikolamalawi","ecuador","eesti","eestivabariik","egypt","eire","ellanvannin","ellasorellada","ellinikidimokratia","elsalvador","equatorialguinea","eritrea","ertra","espantildea","estadoplurinacionaldebolivia","estadosunidosmexicanos","estonia","eswatini","ethiopia","falklandislandsislasmalvinas","faroeislands","federaldemocraticrepublicofethiopia","federalrepublicofgermany","federalrepublicofnigeria","federalrepublicofsomalia","federatedstatesofmicronesia","federationofsaintkittsandnevis","federativerepublicofbrazil","fiji","fijienglishvitifijian","finland","foroyar","france","frenchpolynesia","frenchrepublic","frenchsouthernandantarcticlands","fuerstentumliechtenstein","gabon","gaboneserepublic","ganaprajatantribangladesh","gazagazastrip","georgia","germany","ghana","gibraltar","grandducheacutedeluxembourg","grandduchyofluxembourg","greece","greenland","grenada","guahan","guam","guatemala","guernsey","guinea","guineabissau","guineacutee","guineaecuatorialspanishguineacuteeeacutequatorialefrench","guinebissau","guyana","hagereertra","haiti","haiumltifrenchayitihaitiancreole","hanguk","hashemitekingdomofjordan","hayastan","hayastanihanrapetutyun","heardislandandmcdonaldislands","hellenicrepublic","heungkongeiteldyerball","heungkongtakpithangchingkueiteldyerball","holyseevaticancity","honduras","hongkong","hongkongspecialadministrativeregion","hrvatska","hungary","iceland","ileclipperton","independentstateofpapuanewguinea","independentstateofsamoa","india","indiaenglishbharathindi","indonesia","iran","iraq","ireland","islamicrepublicofafghanistanpriortoaugustcurrentcountrynamedisputed","islamicrepublicofiran","islamicrepublicofmauritania","islamicrepublicofpakistan","island","isleofman","israel","italia","italianrepublic","italy","ityopiya","jamaica","jamhuriyamuunganowatanzania","jamhuriyeislamiyeafghanistanpriortoaugustcurrentcountrynameisdisputed","jamhuryatislamipakistan","jamhuuriyaddafederaalkasoomaaliyasomalijumhuriyatassumalalfidiraliyaharabic","janmayen","japan","jersey","jomhuriyeeslamiyeiran","jordan","jumhuriitojikiston","jumhuriyataliraqkomarieraq","jumhuriyatassudan","jumhuriyatmisralarabiyah","kalaallitnunaat","kampuchea","kazakhstan","kenya","kingdomofbahrain","kingdomofbelgium","kingdomofbhutan","kingdomofcambodia","kingdomofdenmark","kingdomofeswatini","kingdomoflesotho","kingdomofmorocco","kingdomofnorway","kingdomofsaudiarabia","kingdomofspain","kingdomofsweden","kingdomofthailand","kingdomofthenetherlands","kingdomoftonga","kiribati","komoricomorianlescomoresfrenchjuzuralqamararabic","kongerigetdanmark","kongeriketnorge","koninkrijkdernederlanden","konungariketsverige","kosovealbaniankosovoserbian","kosovo","kuwait","kypriakidimokratiagreekkibriscumhuriyetiturkish","kyprosgreekkibristurkish","kyrgyzrepublic","kyrgyzrespublikasy","kyrgyzstan","ladominicana","landarubadutchpaisarubapapiamento","landcuracaodutchpaiskorsoupapiamento","landsintmaartendutchcountryofsintmaartenenglish","laopeoplesdemocraticrepublic","laos","lasantasedestatodellacittadelvaticano","latvia","latvija","latvijasrepublika","lebaneserepublic","lebanon","lesotho","liberia","libiya","libya","liechtenstein","lietuva","lietuvosrespublika","lithuania","lubnan","luxembourg","macau","macauspecialadministrativeregion","madagascar","madagascarmadagasikara","magyarorszag","malawi","malaysia","maldives","mali","malosaolototutoatasiosamoa","malta","mamlakatalbahrayn","marshallislands","mauritania","mauritius","medinatyisrael","mexico","misr","mocambique","moldova","monaco","mongolia","mongoluls","montenegro","montserrat","morocco","mozambique","mueanglaounofficial","muritaniyah","myanmanaingngandaw","namibia","nauru","navassaisland","nederland","negarabruneidarussalam","nepal","netherlands","newcaledonia","newzealand","nicaragua","niger","nigeria","nihonkokunipponkoku","nihonnippon","niue","norfolkisland","norge","northernmarianaislands","northkorea","northmacedonia","norway","nouvellecaleacutedonie","oesterreich","oman","orientalrepublicofuruguay","overseascollectivityofsaintbarthelemy","overseascollectivityofsaintmartin","overseaslandsoffrenchpolynesia","ozbekiston","ozbekistonrespublikasi","pakistan","palau","panama","papuanewguinea","papuaniugini","paracelislands","paraguay","paysdoutremerdelapolyneacutesiefranccedilaise","peoplesdemocraticrepublicofalgeria","peoplesrepublicofbangladesh","peoplesrepublicofchina","peru","peruacute","philippines","pilipinas","pitcairnhendersonducieandoenoislands","pitcairnislands","plurinationalstateofbolivia","poland","polska","polyneacutesiefranccedilaise","portugal","portugueserepublic","prathetthai","preahreacheanachakrkampucheaphonetictransliteration","principalityofandorra","principalityofliechtenstein","principalityofmonaco","principatdandorra","principauteacutedemonaco","puertorico","puleangafakatuiotonga","pyidaungzuthammadamyanmanaingngandawtranslatedastherepublicoftheunionofmyanmar","qatar","qazaqstan","qazaqstanrespublikasy","qitaghazzah","ratchaanachakthai","rdc","reacutepubliquecentrafricaine","reacutepubliquedeacutemocratiqueducongo","reacutepubliquedecocirctedivoire","reacutepubliquededjiboutifrenchjumhuriyatjibutiarabic","reacutepubliquedeguineacutee","reacutepubliquedemadagascarrepoblikanimadagasikara","reacutepubliquedemali","reacutepubliquedhaiumltifrenchrepiblikdayitihaitiancreole","reacutepubliquedubenin","reacutepubliqueduburundifrenchrepublikayuburundikirundi","reacutepubliqueducamerounfrenchrepublicofcameroonenglish","reacutepubliqueducongo","reacutepubliqueduniger","reacutepubliqueduseacuteneacutegal","reacutepubliquedutchadjumhuriyattshad","reacutepubliquefranccedilaise","reacutepubliquegabonaise","reacutepubliquetogolaise","reinodeespantildea","repuacuteblicaargentina","repuacuteblicabolivarianadevenezuela","repuacuteblicadechile","repuacuteblicadecolombia","repuacuteblicadecostarica","repuacuteblicadecuba","repuacuteblicadeelsalvador","repuacuteblicadeguatemala","repuacuteblicadehonduras","repuacuteblicadelecuador","repuacuteblicadelparaguay","repuacuteblicadelperuacute","repuacuteblicadenicaragua","repuacuteblicadepanama","repuacuteblicadominicana","repuacuteblicafederativadobrasil","repuacuteblicaorientaldeluruguay","repubblicadisanmarino","repubblicaitaliana","repubblikatamalta","republicadaguinebissau","republicadeangola","republicadecaboverde","republicadeguineaecuatorialspanishreacutepubliquedeguineacuteeeacutequatorialefrench","republicademocambique","republicademocraticadesaotomeeprincipe","republicamoldova","republicaportuguesa","republicofalbania","republicofangola","republicofarmenia","republicofaustria","republicofazerbaijan","republicofbelarus","republicofbenin","republicofbotswana","republicofbulgaria","republicofburundi","republicofcaboverde","republicofcameroon","republicofchad","republicofchile","republicofcocirctedivoire","republicofcolombia","republicofcostarica","republicofcroatia","republicofcuba","republicofcyprus","republicofdjibouti","republicofecuador","republicofelsalvador","republicofequatorialguinea","republicofestonia","republicoffiji","republicoffijienglishmatanitukovitifijian","republicoffinland","republicofgeorgia","republicofghana","republicofguatemala","republicofguinea","republicofguineabissau","republicofhaiti","republicofhonduras","republicofindia","republicofindiaenglishbharatiyaganarajyahindi","republicofindonesia","republicofiraq","republicofkazakhstan","republicofkenya","republicofkenyaenglishjamhuriyakenyaswahili","republicofkiribati","republicofkorea","republicofkosovo","republicoflatvia","republicofliberia","republicoflithuania","republicofmadagascar","republicofmalawi","republicofmaldives","republicofmali","republicofmalta","republicofmauritius","republicofmoldova","republicofmozambique","republicofnamibia","republicofnauru","republicofnicaragua","republicofniger","republicofnorthmacedonia","republicofpalau","republicofpanama","republicofparaguay","republicofperu","republicofpoland","republicofrwanda","republicofsanmarino","republicofsenegal","republicofserbia","republicofseychelles","republicofsierraleone","republicofsingapore","republicofslovenia","republicofsouthafrica","republicofsouthsudan","republicofsuriname","republicoftajikistan","republicofthecongo","republicofthegambia","republicofthemarshallislands","republicofthephilippines","republicofthesudan","republicoftrinidadandtobago","republicoftunisia","republicofturkey","republicofuganda","republicofuzbekistan","republicofvanuatu","republicofyemen","republicofzambia","republicofzimbabwe","republieksuriname","republikabulgaria","republikademokratikatimorlorosaetetumrepublicademocraticadetimorlesteportuguese","republikaekosovesalbanianrepublikakosovoserbian","republikaeshqiperise","republikahrvatska","republikangpilipinas","republikasevernamakedonija","republikaslovenija","republikasrbija","republikayurwanda","republikindonesia","republikoesterreich","respublikabyelarusbelarusianrespublikabelarusrussian","ripablikblongvanuatu","romania","rossiya","rossiyskayafederatsiya","royaumedebelgiquefrenchkoninkrijkbelgiedutchkoenigreichbelgiengerman","russia","russianfederation","rwanda","rzeczpospolitapolska","saintbartheacutelemy","saintbarthelemy","sainthelenaascensionandtristandacunha","saintkittsandnevis","saintlucia","saintmartin","saintpierreandmiquelon","saintpierreetmiquelon","saintvincentandthegrenadines","sakartvelo","saltanatuman","samoa","sanmarino","santasedecittadelvaticano","saotomeandprincipe","saotomeeprincipe","sathalanalatpaxathipataipaxaxonlao","saudiarabia","schweizerischeeidgenossenschaftgermanconfederationsuissefrenchconfederazionesvizzeraitalianconfederaziunsvizraromansh","schweizgermansuissefrenchsvizzeraitaliansvizraromansh","seacuteneacutegal","senegal","serbia","severnamakedonija","seychelles","shqiperia","shrilankaprajatantrikasamajavadijanarajayasinhalailankaijananayakachoshalichakkutiyarachutamil","shrilankasinhalailankaitamil","sierraleone","singapore","sintmaarten","sintmaartendutchandenglish","slovakia","slovakrepublic","slovenia","slovenija","slovenskarepublika","slovensko","socialistrepublicofvietnam","solomonislands","somalia","soomaaliyasomaliassumalarabic","southafrica","southgeorgiaandsouthsandwichislands","southgeorgiaandthesouthsandwichislands","southkorea","southsudan","spain","spratlyislands","srbija","srilanka","stateoferitrea","stateofisrael","stateofkuwait","stateoflibya","stateofqatar","sudan","sultanateofoman","suomentasavaltafinnishrepublikenfinlandswedish","suomifinnishfinlandswedish","suriname","suriyah","svalbardsometimesreferredtoasspitsbergenthelargestislandinthearchipelago","sverige","sweden","swissconfederation","switzerland","syria","syrianarabrepublic","taehanminguk","taiwan","tajikistan","tanzania","tchadtshad","terresaustralesetantarctiquesfranccedilaises","territoiredesileswallisetfutuna","territoiredesnouvellecaleacutedonieetdeacutependances","territorialcollectivityofsaintpierreandmiquelon","territoryofashmoreandcartierislands","territoryofchristmasisland","territoryofcocoskeelingislands","territoryofheardislandandmcdonaldislands","territoryofnewcaledoniaanddependencies","territoryofnorfolkisland","territoryofthefrenchsouthernandantarcticlands","territoryofthewallisandfutunaislands","thailand","thebahamas","thedominican","thegambia","theholyseevaticancitystate","timorleste","timorlorosaetetumtimorlesteportuguese","togo","togoleserepublic","tojikiston","tokelau","tonga","trinidadandtobago","tunis","tunisia","turkey","turkeycumhuriyeti","turkmenistan","turksandcaicosislands","tuvalu","udzimawakomoricomorianuniondescomoresfrenchalittihadalqumuriarabic","uganda","ukraina","ukraine","uman","umbusoweswatini","unionofburma","unionofthecomoros","unitedarabemirates","unitedkingdom","unitedkingdomofgreatbritainandnorthernirelandnotetheislandofgreatbritainincludesenglandscotlandandwales","unitedmexicanstates","unitedrepublicoftanzania","unitedstates","unitedstatesofamerica","uruguay","uzbekistan","vanuatu","venezuela","vietnam","virginislands","wakeisland","wallisandfutuna","wallisetfutuna","westbank","westernsahara","yeityopiyafederalawidemokrasiyawiripeblik","yemen","yisrael","zambia","zhongguo","zhonghuarenmingongheguo","zimbabwe"];
 
-  // --- LOCAL STORAGE & DATE SETUP ---
-  const todayStr = new Date().toLocaleDateString('en-CA'); // Gets local YYYY-MM-DD
-  const dailyIndex = Math.floor(Date.now() / 86400000) % countryFiles.length;
-  let currentTargetFile = countryFiles[dailyIndex];
+  let currentIndex = Math.floor(Date.now() / 86400000) % countryFiles.length;
 
-  // Load Lifetime Stats
-  let stats = JSON.parse(localStorage.getItem('factbookleStats')) || {
-    wins: 0, losses: 0, streak: 0, bestStreak: 0, lastPlayedDate: null
-  };
-
-  // Load Daily State (Reset if it's a new day!)
-  let dailyState = JSON.parse(localStorage.getItem('factbookleState')) || { date: todayStr, guesses: [], isGameOver: false, isWin: false };
-  if (dailyState.date !== todayStr) {
-    dailyState = { date: todayStr, guesses: [], isGameOver: false, isWin: false };
-    localStorage.setItem('factbookleState', JSON.stringify(dailyState));
-  }
-
-  // Game State
+  // Game State Variables
+  let currentTargetFile = "";
   let countryData = null;
   let validNames = [];
   let rawNamesForRedaction = [];
@@ -296,99 +282,112 @@ document.addEventListener('DOMContentLoaded', () => {
   const endScreen = document.getElementById('end-screen');
   const pastGuessesContainer = document.getElementById('past-guesses-container');
   const pastGuessesDiv = document.getElementById('past-guesses');
+  const testNextBtn = document.getElementById('test-next-btn');
   const imageModal = document.getElementById('image-modal');
   const modalImg = document.getElementById('modal-img');
-  const flagImg = document.getElementById('reveal-flag');
+  const flagImg = document.getElementById('reveal-flag'); // Moving these up here!
   const mapImg = document.getElementById('reveal-map');
 
-  // Update UI Stats
-  function updateStatsUI() {
-    const totalPlayed = stats.wins + stats.losses;
-    const winPct = totalPlayed === 0 ? 0 : Math.round((stats.wins / totalPlayed) * 100);
-    document.getElementById('stat-wins').innerText = `Wins: ${stats.wins}`;
-    document.getElementById('stat-losses').innerText = `Losses: ${stats.losses}`;
-    document.getElementById('stat-winpct').innerText = `Win %: ${winPct}`;
-    document.getElementById('stat-streak').innerText = `Streak: ${stats.streak}`;
-    document.getElementById('stat-best').innerText = `Best: ${stats.bestStreak}`;
-  }
-
+  // Case-Insensitive Helper
   function getCaseInsensitive(obj, keyName) {
     if (!obj || typeof obj !== 'object') return null;
     const key = Object.keys(obj).find(k => k.toLowerCase() === keyName.toLowerCase());
     return key ? obj[key] : null;
   }
 
-  // Initial Fetch
-  fetch(`factbook/${currentTargetFile}`)
-    .then(response => response.json())
-    .then(data => {
-      countryData = data;
-      const govData = getCaseInsensitive(data, "government");
-      const namesData = getCaseInsensitive(govData, "country name");
+  // --- NEW: Reusable Load Function ---
+  function loadGame(index) {
+    currentTargetFile = countryFiles[index];
 
-      if (namesData) {
-        const checkAndAdd = (obj) => {
-          if (obj && obj.text && obj.text.toLowerCase() !== "none") {
-            validNames.push(obj.text.toLowerCase().replace(/[^a-z]/g, ''));
-            rawNamesForRedaction.push(obj.text);
-          }
-        };
-        checkAndAdd(getCaseInsensitive(namesData, "conventional short form"));
-        checkAndAdd(getCaseInsensitive(namesData, "conventional long form"));
-        checkAndAdd(getCaseInsensitive(namesData, "local short form"));
-        checkAndAdd(getCaseInsensitive(namesData, "local long form"));
+    // Reset all state variables for the new round
+    countryData = null;
+    validNames = [];
+    rawNamesForRedaction = [];
+    displayCountryName = "Unknown";
+    availableClues = [];
+    pastGuesses = [];
+    guessesLeft = 6;
+    isGameOver = false;
 
-        const peopleData = getCaseInsensitive(data, "people and society");
-        const natData = getCaseInsensitive(peopleData, "nationality");
-        const adj = getCaseInsensitive(natData, "adjective");
-        if (adj && adj.text) rawNamesForRedaction.push(adj.text);
+    // Reset the DOM (clear old clues, un-disable inputs, hide end screen)
+    guessInput.value = "";
+    guessInput.disabled = false;
+    guessBtn.disabled = false;
+    cluesContainer.innerHTML = "";
+    pastGuessesDiv.innerHTML = "";
+    pastGuessesContainer.classList.add('hidden');
+    feedbackMsg.classList.add('hidden');
+    endScreen.classList.add('hidden');
+    guessesDisplay.innerText = `Remaining Guesses: ${guessesLeft}`;
+    document.getElementById('full-data-accordion').innerHTML = "";
 
-        const shortForm = getCaseInsensitive(namesData, "conventional short form");
-        const longForm = getCaseInsensitive(namesData, "conventional long form");
-        displayCountryName = (shortForm && shortForm.text !== "none") ? shortForm.text :
-                              (longForm && longForm.text !== "none") ? longForm.text : "Unknown";
-      }
+    fetch(`factbook/${currentTargetFile}`)
+      .then(response => response.json())
+      .then(data => {
+        countryData = data;
 
-      prepClues();
-      updateStatsUI();
-      revealNextClue(); // Reveal the free 1st clue
+        const govData = getCaseInsensitive(data, "government");
+        const namesData = getCaseInsensitive(govData, "country name");
 
-      // --- NEW: Restore Past Game State ---
-      if (dailyState.guesses.length > 0) {
-        dailyState.guesses.forEach(rawGuess => {
-          const normalized = rawGuess.toLowerCase().replace(/[^a-z]/g, '');
-          pastGuesses.push(normalized);
-          guessesLeft--;
-          guessesDisplay.innerText = `Guesses: ${guessesLeft}`;
+        if (namesData) {
+          const checkAndAdd = (obj) => {
+            if (obj && obj.text && obj.text.toLowerCase() !== "none") {
+              validNames.push(obj.text.toLowerCase().replace(/[^a-z]/g, ''));
+              rawNamesForRedaction.push(obj.text);
+            }
+          };
 
-          pastGuessesContainer.classList.remove('hidden');
-          const pill = document.createElement('span');
-          pill.className = 'guess-pill';
-          pill.innerText = rawGuess;
-          pastGuessesDiv.appendChild(pill);
+          checkAndAdd(getCaseInsensitive(namesData, "conventional short form"));
+          checkAndAdd(getCaseInsensitive(namesData, "conventional long form"));
+          checkAndAdd(getCaseInsensitive(namesData, "local short form"));
+          checkAndAdd(getCaseInsensitive(namesData, "local long form"));
 
-          // Only reveal a new clue if the game didn't end on this guess
-          if (!validNames.includes(normalized) && guessesLeft > 0) revealNextClue();
-        });
-      }
+          const peopleData = getCaseInsensitive(data, "people and society");
+          const natData = getCaseInsensitive(peopleData, "nationality");
+          const adj = getCaseInsensitive(natData, "adjective");
+          if (adj && adj.text) rawNamesForRedaction.push(adj.text);
 
-      // If they already won or lost today, immediately trigger the end screen (skip saving stats)
-      if (dailyState.isGameOver) {
-        endGame(dailyState.isWin, true);
-      }
-    })
-    .catch(err => {
-      feedbackMsg.innerText = "Error loading secure database connection.";
-      feedbackMsg.className = "error";
-      feedbackMsg.classList.remove('hidden');
+          const shortForm = getCaseInsensitive(namesData, "conventional short form");
+          const longForm = getCaseInsensitive(namesData, "conventional long form");
+          displayCountryName = (shortForm && shortForm.text !== "none") ? shortForm.text :
+                                (longForm && longForm.text !== "none") ? longForm.text : "Unknown";
+        }
+
+        prepClues();
+        revealNextClue();
+      })
+      .catch(err => {
+        feedbackMsg.innerText = "Error loading secure database connection.";
+        feedbackMsg.className = "error";
+        feedbackMsg.classList.remove('hidden');
+        console.error(err);
+      });
+  }
+
+  // --- NEW: Event Listener for the Test Button ---
+  if (testNextBtn) {
+    testNextBtn.addEventListener('click', () => {
+      // Increment the index, looping back to 0 if we hit the end of the array
+      currentIndex = (currentIndex + 1) % countryFiles.length;
+      loadGame(currentIndex);
     });
+  }
 
+  // Boot up the game for the very first time!
+  loadGame(currentIndex);
+
+  // --- SMART FORMATTER: Associates sub-keys directly with values ---
+  // (Keep the rest of your file exactly the same from here down!)
+  // --- SMART FORMATTER: Associates sub-keys directly with values ---
   function formatClueData(obj) {
     if (typeof obj !== 'object' || obj === null) return String(obj);
+
     let parts = [];
-    if (obj.text) parts.push(obj.text);
+    if (obj.text) parts.push(obj.text); // Pushes base text first
+
     for (const [key, value] of Object.entries(obj)) {
       if (key === 'text') continue;
+
       if (typeof value === 'object' && value !== null) {
         const formatted = formatClueData(value);
         if (formatted) parts.push(`<strong>${key}:</strong> ${formatted}`);
@@ -411,31 +410,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (const [subName, subcategory] of Object.entries(category)) {
         const subLower = subName.toLowerCase();
+
+        // Exclusions
         if (catLower === 'government' && (subLower === 'country name' || subLower === 'capital')) continue;
         if (catLower === 'economy' && subLower === 'exchange rates') continue;
         if (catLower === 'people and society' && (subLower === 'nationality' || subLower === 'languages')) continue;
 
         let combinedText = formatClueData(subcategory);
+
         if (combinedText.trim().length > 0) {
           redactionRegexes.forEach(regex => {
-              combinedText = combinedText.replace(regex, '██████');
+             combinedText = combinedText.replace(regex, '██████');
           });
           availableClues.push({ category: catName, subcategory: subName, text: combinedText });
         }
       }
     }
-
-    // --- NEW: Deterministic Fisher-Yates Shuffle ---
-    // This guarantees the exact same clue order across page refreshes!
-    let seed = dailyIndex + 1;
-    function random() {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280;
-    }
-    for (let i = availableClues.length - 1; i > 0; i--) {
-      const j = Math.floor(random() * (i + 1));
-      [availableClues[i], availableClues[j]] = [availableClues[j], availableClues[i]];
-    }
+    availableClues.sort(() => Math.random() - 0.5);
   }
 
   function revealNextClue() {
@@ -464,24 +455,22 @@ document.addEventListener('DOMContentLoaded', () => {
       feedbackMsg.classList.remove('hidden');
       return;
     }
+
+    // --- NEW: Dictionary Validation ---
     if (!globalDictionary.includes(normalizedGuess)) {
-      feedbackMsg.innerText = "Entity not recognized. Please try a valid country or territory.";
+      feedbackMsg.innerText = "Invalid guess. Please try a valid country or territory.";
       feedbackMsg.className = "error";
       feedbackMsg.classList.remove('hidden');
-      return;
+      return; // Stop the function here so they don't lose a guess!
     }
 
     pastGuesses.push(normalizedGuess);
-    pastGuessesContainer.classList.remove('hidden');
+    if (pastGuessesContainer) pastGuessesContainer.classList.remove('hidden');
 
     const pill = document.createElement('span');
     pill.className = 'guess-pill';
     pill.innerText = rawGuess;
-    pastGuessesDiv.appendChild(pill);
-
-    // --- NEW: Save the guess to Local Storage ---
-    dailyState.guesses.push(rawGuess);
-    localStorage.setItem('factbookleState', JSON.stringify(dailyState));
+    if (pastGuessesDiv) pastGuessesDiv.appendChild(pill);
 
     if (validNames.includes(normalizedGuess)) {
       endGame(true);
@@ -492,11 +481,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (guessesLeft <= 0) {
         endGame(false);
       } else {
-        feedbackMsg.innerText = "Incorrect. A new clue has been revealed.";
+        feedbackMsg.innerText = "Incorrect. Here's a new clue.";
         feedbackMsg.className = "error";
         feedbackMsg.classList.remove('hidden');
         revealNextClue();
-        guessInput.focus();
       }
     }
   }
@@ -506,27 +494,59 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') handleGuess();
   });
 
-  // --- NEW: isRestore flag prevents double-counting stats on refresh ---
-  function endGame(isWin, isRestore = false) {
+  // --- Lightbox Click Listeners ---
+  if (flagImg) {
+    flagImg.addEventListener('click', () => {
+      modalImg.src = flagImg.src;
+      imageModal.classList.remove('hidden'); // Show the modal
+    });
+  }
+
+  if (mapImg) {
+    mapImg.addEventListener('click', () => {
+      modalImg.src = mapImg.src;
+      imageModal.classList.remove('hidden'); // Show the modal
+    });
+  }
+
+  // Clicking anywhere on the dark background closes it
+  if (imageModal) {
+    imageModal.addEventListener('click', () => {
+      imageModal.classList.add('hidden'); // Hide the modal
+    });
+  }
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+      imageModal.classList.add('hidden'); // Hide the modal
+    }
+  });
+
+  function endGame(isWin) {
     isGameOver = true;
     guessInput.disabled = true;
     guessBtn.disabled = true;
 
-    feedbackMsg.innerText = isWin ? "Access Granted. Identity confirmed." : "Access Denied. Target lost.";
+    feedbackMsg.innerText = isWin ? "Yes! Nice." : "Darn, ya didn't get it!";
     feedbackMsg.className = isWin ? "success" : "error";
     feedbackMsg.classList.remove('hidden');
 
     const endTitle = document.getElementById('end-title');
-    endTitle.innerText = isWin ? "Mission Success" : "Mission Failed";
+    endTitle.innerText = isWin ? "Success!" : "Failure :(";
     endTitle.style.color = isWin ? "#a9c191" : "#c48b8b";
 
-    document.getElementById('reveal-country-name').innerText = displayCountryName;
-
+    // --- NEW: Visual Reveal (Flags and Maps) ---
+    // Extract the base name without the '.json' (e.g., 'anguilla.json' becomes 'anguilla')
     const baseFileName = currentTargetFile.replace('.json', '');
+    // const flagImg = document.getElementById('reveal-flag');
+    // const mapImg = document.getElementById('reveal-map');
+
     const validExtensions = ['webp', 'gif', 'svg', 'png', 'jpg', 'jpeg'];
 
     function findAndLoadImage(imgElement, folder) {
       let currentExtIndex = 0;
+
       imgElement.onload = null;
       imgElement.onerror = null;
 
@@ -535,25 +555,33 @@ document.addEventListener('DOMContentLoaded', () => {
           imgElement.style.display = 'none';
           return;
         }
-        imgElement.onload = () => { imgElement.style.display = 'block'; };
+
+        imgElement.onload = () => {
+          imgElement.style.display = 'block';
+        };
+
         imgElement.onerror = () => {
           currentExtIndex++;
           tryNextExtension();
         };
+
         imgElement.src = `images/${folder}/${baseFileName}.${validExtensions[currentExtIndex]}`;
       };
+
       tryNextExtension();
     }
 
-    if (flagImg) findAndLoadImage(flagImg, 'flags');
-    if (mapImg) findAndLoadImage(mapImg, 'maps');
+    findAndLoadImage(flagImg, '../images/flags');
+    findAndLoadImage(mapImg, '../images/maps');
+
+    document.getElementById('reveal-country-name').innerText = displayCountryName;
 
     const govData = getCaseInsensitive(countryData, "government");
     const namesData = getCaseInsensitive(govData, "country name");
     let nameHtml = "";
     if (namesData) {
       for (const [key, val] of Object.entries(namesData)) {
-          if (val.text && val.text.toLowerCase() !== "none") nameHtml += `<strong>${key}:</strong> ${val.text}<br>`;
+         if (val.text && val.text.toLowerCase() !== "none") nameHtml += `<strong>${key}:</strong> ${val.text}<br>`;
       }
     }
     document.getElementById('reveal-names').innerHTML = nameHtml;
@@ -563,11 +591,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('reveal-background').innerHTML = bgData?.text || "No background available.";
 
     const accordion = document.getElementById('full-data-accordion');
-    accordion.innerHTML = ""; // Clear out old data if restoring
     for (const [catName, category] of Object.entries(countryData)) {
       if (catName.toLowerCase() === 'introduction') continue;
+
       const details = document.createElement('details');
       details.className = 'fact-category';
+
       const summary = document.createElement('summary');
       summary.innerText = catName;
       details.appendChild(summary);
@@ -576,68 +605,17 @@ document.addEventListener('DOMContentLoaded', () => {
       contentDiv.className = 'fact-content';
 
       for (const [subName, subcategory] of Object.entries(category)) {
-          let formattedText = formatClueData(subcategory);
-          if (formattedText.trim().length > 0) {
-            contentDiv.innerHTML += `<div style="margin-bottom: 12px;"><strong><u>${subName}</u>:</strong><br>${formattedText}</div>`;
-          }
+         let formattedText = formatClueData(subcategory);
+         if (formattedText.trim().length > 0) {
+           contentDiv.innerHTML += `<div style="margin-bottom: 12px;"><strong><u>${subName}</u>:</strong><br>${formattedText}</div>`;
+         }
       }
+
       details.appendChild(contentDiv);
       accordion.appendChild(details);
     }
 
     endScreen.classList.remove('hidden');
-    if (!isRestore) endScreen.scrollIntoView({ behavior: 'smooth' });
-
-    // --- NEW: Save Stats (Only if this is a fresh win/loss, not a refresh!) ---
-    if (!isRestore) {
-      dailyState.isGameOver = true;
-      dailyState.isWin = isWin;
-
-      if (isWin) stats.wins++;
-      else stats.losses++;
-
-      // Streak logic (Days in a row played)
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      const yesterdayStr = yesterday.toLocaleDateString('en-CA');
-
-      if (stats.lastPlayedDate === yesterdayStr) {
-        stats.streak++;
-      } else if (stats.lastPlayedDate !== todayStr) {
-        stats.streak = 1; // Reset to 1 if they missed a day
-      }
-
-      if (stats.streak > stats.bestStreak) stats.bestStreak = stats.streak;
-      stats.lastPlayedDate = todayStr;
-
-      localStorage.setItem('factbookleStats', JSON.stringify(stats));
-      localStorage.setItem('factbookleState', JSON.stringify(dailyState));
-      updateStatsUI();
-    }
+    endScreen.scrollIntoView({ behavior: 'smooth' });
   }
-
-  // Lightbox Click Listeners
-  if (flagImg) {
-    flagImg.addEventListener('click', () => {
-      modalImg.src = flagImg.src;
-      imageModal.classList.remove('hidden');
-    });
-  }
-  if (mapImg) {
-    mapImg.addEventListener('click', () => {
-      modalImg.src = mapImg.src;
-      imageModal.classList.remove('hidden');
-    });
-  }
-  if (imageModal) {
-    imageModal.addEventListener('click', () => {
-      imageModal.classList.add('hidden');
-    });
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
-      imageModal.classList.add('hidden');
-    }
-  });
-
 });

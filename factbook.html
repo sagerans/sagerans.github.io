@@ -34,12 +34,26 @@
       <div class="sim-header">
         <div>
           <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Factbookle</h3>
-          <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="game-instructions">You have 6 guesses.</p>
+          <div id="stats-display" style="display: flex; gap: 15px; font-size: 0.85em; color: #888; font-weight: bold; text-transform: uppercase;">
+            <span id="stat-wins">Wins: 0</span>
+            <span id="stat-losses">Losses: 0</span>
+            <span id="stat-winpct">Win %: 0</span>
+            <span id="stat-streak">Streak: 0</span>
+            <span id="stat-best">Best: 0</span>
+          </div>
         </div>
         <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
       </div>
 
       <!--
+      <div class="sim-header">
+        <div>
+          <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Factbookle</h3>
+          <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="game-instructions">You have 6 guesses.</p>
+        </div>
+        <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
+      </div>
+
       <div style="text-align: right; margin-bottom: 10px;">
         <button id="test-next-btn" class="guess-pill" style="cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff;">Test Next Country &rarr;</button>
       </div>
@@ -47,7 +61,7 @@
 
       <div id="game-ui">
         <div class="input-row">
-          <input type="text" id="country-guess" placeholder="Enter country name..." autocomplete="off" />
+          <input type="text" id="country-guess" placeholder="Enter country name..." autocomplete="off" autofocus />
           <button id="guess-btn" <!--class="menu-btn"-->Guess</button>
         </div>
 
