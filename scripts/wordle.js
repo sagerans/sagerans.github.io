@@ -1,7 +1,7 @@
 const WORD_LENGTH = 5;
 const MAX_GUESSES = 6;
 // Simple word list (expand or load from JSON)
-const wordList = ["bitch", "cunts", "fucks", "skank", "sluts", "shits", "dummy", "fucky", "ninja", "sigma", "cunty", "clits", "gspot", "chink", "titty", "boobs", "poons", "wanks", "jerks", "blown", "trash", "tramp", "whore", "queef", "tards", "pissa", "shite", "droog", "spank", "daddy", "mommy", "erect", "shart"];
+const wordList = ["bitch", "cunts", "fucks", "skank", "sluts", "shits", "dummy", "fucky", "sigma", "cunty", "clits", "gspot", "titty", "boobs", "poons", "wanks", "jerks", "blown", "trash", "tramp", "whore", "queef", "tards", "pissa", "shite", "droog", "spank", "daddy", "mommy", "erect", "shart"];
 let validWords = [];
 let solution;
 let currentGuess = "";
