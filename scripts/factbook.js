@@ -300,6 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalImg = document.getElementById('modal-img');
   const flagImg = document.getElementById('reveal-flag');
   const mapImg = document.getElementById('reveal-map');
+  const shareBtn = document.getElementById('share-btn');
+
 
   // Update UI Stats
   function updateStatsUI() {
@@ -359,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const normalized = rawGuess.toLowerCase().replace(/[^a-z]/g, '');
           pastGuesses.push(normalized);
           guessesLeft--;
-          guessesDisplay.innerText = `Guesses: ${guessesLeft}`;
+          guessesDisplay.innerText = `Remaining Guesses: ${guessesLeft}`;
 
           pastGuessesContainer.classList.remove('hidden');
           const pill = document.createElement('span');
@@ -512,13 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
     guessInput.disabled = true;
     guessBtn.disabled = true;
 
-    feedbackMsg.innerText = isWin ? "Access Granted. Identity confirmed." : "Access Denied. Target lost.";
+    feedbackMsg.innerText = isWin ? "You figured it out!": "Better luck next time :/";
     feedbackMsg.className = isWin ? "success" : "error";
     feedbackMsg.classList.remove('hidden');
 
     const endTitle = document.getElementById('end-title');
-    endTitle.innerText = isWin ? "Mission Success" : "Mission Failed";
+    endTitle.innerText = isWin ? "Success!" : "Failure :(";
     endTitle.style.color = isWin ? "#a9c191" : "#c48b8b";
+
+    if (shareBtn) shareBtn.style.display = 'block'; // reveal share button
 
     document.getElementById('reveal-country-name').innerText = displayCountryName;
 
@@ -640,4 +644,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // --- NEW: Share Button Logic (Spoiler-Free Globes) ---
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      // If loss, print 'x/6', otherwise print the number of guesses
+      const guessCount = dailyState.isWin ? dailyState.guesses.length : 'x';
+      const statusText = dailyState.isWin ? "WIN" : "LOSS";
+      const globes = ['🌎', '🌍', '🌏'];
+
+      let emojis = "";
+      for (let i = 0; i < dailyState.guesses.length; i++) {
+        // If they won, make the final guess the map emoji
+        if (dailyState.isWin && i === dailyState.guesses.length - 1) {
+          emojis += "🗺️";
+        }
+        // If they lost, make the 6th guess the exploding head emoji
+        else if (!dailyState.isWin && i === 5) {
+          emojis += "🤯";
+        }
+        // Otherwise, pick a random globe for the incorrect guess
+        else {
+          emojis += globes[Math.floor(Math.random() * globes.length)];
+        }
+      }
+
+      // Assemble the exact string you requested
+      const shareText = `Factbookle ${dailyState.date}\nGuesses: ${guessCount}/6\n${statusText}\n${emojis}\nhttps://sagerans.com/factbook`;
+
+      // Copy to clipboard and briefly change the button text to "Copied!"
+      navigator.clipboard.writeText(shareText).then(() => {
+        const originalText = shareBtn.innerText;
+        shareBtn.innerText = "Copied!";
+        setTimeout(() => { shareBtn.innerText = originalText; }, 2000);
+      }).catch(err => {
+        alert("Failed to copy to clipboard.");
+      });
+    });
+  }
 });

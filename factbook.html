@@ -83,7 +83,11 @@
       <div id="clues-container"></div>
 
       <div id="end-screen" class="hidden">
-        <h2 id="end-title" style="color: #a9c191; text-align: center;"></h2>
+        <!-- <h2 id="end-title" style="color: #a9c191; text-align: center;"></h2> -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
+          <h2 id="end-title" style="margin: 0; color: #a9c191;"></h2>
+          <button id="share-btn" class="guess-pill" style="display: none; cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease;">Share &rarr;</button>
+        </div>
 
         <div id="reveal-data" class="clue-card" style="background: #fffdf2; border-color: #a9c191;">
           <h3 style="margin-top: 0; color: #696969;">Entity: <span id="reveal-country-name" style="color: #a9c191;"></span></h3>
