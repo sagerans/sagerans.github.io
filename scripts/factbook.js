@@ -644,41 +644,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- NEW: Share Button Logic (Spoiler-Free Globes) ---
+  // --- Share Button Logic (Native Mobile Share + Desktop Clipboard) ---
   if (shareBtn) {
     shareBtn.addEventListener('click', () => {
-      // If loss, print 'x/6', otherwise print the number of guesses
       const guessCount = dailyState.isWin ? dailyState.guesses.length : 'x';
       const statusText = dailyState.isWin ? "WIN" : "LOSS";
       const globes = ['🌎', '🌍', '🌏'];
 
       let emojis = "";
       for (let i = 0; i < dailyState.guesses.length; i++) {
-        // If they won, make the final guess the map emoji
         if (dailyState.isWin && i === dailyState.guesses.length - 1) {
           emojis += "🗺️";
-        }
-        // If they lost, make the 6th guess the exploding head emoji
-        else if (!dailyState.isWin && i === 5) {
+        } else if (!dailyState.isWin && i === 5) {
           emojis += "🤯";
-        }
-        // Otherwise, pick a random globe for the incorrect guess
-        else {
+        } else {
           emojis += globes[Math.floor(Math.random() * globes.length)];
         }
       }
 
-      // Assemble the exact string you requested
       const shareText = `Factbookle ${dailyState.date}\nGuesses: ${guessCount}/6\n${statusText}\n${emojis}\nhttps://sagerans.com/factbook`;
 
-      // Copy to clipboard and briefly change the button text to "Copied!"
-      navigator.clipboard.writeText(shareText).then(() => {
-        const originalText = shareBtn.innerText;
-        shareBtn.innerText = "Copied!";
-        setTimeout(() => { shareBtn.innerText = originalText; }, 2000);
-      }).catch(err => {
-        alert("Failed to copy to clipboard.");
-      });
+      // NEW: Detect if it's a mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      // If Web Share API is supported AND we are on mobile, pop the native share sheet
+      if (navigator.share && isMobile) {
+        navigator.share({
+          text: shareText
+        }).catch(err => {
+          // If the user dismisses the share sheet, do nothing.
+          // We just catch the error so the console doesn't complain.
+          console.log("Share sheet dismissed or failed:", err);
+        });
+      } else {
+        // Fallback for Desktop: Copy to clipboard
+        navigator.clipboard.writeText(shareText).then(() => {
+          const originalText = shareBtn.innerText;
+          shareBtn.innerText = "Copied!";
+          setTimeout(() => { shareBtn.innerText = originalText; }, 2000);
+        }).catch(err => {
+          alert("Failed to copy to clipboard.");
+        });
+      }
     });
   }
 });
