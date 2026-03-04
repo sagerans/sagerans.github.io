@@ -208,8 +208,11 @@ function clearDailyState() {
 
 // for mobile sharing
 async function smartShare(text) {
+  // check for mobile browser
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   // Prefer native share sheet when available
-  if (navigator.share) {
+  if (navigator.share && isMobile) { // NEW CHANGE HERE
     try {
       await navigator.share({
         title: "Sage Hangman",

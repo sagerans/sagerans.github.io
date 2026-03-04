@@ -35,7 +35,7 @@ section {
 /* Layering fix to keep content above the falling sage leaves */
 header, footer, .hero, #lens-sim-wrapper, #hangman, #wordle,
 #contact-page-container, .about-container, .landing-container,
-.portal-card {
+.portal-card, .contact-form-wrapper {
   position: relative;
   z-index: 10;
 }
