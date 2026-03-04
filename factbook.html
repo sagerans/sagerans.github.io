@@ -25,16 +25,17 @@
       </nav>
     </header>
 
-    <main class="landing-container" style="width: 100%; max-width: 800px; margin: 0 auto;">
+    <main class="landing-container" style="width: calc(100% - 40px); max-width: 800px; margin: 0 auto; box-sizing: border-box;">
 
-      <div style="margin-bottom: 20px; text-align: left;">
+      <div style="margin-bottom: 20px; margin-top: 30px; text-align: left;">
         <a href="games.html" class="back-link">&larr; Back to Games</a>
       </div>
 
       <div class="sim-header">
         <div>
           <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Factbookle</h3>
-          <div id="stats-display" style="display: flex; gap: 15px; font-size: 0.85em; color: #888; font-weight: bold; text-transform: uppercase;">
+          <div id="stats-display" style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.85em; color: #888; font-weight: bold; text-transform: uppercase;">
+          <!-- <div id="stats-display" style="display: flex; gap: 15px; font-size: 0.85em; color: #888; font-weight: bold; text-transform: uppercase;"> -->
             <span id="stat-wins">Wins: 0</span>
             <span id="stat-losses">Losses: 0</span>
             <span id="stat-winpct">Win %: 0</span>
@@ -45,32 +46,11 @@
         <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
       </div>
 
-      <!--
-      <div class="sim-header">
-        <div>
-          <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Factbookle</h3>
-          <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;" id="game-instructions">You have 6 guesses.</p>
-        </div>
-        <div style="font-weight: bold; color: #c48b8b;" id="guesses-left">Remaining Guesses: 6</div>
-      </div>
-
-      <div style="text-align: right; margin-bottom: 10px;">
-        <button id="test-next-btn" class="guess-pill" style="cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff;">Test Next Country &rarr;</button>
-      </div>
-      -->
-
       <div id="game-ui">
         <div class="input-row">
           <input type="text" id="country-guess" placeholder="Enter country name..." autocomplete="off" autofocus />
           <button id="guess-btn" <!--class="menu-btn"-->Guess</button>
         </div>
-
-        <!--
-        <div id="past-guesses-container" class="hidden" style="margin-bottom: 20px;">
-          <span style="font-size: 0.85em; color: #888; text-transform: uppercase; font-weight: bold;">Past Guesses:</span>
-          <div id="past-guesses" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;"></div>
-        </div>
-        -->
 
         <div id="past-guesses-container" class="hidden" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
           <span style="font-size: 0.85em; color: #888; text-transform: uppercase; font-weight: bold; margin-right: 4px;">Past Guesses:</span>
@@ -83,7 +63,6 @@
       <div id="clues-container"></div>
 
       <div id="end-screen" class="hidden">
-        <!-- <h2 id="end-title" style="color: #a9c191; text-align: center;"></h2> -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px;">
           <h2 id="end-title" style="margin: 0; color: #a9c191;"></h2>
           <button id="share-btn" class="guess-pill" style="display: none; cursor: pointer; background: #e8c374; border-color: #e8c374; color: #fff; font-size: 0.9em; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease;">Share &rarr;</button>
