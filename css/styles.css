@@ -6,7 +6,7 @@
   --btn-bg: #e7efdf;        /* Very light sage for button backgrounds */
   --bg-interactive-dropdown: #ffffff;
   --bg-card-hover: #f5f1df;
-  --bg-footer: #4d4d4d;
+  --bg-footer: #fff8dc; /* #4d4d4d; */
 
   /* Text */
   --text-main: #696969;     /* Standard gray text */
@@ -197,7 +197,7 @@ footer {
   text-align: center;
   padding: 10px;
   background: var(--bg-footer); /* #4d4d4d; */
-  color: var(--bg-card);
+  color: var(--text-main);
 }
 
 /* =========================================
