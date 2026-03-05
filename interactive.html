@@ -12,6 +12,14 @@
     <div id="leaves-container"></div>
 
     <header>
+      <div class="theme-switch-wrapper">
+        <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
       <h1><a href="index.html">Sage Ransom</a></h1>
       <nav>
         <ul>
@@ -30,8 +38,8 @@
       <section id="optics" style="margin-bottom: 80px; padding-top: 40px;">
         <div class="sim-header">
           <div>
-            <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Optics</h3>
-            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">Adjust the lens, light source, or screen.</p>
+            <h3 style="color: var(--text-main); margin-top: 0; margin-bottom: 5px; text-align: left;">Optics</h3>
+            <p style="font-size: 0.9em; color: var(--text-muted); text-align: left; margin: 0;">Adjust the lens, light source, or screen.</p>
           </div>
           <div style="display: flex; gap: 10px;">
             <select id="source-type" class="lens-dropdown">
@@ -54,8 +62,8 @@
       <section id="waves" style="margin-bottom: 80px; padding-top: 40px;">
         <div class="sim-header">
           <div>
-            <h3 style="color: #696969; margin-top: 0; margin-bottom: 5px; text-align: left;">Wave Interference</h3>
-            <p style="font-size: 0.9em; color: #888; text-align: left; margin: 0;">Play with waves!</p>
+            <h3 style="color: var(--text-main); margin-top: 0; margin-bottom: 5px; text-align: left;">Wave Interference</h3>
+            <p style="font-size: 0.9em; color: var(--text-muted); text-align: left; margin: 0;">Play with waves!</p>
           </div>
           <div>
             <button id="reset-waves" class="lens-dropdown">Reset</button>

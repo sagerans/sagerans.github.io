@@ -2007,7 +2007,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const endTitle = document.getElementById('end-title');
     endTitle.innerText = isWin ? "Success!" : "Failure :(";
-    endTitle.style.color = isWin ? "#a9c191" : "#c48b8b";
+    endTitle.style.color = isWin ? "var(--accent-main)" : "var(--error-color)";
 
     if (shareBtn) shareBtn.style.display = 'block'; // reveal share button
 

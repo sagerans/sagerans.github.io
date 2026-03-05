@@ -265,3 +265,30 @@ function renderBlogPosts() {
 
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", renderBlogPosts);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleSwitch = document.getElementById('theme-checkbox');
+
+  if (!toggleSwitch) return; // Failsafe if the toggle isn't on this specific page
+
+  // 1. Check local storage OR the user's system preferences
+  const currentTheme = localStorage.getItem('theme') ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+  // 2. Apply the theme on load and physically check the box if needed
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleSwitch.checked = true;
+  }
+
+  // 3. Listen for the slider movement
+  toggleSwitch.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+});
