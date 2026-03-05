@@ -56,6 +56,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Forces main content to stretch, pushing footer to the bottom */
@@ -93,6 +94,18 @@ header {
   padding-bottom: 25px;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+/* --- Header Infinite Bleed for Overscroll --- */
+header::before {
+  content: "";
+  position: absolute;
+  top: -100vh;    /* Stretches it infinitely upwards */
+  left: -100vw;   /* Stretches it infinitely left */
+  right: -100vw;  /* Stretches it infinitely right */
+  bottom: 0;      /* Anchors it flush with the bottom of the header */
+  background: inherit; /* Magically copies whatever the header background is */
+  z-index: -1;    /* Tucks it safely behind your text and buttons */
 }
 
 header h1 {
