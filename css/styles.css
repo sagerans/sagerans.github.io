@@ -400,7 +400,8 @@ button {
 }
 
 .game-btn:hover {
-  background: #c7d6b8;
+  background: var(--accent-hover); /* #c7d6b8; */
+  color: var(--bg-card);
 }
 
 /* =========================================
@@ -1522,6 +1523,25 @@ details.fact-category[open] > summary::before {
   }
   .guess-wrapper {
     position: static; /* Removes the anchor from the text box */
+  }
+
+  /* Make the toggle look better on mobile */
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .theme-switch-wrapper {
+    position: static;       /* Removes it from the top right corner */
+    transform: scale(1);    /* Restores it to full, comfortable tapping size */
+    order: 3;               /* Magically moves it BELOW the nav menu */
+    margin-top: 20px;       /* Adds breathing room between the nav and the toggle */
+  }
+
+  header h1 {
+    margin-bottom: 15px;
   }
 }
 
