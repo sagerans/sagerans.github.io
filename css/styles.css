@@ -1119,6 +1119,7 @@ body.physics-page {
   height: 100vh;
   margin: 0;
   /* overflow: hidden; */
+  /* overscroll-behavior: none; */
 }
 
 #physics-container {
