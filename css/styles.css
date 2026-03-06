@@ -1116,9 +1116,9 @@ cube-container {
 body.physics-page {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 100vh;
   margin: 0;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 #physics-container {
