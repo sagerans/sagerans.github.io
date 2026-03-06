@@ -53,7 +53,7 @@ html {
   /* The Safari Rubber-Band Fix:
     Makes the top background the header color, and the rest the body color! */
   background: linear-gradient(
-    to bottom,
+    to top,
     var(--accent-main) 0%,
     var(--accent-main) 250px,
     var(--bg-body) 250px,
