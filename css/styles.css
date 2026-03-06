@@ -244,7 +244,7 @@ input:checked + .slider:before {
 footer {
   text-align: center;
   padding: 10px;
-  background: var(--bg-footer); /* #4d4d4d; */
+  background: transparent; /* var(--bg-footer); */ /* #4d4d4d; */
   color: var(--text-main);
 }
 
