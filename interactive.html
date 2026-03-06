@@ -6,6 +6,8 @@
     <title>Interactive | Sage Ransom</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   </head>
   <body>
 
@@ -82,6 +84,65 @@
         </div>
       </section>
 
+      <section id="wave-simulator-container">
+        <div class="sim-header">
+          <h3 style="color: var(--text-main); margin: 0;">Wave Interference Synthesizer</h3>
+          <div>
+            <button id="master-play-btn" class="menu-btn">▶ Play Tone</button>
+            <button id="add-wave-btn" class="menu-btn">+ Add Sine Wave</button>
+          </div>
+        </div>
+
+        <div id="wave-canvas-wrapper" style="background: var(--bg-card); border: 2px solid var(--accent-main); border-radius: 12px; padding: 10px; margin-bottom: 20px; box-shadow: 0 6px 14px rgba(0,0,0,0.08);">
+          <canvas id="wave-canvas" width="800" height="300" style="width: 100%; height: auto; display: block; background: var(--bg-body); border-radius: 8px;"></canvas>
+        </div>
+
+        <div class="wave-card" style="margin-bottom: 20px; padding: 15px 20px;">
+          <h4 style="margin: 0 0 15px 0; color: var(--text-main); text-align: center;">Semitone Frequency Calculator</h4>
+
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 50px;">
+
+            <div id="calc-equation" class="wave-equation" style="flex: 1.5; text-align: center; min-width: 250px;"></div>
+
+            <div class="wave-inputs" style="flex: 1; min-width: 200px;">
+              <div class="wave-input-group">
+                <label>Base Freq (f₀)</label>
+                <input type="number" id="calc-base-freq" step="1" value="440">
+              </div>
+              <div class="wave-input-group">
+                <label>Semitones (n)</label>
+                <input type="number" id="calc-semitones" step="1" value="7">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--
+        <div class="wave-card" style="margin-bottom: 20px;">
+          <div class="wave-card-header">
+            <h4 style="margin: 0; color: var(--text-main);">Semitone Frequency Calculator</h4>
+          </div>
+
+          <div style="margin: 15px 0; min-height: 40px; display: flex; align-items: center; justify-content: center;">
+              <div id="calc-equation" class="wave-equation"></div>
+          </div>
+
+          <div class="wave-inputs">
+            <div class="wave-input-group">
+              <label>Base Frequency (f₀)</label>
+              <input type="number" id="calc-base-freq" step="1" value="440">
+            </div>
+            <div class="wave-input-group">
+              <label>Semitones (n)</label>
+              <input type="number" id="calc-semitones" step="1" value="7">
+            </div>
+          </div>
+        </div>
+        -->
+
+        <div id="waves-list" style="display: flex; flex-direction: column; gap: 15px;"></div>
+      </section>
+
     </main>
 
     <footer>
@@ -90,6 +151,7 @@
 
     <script src="scripts/lens.js"></script>
     <script src="scripts/waves.js"></script>
+    <script src="scripts/soundwaves.js"></script>
     <script src="scripts/script.js"></script>
   </body>
 </html>
