@@ -1118,7 +1118,7 @@ body.physics-page {
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 #physics-container {
