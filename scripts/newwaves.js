@@ -11,60 +11,48 @@ document.addEventListener('DOMContentLoaded', () => {
   let isPlaying = false;
   let waveIdCounter = 0;
 
-  // State array to hold all our wave data
   let waves = [];
 
-  // Initialize the Web Audio API (Must be triggered by a user click)
+  // --- AUDIO INIT & COMPRESSOR ---
   function initAudio() {
     if (audioCtx) return;
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.5; // Master volume
+    masterGain.gain.value = 0.5;
     masterGain.connect(audioCtx.destination);
     updateMasterVolume();
   }
 
-  // --- NEW: Auto-Compressor to prevent speaker clipping ---
   function updateMasterVolume() {
     if (!masterGain) return;
-
     let totalAmplitude = 0;
     waves.forEach(w => {
       totalAmplitude += Math.abs(w.a);
     });
-
-    // Baseline volume is 0.5. If total amplitude exceeds 1, scale it down proportionally.
+    // Auto-compress to prevent speakers from clipping
     const safeVolume = 0.5 / Math.max(1, totalAmplitude);
-
-    // Smoothly ramp to the new volume over 0.1 seconds to prevent audio "pops" or clicking
     masterGain.gain.setTargetAtTime(safeVolume, audioCtx.currentTime, 0.1);
   }
 
-  // Generate the LaTeX string for KaTeX
+  // --- UI & EQUATIONS ---
   function updateEquationDisplay(wave) {
     const eqDiv = document.getElementById(`eq-${wave.id}`);
     if (!eqDiv) return;
 
-    // Format the math: y(t) = A * sin( 2pi(f)(t - phi) ) + D
     const A = wave.a;
     const f = wave.f;
-    const phi = wave.phi;
-    const D = wave.d;
+    const phi = wave.phi; // Now perfectly in radians
 
-    // We use 2\pi(f) so it looks clean, e.g., 2π(440)
-    const latexStr = `y(t) = ${A} \\sin(2\\pi\\cdot${f}\\cdot(t - ${phi}))`; //  ${D >= 0 ? '+' : '-'} ${Math.abs(D)}`;
-
-    // Render the math!
+    // Formatted as standard physics math: A sin(2π(f)t - φ) + D
+    const latexStr = `y(t) = ${A} \\sin[2\\pi\\cdot${f}\\cdot(t - ${phi})]`;
     katex.render(latexStr, eqDiv, { throwOnError: false });
   }
 
-  function addWave(a = 1, f = 440, phi = 0, d = 0) { // Default is now cleanly 440 Hz!
+  function addWave(a = 1, f = 440, phi = 0, d = 0) {
     const id = waveIdCounter++;
-
     const waveData = { id, a, f, phi, d, osc: null, delay: null, gain: null };
     waves.push(waveData);
 
-    // Create the UI Card
     const card = document.createElement('div');
     card.className = 'wave-card';
     card.id = `wave-card-${id}`;
@@ -84,21 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type="number" step="1" value="${f}" data-id="${id}" data-param="f">
         </div>
         <div class="wave-input-group">
-          <label>Phase Shift (φ)</label>
-          <input type="number" step="0.001" value="${phi}" data-id="${id}" data-param="phi">
-        </div>
-        <div class="wave-input-group">
-          <label>Vertical Shift (D)</label>
-          <input type="number" step="0.1" value="${d}" data-id="${id}" data-param="d">
+          <label>Phase Shift (rad)</label>
+          <input type="number" step="0.01" value="${phi}" data-id="${id}" data-param="phi">
         </div>
       </div>
     `;
 
-    wavesList.prepend(card);
+    // Forcefully add new waves to the absolute top of the list
+    if (wavesList.firstChild) {
+      wavesList.insertBefore(card, wavesList.firstChild);
+    } else {
+      wavesList.appendChild(card);
+    }
+
     updateEquationDisplay(waveData);
     updateMasterVolume();
 
-    // Event listeners for live updates
+    // Live update listeners
     card.querySelectorAll('input').forEach(input => {
       input.addEventListener('input', (e) => {
         const param = e.target.dataset.param;
@@ -106,10 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         waveData[param] = val;
         updateEquationDisplay(waveData);
         updateAudioNode(waveData);
-
-        if (param === 'a' || param === 'd') {
-          updateMasterVolume();
-        }
+        if (param === 'a') updateMasterVolume();
       });
     });
 
@@ -117,7 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
       removeWave(id);
     });
 
-    if (isPlaying) startAudioNode(waveData);
+    // If already playing, start this new wave synced up slightly in the future
+    if (isPlaying) {
+      const syncTime = audioCtx.currentTime + 0.05;
+      startAudioNode(waveData, syncTime);
+    }
   }
 
   function removeWave(id) {
@@ -128,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (wave.osc) {
       wave.osc.stop();
       wave.osc.disconnect();
+      wave.delay.disconnect();
       wave.gain.disconnect();
     }
 
@@ -137,43 +129,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- AUDIO ROUTING ---
-  function startAudioNode(wave) {
+  function startAudioNode(wave, syncTime = null) {
     if (!audioCtx) initAudio();
-    if (wave.osc) return; // Already playing
+    if (wave.osc) return;
 
     wave.osc = audioCtx.createOscillator();
-    wave.delay = audioCtx.createDelay(10); // Max 10s delay
+    wave.delay = audioCtx.createDelay(10);
     wave.gain = audioCtx.createGain();
-
     wave.osc.type = 'sine';
 
     updateAudioNode(wave);
 
-    // Route: Osc -> Delay -> Gain -> Master
     wave.osc.connect(wave.delay);
     wave.delay.connect(wave.gain);
     wave.gain.connect(masterGain);
 
-    wave.osc.start();
+    const startTime = syncTime || audioCtx.currentTime;
+    wave.osc.start(startTime);
   }
 
   function updateAudioNode(wave) {
     if (!wave.osc) return;
 
-    // We can now pass the frequency directly without dividing!
     wave.osc.frequency.setTargetAtTime(wave.f, audioCtx.currentTime, 0.05);
-
-    // Amplitude mapping
     wave.gain.gain.setTargetAtTime(wave.a, audioCtx.currentTime, 0.05);
 
-    // Phase shift translates to a time delay in Web Audio.
-    // We modulo the delay by the period (1/f) so it doesn't try to delay for minutes if they type a big number.
+    // Math: Delay time based on radians
     const period = wave.f !== 0 ? Math.abs(1 / wave.f) : 0;
-    const delayTime = period !== 0 ? Math.abs(wave.phi) % period : 0;
+
+    // Divide the shift by 2PI to get the fraction of the period
+    let phaseFraction = wave.phi / (2 * Math.PI);
+    phaseFraction = phaseFraction % 1; // Keep it within 1 cycle
+    if (phaseFraction < 0) phaseFraction += 1; // Handle negative phase gracefully
+
+    const delayTime = period !== 0 ? phaseFraction * period : 0;
     wave.delay.delayTime.setTargetAtTime(delayTime, audioCtx.currentTime, 0.05);
   }
 
-  // --- PLAY/PAUSE LOGIC ---
+  // --- MASTER PLAY/PAUSE ---
   playBtn.addEventListener('click', () => {
     initAudio();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -183,6 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (w.osc) {
           w.osc.stop();
           w.osc.disconnect();
+          w.delay.disconnect();
+          w.gain.disconnect();
           w.osc = null;
         }
       });
@@ -190,7 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
       playBtn.style.background = "";
       playBtn.style.color = "";
     } else {
-      waves.forEach(w => startAudioNode(w));
+      // Synchronize all waves to start at the exact same digital sample!
+      const syncTime = audioCtx.currentTime + 0.05;
+      waves.forEach(w => startAudioNode(w, syncTime));
+
       playBtn.innerText = "⏸ Stop Tone";
       playBtn.style.background = "var(--error-color)";
       playBtn.style.color = "#fff";
@@ -199,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   addBtn.addEventListener('click', () => {
-    addWave(1, 440, 0, 0); // Adds a new A440 wave
+    addWave(1, 440, 0, 0);
   });
 
   // --- REAL-TIME VISUALIZER ---
@@ -207,50 +205,41 @@ document.addEventListener('DOMContentLoaded', () => {
   function drawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw center line
     ctx.beginPath();
     ctx.moveTo(0, canvas.height / 2);
     ctx.lineTo(canvas.width, canvas.height / 2);
-    ctx.strokeStyle = "rgba(136, 136, 136, 0.3)"; // Muted axis
+    ctx.strokeStyle = "rgba(136, 136, 136, 0.3)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.beginPath();
-    const waveColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-main').trim();
+    // Read the CSS variable live so it updates instantly on dark mode toggle!
+    const waveColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-main').trim() || "#a9c191";
     ctx.strokeStyle = waveColor;
     ctx.lineWidth = 3;
 
-    // --- NEW: Dynamic Auto-Scaling ---
-    // Calculate the absolute maximum peak possible with the current active waves
+    // Dynamic Auto-Scaling math
     let maxPeak = 0;
     waves.forEach(w => {
-      if (w.f !== 0) {
-        maxPeak += Math.abs(w.a) + Math.abs(w.d);
-      }
+      if (w.f !== 0) maxPeak += Math.abs(w.a);
     });
 
-    // Set a baseline boundary (e.g., 2.5 units).
-    // This prevents a tiny wave (Amplitude 0.1) from aggressively zooming in to fill the whole screen.
     const visualBoundary = Math.max(2.5, maxPeak);
-
-    // Calculate the scale to leave a 10% safety margin at the top and bottom of the canvas
     const usableHalfHeight = (canvas.height / 2) * 0.9;
     const dynamicScale = usableHalfHeight / visualBoundary;
-    // ---------------------------------
 
     const timeWindow = 0.01;
 
     for (let x = 0; x < canvas.width; x++) {
       const t = (x / canvas.width) * timeWindow + timeOffset;
-
       let combinedY = 0;
 
       waves.forEach(w => {
         if (w.f === 0) return;
-        combinedY += w.a * Math.sin(2 * Math.PI * w.f * (t - w.phi)) + w.d;
+        // Perfect radian physics math
+        combinedY += w.a * Math.sin(2 * Math.PI * w.f * t - w.phi);
       });
 
-      // Map mathematical Y to pixel Y using our new dynamicScale!
       const pixelY = (canvas.height / 2) - (combinedY * dynamicScale);
 
       if (x === 0) ctx.moveTo(x, pixelY);
@@ -258,17 +247,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     ctx.stroke();
-
     if (isPlaying) timeOffset += 0.0001;
-
     requestAnimationFrame(drawCanvas);
   }
-  // Start the render loop and load the default wave
+
   drawCanvas();
-  addWave(); // Pre-loads the A440 wave on page load
+  addWave();
 
   // ==========================================
-  // --- SEMITONE FREQUENCY CALCULATOR ---
+  // --- SEMITONE CALCULATOR ---
   // ==========================================
   const calcBaseInput = document.getElementById('calc-base-freq');
   const calcNInput = document.getElementById('calc-semitones');
@@ -280,17 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const f0 = parseFloat(calcBaseInput.value) || 0;
     const n = parseFloat(calcNInput.value) || 0;
 
-    // The math: f = f0 * 2^(n/12)
     const f = f0 * Math.pow(2, n / 12);
-
-    // Format it beautifully for KaTeX.
-    // We use .toFixed(2) to round the final frequency so the UI stays clean.
     const latexStr = `f = ${f0} \\times 2^{\\frac{${n}}{12}} = ${f.toFixed(2)}\\text{ Hz}`;
 
     katex.render(latexStr, calcEqDisplay, { throwOnError: false });
   }
 
-  // Attach event listeners and run once on page load
   if (calcBaseInput && calcNInput) {
     calcBaseInput.addEventListener('input', updateCalculator);
     calcNInput.addEventListener('input', updateCalculator);

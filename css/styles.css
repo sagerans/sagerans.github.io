@@ -1908,17 +1908,76 @@ details.fact-category[open] > summary::before {
   border-color: var(--accent-main);
 }
 
-.wave-card-header {
+/* --- Wave Simulator Header Layout --- */
+.wave-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap; /* Forces the text and buttons to share the same line */
+  gap: 15px;
+}
+
+.wave-header h3 {
+  flex: 1 1 auto; /* Allows the title to shrink and wrap */
+  line-height: 1.2;
+}
+
+.wave-header .button-container {
+  flex: 0 0 auto; /* Completely protects the buttons from getting squished */
+  display: flex;
+  gap: 8px; /* Adds nice spacing between your two square icons */
+}
+
+/* Hide the line break on desktop, show it on mobile */
+.title-break {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .title-break {
+    display: block; /* Forces "Synthesizer" to its own line perfectly */
+  }
+}
+
+.wave-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 10px;
 }
 
 .wave-equation {
-  font-size: 1.2em;
+  font-size: clamp(0.95rem, 3.5vw, 1.2em);
   color: var(--text-dark);
+  white-space: nowrap; /* Absolutely forbids the math from wrapping */
+  overflow-x: auto; /* Adds a clean scrollbar if the screen is microscopically thin */
+  padding-bottom: 4px;
+}
+
+@media (max-width: 480px) {
+  .wave-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .delete-wave-btn {
+    align-self: flex-end;
+  }
+}
+
+/* --- Wave Simulator Icon Buttons --- */
+#master-play-btn,
+#add-wave-btn {
+  width: 44px;         /* Locks the width */
+  height: 44px;        /* Locks the height to form a perfect square */
+  padding: 0;          /* Strips away the default .menu-btn padding */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;   /* Bumps up the size of the icons */
+  vertical-align: middle;
 }
 
 .delete-wave-btn {
