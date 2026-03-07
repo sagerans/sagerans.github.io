@@ -39,6 +39,11 @@
   --error-color: #d88383;   /* Pastel red */
 }
 
+/* Add this to the very top of styles.css */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* =========================================
    1. GLOBAL & BASE STYLES
    ========================================= */
@@ -1955,6 +1960,7 @@ details.fact-category[open] > summary::before {
   white-space: nowrap; /* Absolutely forbids the math from wrapping */
   overflow-x: auto; /* Adds a clean scrollbar if the screen is microscopically thin */
   padding-bottom: 4px;
+  max-width: 100%;
 }
 
 @media (max-width: 480px) {
@@ -1996,7 +2002,7 @@ details.fact-category[open] > summary::before {
 
 .wave-inputs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 15px;
 }
 
