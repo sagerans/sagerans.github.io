@@ -130,3 +130,41 @@ async function renderBlogPosts() {
 
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", renderBlogPosts);
+
+// dark mode toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleSwitch = document.getElementById('theme-checkbox');
+
+  if (!toggleSwitch) return; // Failsafe if the toggle isn't on this specific page
+
+  // 1. Check local storage OR the user's system preferences
+  const currentTheme = localStorage.getItem('theme') ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+  // 2. Apply the theme on load and physically check the box if needed
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleSwitch.checked = true;
+  }
+
+  // 3. Listen for the slider movement
+  const themeMeta = document.getElementById('theme-color-meta');
+
+  toggleSwitch.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      if (themeMeta) themeMeta.setAttribute('content', '#799362'); // Dark mode header color
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+      if (themeMeta) themeMeta.setAttribute('content', '#a9c191'); // Light mode header color
+    }
+  });
+  // Also update the on-load check so it matches if they refresh!
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    toggleSwitch.checked = true;
+    if (themeMeta) themeMeta.setAttribute('content', '#799362');
+  }
+});

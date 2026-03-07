@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
           w.osc = null;
         }
       });
-      playBtn.innerText = "▶ Play Tone";
+      playBtn.innerText = "▶";
       playBtn.style.background = "";
       playBtn.style.color = "";
     } else {
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const syncTime = audioCtx.currentTime + 0.05;
       waves.forEach(w => startAudioNode(w, syncTime));
 
-      playBtn.innerText = "⏸ Stop Tone";
+      playBtn.innerText = "⏸";
       playBtn.style.background = "var(--error-color)";
       playBtn.style.color = "#fff";
     }
