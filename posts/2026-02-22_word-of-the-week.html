@@ -3,34 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Story Title | Sage Ransom</title>
+    <title>WOTW 22 February 2026 | Sage Ransom</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
+    <div id="leaves-container"></div>
     <header>
-      <h1>
-        <a href="../index.html">Sage Ransom</a>
-      </h1>
+      <div class="theme-switch-wrapper"> <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
+      <h1><a href="../index.html">Sage Ransom</a></h1>
       <nav>
         <ul>
           <li><a href="../gallery.html">Gallery</a></li>
           <li><a href="../writing.html">Writing</a></li>
-          <li><a href="../wordle.html">Naughty Wordle</a></li>
-          <li><a href="../hangman.html">Hangmandle</a></li>
+          <li><a href="../interactive.html">Interactive</a></li>
+          <li><a href="../games.html">Games</a></li>
           <li><a href="../about.html">About</a></li>
         </ul>
       </nav>
     </header>
 
     <main class="post-container">
-      <article class="post-content">
-        <a href="../writing.html" class="back-link">&larr; Back to all writing</a>
 
-        <div class="post-header">
-          <h2>Word of the Week: Prosecution</h2>
-          <p class="post-date">February 22, 2026</p>
-          <p style="font-style: italic; font-size: 0.9em;">Thanks to the ridiculous dictionary I found to fuel
+      <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../writing.html" class="back-link">&larr; Back to all writing</a>
+      </div>
+
+      <div style="text-align: left; max-width: 800px; margin: 0 auto; padding: 0 20px;">
+
+        <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+          <h2 style="color: var(--text-main); font-size: 2.2em; margin-bottom: 10px; margin-top: 0;">Word of the Week: </h2>
+          <p class="post-date" style="color: var(--text-muted); margin: 0;">DATE</p>
+          <p style="font-style: italic; font-size: 0.95em; color: var(--text-muted); text-align: left; line-height: 1.6;">
+            Thanks to the ridiculous dictionary I found to fuel
             <a href="../hangman.html" class="inline-link">Hangmandle</a>, the game is full of archaic
             words with sometimes frustrating spellings and definitions. Fortunately for me, this means
             lots of little rabbit holes. Fortunately for you, this means reading about my choice for
@@ -39,23 +50,20 @@
           </p>
         </div>
 
-
-        <div class="post-body">
+        <div class="post-body" style="line-height: 1.8; color: var(--text-dark); font-size: 1.1em;">
           <p>placeholder placheholder placeholder</p>
-
           <p>placheholder placeholder</p>
-
-          <h3>placeholder subheading</h3>
+          <h3 style="color: var(--text-main);">placeholder subheading</h3>
           <p>placeholder</p>
         </div>
 
-      </article>
+      </div>
     </main>
 
     <footer>
       <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
     </footer>
+
     <script src="../scripts/script.js"></script>
-    <script src="../scripts/blog.js"></script>
   </body>
 </html>

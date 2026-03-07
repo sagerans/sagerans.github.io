@@ -3,55 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Story Title | Sage Ransom</title>
+    <title>TEMPLATE | Sage Ransom</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
+    <div id="leaves-container"></div>
     <header>
-      <h1>
-        <a href="../index.html">Sage Ransom</a>
-      </h1>
+      <div class="theme-switch-wrapper"> <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
+      <h1><a href="../index.html">Sage Ransom</a></h1>
       <nav>
         <ul>
           <li><a href="../gallery.html">Gallery</a></li>
           <li><a href="../writing.html">Writing</a></li>
-          <li><a href="../wordle.html">Naughty Wordle</a></li>
-          <li><a href="../hangman.html">Hangmandle</a></li>
+          <li><a href="../interactive.html">Interactive</a></li>
+          <li><a href="../games.html">Games</a></li>
           <li><a href="../about.html">About</a></li>
         </ul>
       </nav>
     </header>
 
     <main class="post-container">
-      <article class="post-content">
-        <a href="../writing.html" class="back-link">&larr; Back to all writing</a>
 
-        <div class="post-header">
-          <h2>Title</h2>
-          <p class="post-date">Date</p>
-          <p style="font-style: italic; font-size: 0.9em;">
-            Feel free to discuss in the <a href="../about.html#contact" class="inline-link">comments</a>!
+      <div style="text-align: left; margin-bottom: 20px;">
+        <a href="../writing.html" class="back-link">&larr; Back to all writing</a>
+      </div>
+
+      <div style="text-align: left; max-width: 800px; margin: 0 auto; padding: 0 20px;">
+
+        <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+          <h2 style="color: var(--text-main); font-size: 2.2em; margin-bottom: 10px; margin-top: 0;">TITLE</h2>
+          <p class="post-date" style="color: var(--text-muted); margin: 0;">DATE</p>
+          <p style="font-style: italic; font-size: 0.95em; color: var(--text-muted); text-align: left; line-height: 1.6;">
+            A description of the post!
           </p>
         </div>
 
-        <div class="post-body">
-          <p>Paragraph 1</p>
-
-          <p>Paragraph 2</p>
-
-          <h3>Subheading</h3>
-
-          <p>Paragraph 3</p>
+        <div class="post-body" style="line-height: 1.8; color: var(--text-dark); font-size: 1.1em;">
+          <p>placeholder placheholder placeholder</p>
+          <p>placheholder placeholder</p>
+          <h3 style="color: var(--text-main);">placeholder subheading</h3>
+          <p>placeholder</p>
         </div>
 
-      </article>
+      </div>
     </main>
 
     <footer>
       <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
     </footer>
+
     <script src="../scripts/script.js"></script>
-    <script src="../scripts/blog.js"></script>
   </body>
 </html>
