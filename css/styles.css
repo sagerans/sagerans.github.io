@@ -612,7 +612,7 @@ button {
 .blog-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px 20px;
   text-align: left;
 }
 
@@ -762,7 +762,7 @@ button {
 /* 1. Strip the massive global section padding off the writing page */
 .featured-post,
 .previous-posts {
-  padding: 20;
+  padding: 20px 0;
   margin: 0;
 }
 
