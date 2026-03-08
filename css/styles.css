@@ -621,6 +621,13 @@ button {
   margin-bottom: 20px;
 }
 
+/* --- Master Reading Width --- */
+.story-width {
+  max-width: 650px; /* change to alter width */
+  margin: 0 auto;
+  text-align: left;
+}
+
 .post-date {
   font-size: 0.9em;
   font-style: italic;
