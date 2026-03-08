@@ -754,7 +754,7 @@ button {
 /* 1. Strip the massive global section padding off the writing page */
 .featured-post,
 .previous-posts {
-  padding: 0;
+  padding: 20;
   margin: 0;
 }
 
@@ -762,7 +762,7 @@ button {
 @media (max-width: 600px) {
   .blog-container,
   .post-container {
-    padding: 20px 12px; /* Drops the side padding from 20px down to a sleek 12px */
+    padding: 20px 16px; /* Drops the side padding from 20px down to a sleek 12px */
   }
 }
 

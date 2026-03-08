@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hangmandle - Sage Ransom</title>
 
-    <!-- Your existing site styles -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 
@@ -32,71 +31,74 @@
           <li><a href="writing.html">Writing</a></li>
           <li><a href="interactive.html">Interactive</a></li>
           <li><a href="games.html">Games</a></li>
-          <li><a href="hangman.html">Hangmandle</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- Hangman contained within a section -->
-    <section id="hangman">
-      <div class="hangman-wrapper">
-        <div class="game-container">
-          <h2>Hangmandle</h2>
+    <main class="landing-container" style="width: calc(100% - 30px); max-width: 800px; margin: 0 auto; box-sizing: border-box;">
 
-          <div class="hangman-topbar">
-            <div id="mode-indicator" class="mode-indicator">
-              Mode: Daily
-            </div>
-            <div id="stats-bar" class="stats-bar"></div>
-          </div>
-
-          <div id="status-bar">
-            <div id="tries">Remaining guesses: <span id="remaining">8</span></div>
-            <div id="wrong-letters">Wrong letters: <span id="wrong-list">None</span></div>
-          </div>
-
-          <div id="figure-container">
-            <img
-              id="hangman-image"
-              src="images/hangman0.png"
-              alt="Hangman figure"
-            />
-          </div>
-
-          <div id="word-display" aria-label="hidden word"></div>
-
-          <div id="keyboard" aria-label="letter buttons"></div>
-
-          <div id="message"></div>
-
-          <div id="definition-panel" class="hidden">
-            <h3>Word &amp; Definition</h3>
-            <p><strong>Word:</strong> <span id="final-word"></span></p>
-            <p><strong>Definition:</strong></p>
-            <p id="final-definition"></p>
-
-            <div id="ngram-panel" class="ngram-panel hidden">
-              <h4>Usage in books (1500–2022)</h4>
-              <canvas id="ngram-canvas" width="680" height="180"></canvas>
-              <div id="ngram-note" class="ngram-note"></div>
-            </div>
-          </div>
-
-          <div class="hangman-buttons">
-            <button id="daily-btn">Daily</button>
-            <button id="share-btn"><Share></button>
-            <button id="practice-btn">Practice</button>
-            <button id="new-game-btn">New Game</button>
-          </div>
-
-          <div id="share-status" aria-live="polite"</div>
-
-        </div>
-
+      <div style="margin-bottom: 20px; margin-top: 30px; text-align: left;">
+        <a href="games.html" class="back-link">&larr; Back to Games</a>
       </div>
 
-    </section>
+      <div id="hangman">
+        <div class="hangman-wrapper">
+          <div class="game-container">
+            <h2>Hangmandle</h2>
+
+            <div class="hangman-topbar">
+              <div id="mode-indicator" class="mode-indicator">
+                Mode: Daily
+              </div>
+              <div id="stats-bar" class="stats-bar"></div>
+            </div>
+
+            <div id="status-bar">
+              <div id="tries">Remaining guesses: <span id="remaining">8</span></div>
+              <div id="wrong-letters">Wrong letters: <span id="wrong-list">None</span></div>
+            </div>
+
+            <div id="figure-container">
+              <img
+                id="hangman-image"
+                src="images/hangman0.png"
+                alt="Hangman figure"
+              />
+            </div>
+
+            <div id="word-display" aria-label="hidden word"></div>
+
+            <div id="keyboard" aria-label="letter buttons"></div>
+
+            <div id="message"></div>
+
+            <div id="definition-panel" class="hidden">
+              <h3>Word &amp; Definition</h3>
+              <p><strong>Word:</strong> <span id="final-word"></span></p>
+              <p><strong>Definition:</strong></p>
+              <p id="final-definition"></p>
+
+              <div id="ngram-panel" class="ngram-panel hidden">
+                <h4>Usage in books (1500–2022)</h4>
+                <canvas id="ngram-canvas" width="680" height="180"></canvas>
+                <div id="ngram-note" class="ngram-note"></div>
+              </div>
+            </div>
+
+            <div class="hangman-buttons">
+              <button id="daily-btn">Daily</button>
+              <button id="share-btn">Share</button>
+              <button id="practice-btn">Practice</button>
+              <button id="new-game-btn">New Game</button>
+            </div>
+
+            <div id="share-status" aria-live="polite"></div>
+
+          </div>
+        </div>
+      </div>
+    </main>
 
     <footer>
       <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
