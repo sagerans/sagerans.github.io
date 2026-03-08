@@ -4,11 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const leafCount = 24; // Adjust for more or fewer leaves
 
-  // 1. Array of your different SVG leaf files
+  // NEW: Check if the URL contains '/posts/' so the script knows where it is
+  const isPostPage = window.location.pathname.includes('/posts/');
+
+  // If we are in a post, step up one folder (../images/). Otherwise, use standard (images/)
+  const imgFolder = isPostPage ? '../images/' : 'images/';
+
+  // 1. Array of your different SVG leaf files with the dynamic path
   const leafImages = [
-    'images/sageleafone.svg',
-    'images/sageleaftwo.svg',
-    'images/sageleafthree.svg'
+    `${imgFolder}sageleafone.svg`,
+    `${imgFolder}sageleaftwo.svg`,
+    `${imgFolder}sageleafthree.svg`
   ];
 
   for (let i = 0; i < leafCount; i++) {

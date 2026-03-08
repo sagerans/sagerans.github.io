@@ -79,6 +79,7 @@ async function renderBlogPosts() {
     }
 
     // Inject the clean, cardless featured post using your global CSS variables!
+    // add class="reading-pane" to get frosted glass background on posts
     featuredContainer.innerHTML = `
       <div style="text-align: left; max-width: 800px; margin: 0 auto; padding: 0 20px;">
         <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
