@@ -2,6 +2,14 @@
 // ALWAYS add your newest post to the VERY TOP of this list.
 const blogPosts = [
   {
+    title: "template top",
+    date: "regular date",
+    excerpt: "regular excerpt",
+    link: "posts/template.html",
+    category: "essay",
+    customIntro: "custom intro could go here"
+  },
+  {
     title: "Word of the Week: uhhhh",
     date: "March 8, 2026",
     excerpt: "who knows!",
@@ -23,7 +31,7 @@ const blogPosts = [
     category: "wotw"
   },
   {
-    title: "Regular title",
+    title: "Template at bottom of list",
     date: "regular date",
     excerpt: "regular excerpt",
     link: "posts/template.html",
@@ -83,7 +91,7 @@ async function renderBlogPosts() {
     //       <div style="text-align: left; max-width: 800px; margin: 0 auto;
     featuredContainer.innerHTML = `
       <div class="story-width">
-        <div class="post-header" style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+        <div class="post-header" style="text-align: left; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
           <h2 style="color: var(--text-main); font-size: 2.2em; margin-bottom: 10px; margin-top: 0;">${newestPost.title}</h2>
           <p class="post-date" style="color: var(--text-muted); margin: 0;">${newestPost.date}</p>
             ${specialDescription}

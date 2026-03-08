@@ -613,7 +613,7 @@ button {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .blog-container h2 {
@@ -708,7 +708,7 @@ button {
 
 /* Individual Post Pages */
 .post-container {
-  max-width: 800px;
+  max-width: 650px;
   margin: 0 auto;
   padding: 40px 20px;
 }
@@ -734,9 +734,9 @@ button {
 }
 
 .post-header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 30px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 20px;
 }
 
@@ -747,13 +747,14 @@ button {
 }
 
 .post-body {
-  line-height: 1.8;
-  color: #444;
-  font-size: 1.0em;
+  line-height: 1.5;
+  color: var(--text-dark);
+  font-size: 0.9em;
 }
 
 .post-body p {
   margin-bottom: 20px;
+  font-size: 0.9em;
 }
 
 /* --- Fix for Blog & Post Mobile Widths --- */
