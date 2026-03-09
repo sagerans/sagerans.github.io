@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Philadelphia | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <div class="theme-switch-wrapper">
+        <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
+      <h1>
+        <a href="index.html">Sage Ransom</a>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="gallery-page-container">
+
+      <div style="text-align: left; margin-top: 20px; margin-bottom: 20px;">
+        <a href="gallery.html" class="back-link">&larr; Back to Albums</a>
+      </div>
+
+      <div class="gallery-category-wrapper" style="margin-top: 20px;">
+        <h2 style="color: var(--text-main); font-size: 1.8em; text-transform: uppercase; letter-spacing: 4px; margin: 0;">Philadelphia</h2>
+        <div style="width: 60px; height: 2px; background-color: var(--border-color); margin: 15px auto 30px;"></div>
+      </div>
+
+      <div class="image-grid">
+        <img src="images/gallery/DSCF1962-positive.jpg" alt="Photography subject 8" class="gallery-img" />
+        <img src="images/gallery/DSCF2005-positive-2.jpg" alt="Photography subject 9" class="gallery-img" />
+        <img src="images/gallery/DSCF2052-positive-2.jpg" alt="Photography subject 10" class="gallery-img" />
+        <img src="images/gallery/DSCF2133-positive-2.jpg" alt="Photography subject 13" class="gallery-img" />
+      </div>
+
+      <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+        <a href="gallery.html" class="back-link">&larr; Back to Albums</a>
+      </div>
+
+    </main>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close-lightbox">&times;</span>
+      <span class="lightbox-arrow left-arrow">&#10094;</span>
+      <img class="lightbox-content" id="lightbox-img" />
+      <span class="lightbox-arrow right-arrow">&#10095;</span>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>

@@ -894,6 +894,57 @@ button {
   font-size: 0.9em;
 }
 
+/* --- Clickable Category Headers --- */
+.gallery-category-wrapper {
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+.gallery-category-wrapper:first-of-type {
+  margin-top: 20px;
+}
+
+.category-link {
+  display: inline-block; /* Treats the text like a physical card */
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  padding: 10px 20px; /* Gives a little invisible breathing room for the hover target */
+}
+
+.category-link h2 {
+  color: var(--text-main);
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.category-link h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background-color: var(--border-color);
+  margin: 15px auto 0;
+  transition: background-color 0.2s ease;
+}
+
+/* The Card-Like Hover Animations */
+.category-link:hover {
+  transform: translateY(-5px); /* Lifts the whole block up */
+}
+
+.category-link:hover h2 {
+  color: var(--accent-main); /* Changes text to Sage Green */
+}
+
+.category-link:hover h2::after {
+  background-color: var(--accent-main); /* Changes the underline to Sage Green */
+}
+
+/*
 .gallery-page-container h2 {
   text-align: center;
   color: var(--text-main);
@@ -912,6 +963,7 @@ button {
   background-color: #ccc;
   margin: 15px auto 0;
 }
+*/
 
 .gallery-page-container h2:first-of-type {
   margin-top: 20px;
