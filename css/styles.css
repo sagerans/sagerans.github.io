@@ -210,6 +210,7 @@ header nav ul {
 
 header nav ul li {
   display: inline;
+  line-height: 1.5;
   margin-right: 10px; /* adjust for space between links */
 }
 
@@ -2140,4 +2141,34 @@ details.fact-category[open] > summary::before {
 .wave-input-group input:focus {
   outline: none;
   border-color: var(--accent-main);
+}
+
+/* =========================================
+   SITE-WIDE MOBILE MARGIN CONTROL
+   ========================================= */
+@media (max-width: 600px) {
+
+  /* 1. Change this ONE number to adjust the edges of all games and interactives!
+        (16px is your writing page. Let's start this at 20px so it's slightly wider,
+        but feel free to tweak it to 18px or 24px to see what looks best!) */
+  :root {
+    --mobile-edge-gap: 20px;
+  }
+
+  /* 2. Apply this gap to all your main layout wrappers */
+  .landing-container,
+  .page-wrapper,
+  .gallery-page-container {
+    padding-left: var(--mobile-edge-gap) !important;
+    padding-right: var(--mobile-edge-gap) !important;
+    width: 100% !important; /* Overrides any hardcoded inline widths on games */
+  }
+
+  /* 3. Strip the redundant "nesting doll" space off standard sections on mobile */
+  section {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
