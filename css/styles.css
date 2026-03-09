@@ -45,8 +45,57 @@
 }
 
 /* =========================================
-   1. GLOBAL & BASE STYLES
+   CUSTOM TYPEFACE: METROPOLIS
    ========================================= */
+
+/* Regular Text (Weight 400) */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Regular Italic (Weight 400) */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Bold Text (Weight 700) */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Bold Text (Weight 700) */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-ExtraBold.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Bold Text (Weight 700) */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-SemiBold.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+/* Light Text (Weight 300) - Optional, great for subtitles */
+@font-face {
+  font-family: 'Metropolis';
+  src: url('../fonts/Metropolis-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
 
 /* =========================================
   1. GLOBAL & BASE STYLES
@@ -67,7 +116,9 @@ html {
 }
 
 body {
-  font-family: Courier New, Monaco, system-ui, sans-serif, serif;
+  /* font-family: Georgia, Times, Helvetica, Century Gothic, Verdana, system-ui, Monaco, Courier New, system-ui, sans-serif, serif; */
+  font-family: Metropolis, system-ui, san-serif;
+  font-weight: 400;
   color: var(--text-main);
   background: var(--bg-body);
   display: flex;
@@ -77,6 +128,22 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden; /* Locks down horizontal scrolling everywhere else */
+}
+
+h1 {
+  font-weight: 900;
+}
+
+h2, h3 {
+  font-weight: 700;
+}
+
+nav {
+  font-weight: 500;
+}
+
+em, i {
+  font-style: italic;
 }
 
 /* Forces main content to stretch, pushing footer to the bottom */
