@@ -207,16 +207,17 @@ function clearDailyState() {
 }
 
 // for mobile sharing
-async function smartShare(text) {
+async function smartShare(text, url) {
   // check for mobile browser
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   // Prefer native share sheet when available
-  if (navigator.share && isMobile) { // NEW CHANGE HERE
+  if (navigator.share && isMobile) {
     try {
       await navigator.share({
         title: "Sage Hangman",
-        text
+        text: text, // The text and emojis
+        url: url    // The URL passed separately to trigger the preview card!
       });
       return { ok: true, method: "share" };
     } catch (err) {
@@ -228,9 +229,10 @@ async function smartShare(text) {
     }
   }
 
-  // Fallback: clipboard copy
+  // Fallback: clipboard copy (combines them back together for desktop!)
   try {
-    await copyTextToClipboard(text);
+    const fullText = `${text}\n${url}`;
+    await copyTextToClipboard(fullText);
     return { ok: true, method: "clipboard" };
   } catch (err) {
     return { ok: false, method: "clipboard" };
@@ -243,15 +245,18 @@ function buildDailyShareText() {
   const wrongUsed = Math.max(0, Math.min(MAX_GUESSES, MAX_GUESSES - remainingGuesses));
   const won = !!gameOver && remainingGuesses > 0;
   const resultLabel = won ? "WIN" : "LOSS";
-  const gallows = won // (lastWin === true)
+
+  // FIXED: Using 'won' instead of the undefined 'lastWin' variable
+  const gallows = won
     ? GALLOWS_WIN[Math.min(wrongUsed, 7)]
     : GALLOWS_LOSE;
 
   return [
-    `Hangmandle ${dateKey}\nWrong Guesses: ${wrongUsed}/${MAX_GUESSES}\n${resultLabel}`,
+    `Hangmandle ${dateKey}`,
+    `Wrong Guesses: ${wrongUsed}/${MAX_GUESSES}`,
+    `${resultLabel}`,
     ``,
-    gallows,
-    `https://sagerans.com/hangman`
+    gallows
   ].join("\n");
 }
 
@@ -293,8 +298,11 @@ if (shareBtn) {
     }
 
     const text = buildDailyShareText();
+    // Use the cache-busting query string here!
+    const gameURL = "https://sagerans.com/hangman.html?v=1";
 
-    const res = await smartShare(text);
+    // Pass both the text and the URL to our new smartShare function
+    const res = await smartShare(text, gameURL);
 
     if (res.ok && res.method === "share") {
         shareStatusEl.textContent = ""; // share sheet handled it
@@ -308,6 +316,7 @@ if (shareBtn) {
       }
   });
 }
+// end share text functions
 
 // end share text functions
 
