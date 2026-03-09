@@ -2149,7 +2149,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      const shareText = `Factbookle ${dailyState.date}\nGuesses: ${guessCount}/6\n${statusText}\n${emojis}\nhttps://sagerans.com/factbook`;
+      // ... (Keep your existing emojis and score generation) ...
+
+      const gameURL = `https://sagerans.com/factbook.html?v=1`;
+
+      // Remove the URL from the bottom of the text string!
+      const shareText = `Factbookle ${dailyState.date}\nGuesses: ${guessCount}/6\n${statusText}\n${emojis}`;
+
+      // Detect if it's a mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (navigator.share && isMobile) {
+        // NEW: Pass the URL as a distinct property!
+        navigator.share({
+          text: shareText,
+          url: gameURL
+        }).catch(err => {
+          console.log("Share sheet dismissed or failed:", err);
+        });
+      } else {
+        // Fallback for Desktop: Keep the URL in the copied text
+        const fullClipboardText = `${shareText}\n\n${gameURL}`;
+        navigator.clipboard.writeText(fullClipboardText).then(() => {
+          const originalText = shareBtn.innerText;
+          shareBtn.innerText = "Copied!";
+          setTimeout(() => { shareBtn.innerText = originalText; }, 2000);
+        }).catch(err => {
+          alert("Failed to copy to clipboard.");
+        });
+      }
+    });
+  }
+});
+
+/*
+      const gameURL = `https://sagerans.com/factbook.html?v=1`;
+      const shareText = `Factbookle ${dailyState.date}\nGuesses: ${guessCount}/6\n${statusText}\n${emojis}\n${gameURL}`;
 
       // NEW: Detect if it's a mobile device
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -2176,3 +2211,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+*/
