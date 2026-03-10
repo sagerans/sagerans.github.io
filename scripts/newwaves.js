@@ -43,8 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const f = wave.f;
     const phi = wave.phi; // Now perfectly in radians
 
-    // Formatted as standard physics math: A sin(2π(f)t - φ) + D
-    const latexStr = `y(t) = ${A} \\sin[2\\pi\\cdot${f}\\cdot(t - ${phi})]`;
+    // Formatted as standard physics math: A sin(2π(f)t - φ)
+    // const latexStr = `y(t) = ${A} \\sin[2\\pi\\cdot${f}\\cdot(t - ${phi})]`;
+    const latexStr = `y(t) = ${A} \\sin[${2*f}\\pi(t - ${phi})]`;
     katex.render(latexStr, eqDiv, { throwOnError: false });
   }
 
