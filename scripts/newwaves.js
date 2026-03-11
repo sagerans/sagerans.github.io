@@ -6,12 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const playBtn = document.getElementById('master-play-btn');
   const addBtn = document.getElementById('add-wave-btn');
 
+  // LFO Elements
+  const lfoEnable = document.getElementById('lfo-enable');
+  const lfoTargetSelect = document.getElementById('lfo-target');
+  const lfoRateInput = document.getElementById('lfo-rate');
+  const lfoDepthInput = document.getElementById('lfo-depth');
+  const lfoRateDisplay = document.getElementById('lfo-rate-display');
+  const lfoDepthDisplay = document.getElementById('lfo-depth-display');
+
   let audioCtx = null;
   let masterGain = null;
+  let lfo = null;
+  let lfoDepth = null;
   let isPlaying = false;
   let waveIdCounter = 0;
-
   let waves = [];
+
+  // Dedicated visual timers so the graph actually stops when paused!
+  let lastFrameTime = performance.now();
+  let visualTime = 0;
+  let timeOffset = 0;
 
   // --- AUDIO INIT & COMPRESSOR ---
   function initAudio() {
@@ -20,32 +34,97 @@ document.addEventListener('DOMContentLoaded', () => {
     masterGain = audioCtx.createGain();
     masterGain.gain.value = 0.5;
     masterGain.connect(audioCtx.destination);
+
+    // Securely initialize LFO
+    lfo = audioCtx.createOscillator();
+    lfoDepth = audioCtx.createGain();
+    lfo.type = 'sine';
+    lfo.frequency.value = parseFloat(lfoRateInput.value) || 2.0;
+
+    lfo.connect(lfoDepth);
+    lfo.start();
+
     updateMasterVolume();
+    updateLfoRouting();
   }
 
   function updateMasterVolume() {
     if (!masterGain) return;
     let totalAmplitude = 0;
-    waves.forEach(w => {
-      totalAmplitude += Math.abs(w.a);
-    });
-    // Auto-compress to prevent speakers from clipping
-    const safeVolume = 0.5 / Math.max(1, totalAmplitude);
-    masterGain.gain.setTargetAtTime(safeVolume, audioCtx.currentTime, 0.1);
+    waves.forEach(w => { totalAmplitude += Math.abs(w.a); });
+
+    // Auto-compress base volume to prevent clipping
+    const baseSafeVolume = 0.5 / Math.max(1, totalAmplitude);
+
+    const isLfoOn = lfoEnable.checked;
+    const target = lfoTargetSelect.value;
+    const depthPercent = parseFloat(lfoDepthInput.value) / 100;
+
+    // AM (Tremolo) modifies the LFO gain here
+    if (isLfoOn && target === 'am' && lfoDepth) {
+      masterGain.gain.setTargetAtTime(baseSafeVolume * (1 - depthPercent / 2), audioCtx.currentTime, 0.1);
+      lfoDepth.gain.setTargetAtTime(baseSafeVolume * (depthPercent / 2), audioCtx.currentTime, 0.1);
+    } else {
+      masterGain.gain.setTargetAtTime(baseSafeVolume, audioCtx.currentTime, 0.1);
+
+      // CRITICAL FIX: Only zero out the LFO depth if we are NOT using FM.
+      // (Otherwise we instantly kill the Vibrato pitch bend!)
+      if (lfoDepth && (!isLfoOn || target !== 'fm')) {
+        lfoDepth.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+      }
+    }
   }
+
+  function updateLfoRouting() {
+    if (!lfoDepth || !masterGain) return;
+
+    const isEnabled = lfoEnable.checked;
+    const target = lfoTargetSelect.value;
+    const depthPercent = parseFloat(lfoDepthInput.value) / 100;
+
+    // Disconnect everywhere to cleanly reset the routing
+    lfoDepth.disconnect();
+
+    if (!isEnabled) {
+      updateMasterVolume();
+      return;
+    }
+
+    if (target === 'am') {
+      // Tremolo: Connect to Master Volume
+      lfoDepth.connect(masterGain.gain);
+      updateMasterVolume();
+    } else if (target === 'fm') {
+      // Vibrato: Connect directly to each oscillator's frequency
+      waves.forEach(w => {
+        if (w.osc) lfoDepth.connect(w.osc.frequency);
+      });
+      // Set the pitch bend depth (Max 50Hz bend)
+      lfoDepth.gain.setTargetAtTime(depthPercent * 50, audioCtx.currentTime, 0.1);
+      updateMasterVolume();
+    }
+  }
+
+  // LFO Event Listeners
+  lfoRateInput.addEventListener('input', (e) => {
+    const rate = parseFloat(e.target.value);
+    if (lfo) lfo.frequency.setTargetAtTime(rate, audioCtx.currentTime, 0.1);
+    lfoRateDisplay.innerText = rate.toFixed(1);
+  });
+
+  lfoDepthInput.addEventListener('input', (e) => {
+    lfoDepthDisplay.innerText = e.target.value;
+    updateLfoRouting();
+  });
+
+  lfoEnable.addEventListener('change', updateLfoRouting);
+  lfoTargetSelect.addEventListener('change', updateLfoRouting);
 
   // --- UI & EQUATIONS ---
   function updateEquationDisplay(wave) {
     const eqDiv = document.getElementById(`eq-${wave.id}`);
     if (!eqDiv) return;
-
-    const A = wave.a;
-    const f = wave.f;
-    const phi = wave.phi; // Now perfectly in radians
-
-    // Formatted as standard physics math: A sin(2π(f)t - φ)
-    // const latexStr = `y(t) = ${A} \\sin[2\\pi\\cdot${f}\\cdot(t - ${phi})]`;
-    const latexStr = `y(t) = ${A} \\sin[${2*f}\\pi(t - ${phi})]`;
+    const latexStr = `y(t) = ${wave.a} \\sin[${2*wave.f}\\pi(t - ${wave.phi})]`;
     katex.render(latexStr, eqDiv, { throwOnError: false });
   }
 
@@ -79,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Forcefully add new waves to the absolute top of the list
     if (wavesList.firstChild) {
       wavesList.insertBefore(card, wavesList.firstChild);
     } else {
@@ -89,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateEquationDisplay(waveData);
     updateMasterVolume();
 
-    // Live update listeners
     card.querySelectorAll('input').forEach(input => {
       input.addEventListener('input', (e) => {
         const param = e.target.dataset.param;
@@ -105,10 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
       removeWave(id);
     });
 
-    // If already playing, start this new wave synced up slightly in the future
     if (isPlaying) {
       const syncTime = audioCtx.currentTime + 0.05;
       startAudioNode(waveData, syncTime);
+      updateLfoRouting();
     }
   }
 
@@ -151,17 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateAudioNode(wave) {
     if (!wave.osc) return;
-
     wave.osc.frequency.setTargetAtTime(wave.f, audioCtx.currentTime, 0.05);
     wave.gain.gain.setTargetAtTime(wave.a, audioCtx.currentTime, 0.05);
 
-    // Math: Delay time based on radians
     const period = wave.f !== 0 ? Math.abs(1 / wave.f) : 0;
-
-    // Divide the shift by 2PI to get the fraction of the period
     let phaseFraction = wave.phi / (2 * Math.PI);
-    phaseFraction = phaseFraction % 1; // Keep it within 1 cycle
-    if (phaseFraction < 0) phaseFraction += 1; // Handle negative phase gracefully
+    phaseFraction = phaseFraction % 1;
+    if (phaseFraction < 0) phaseFraction += 1;
 
     const delayTime = period !== 0 ? phaseFraction * period : 0;
     wave.delay.delayTime.setTargetAtTime(delayTime, audioCtx.currentTime, 0.05);
@@ -186,26 +259,37 @@ document.addEventListener('DOMContentLoaded', () => {
       playBtn.style.background = "";
       playBtn.style.color = "";
     } else {
-      // Synchronize all waves to start at the exact same digital sample!
       const syncTime = audioCtx.currentTime + 0.05;
       waves.forEach(w => startAudioNode(w, syncTime));
+      updateLfoRouting();
 
       playBtn.innerText = "⏸";
       playBtn.style.background = "var(--error-color)";
       playBtn.style.color = "#fff";
+
+      // Reset the time tracker so it doesn't jump forward when unpaused
+      lastFrameTime = performance.now();
     }
     isPlaying = !isPlaying;
   });
 
-  addBtn.addEventListener('click', () => {
-    addWave(1, 440, 0, 0);
-  });
+  addBtn.addEventListener('click', () => addWave(1, 440, 0, 0));
 
   // --- REAL-TIME VISUALIZER ---
-  let timeOffset = 0;
   function drawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Track time properly so animation pauses when the audio stops
+    const now = performance.now();
+    const dt = (now - lastFrameTime) / 1000;
+    lastFrameTime = now;
+
+    if (isPlaying) {
+      visualTime += dt;         // Real-time tracker for the LFO
+      timeOffset += 0.0001;     // Super slow-mo tracker for the high frequency wave
+    }
+
+    // Center Zero-Line
     ctx.beginPath();
     ctx.moveTo(0, canvas.height / 2);
     ctx.lineTo(canvas.width, canvas.height / 2);
@@ -213,64 +297,112 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    ctx.beginPath();
-    // Read the CSS variable live so it updates instantly on dark mode toggle!
-    const waveColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-main').trim() || "#a9c191";
-    ctx.strokeStyle = waveColor;
-    ctx.lineWidth = 3;
+    const isLfoActive = lfoEnable.checked;
+    const lfoTarget = lfoTargetSelect.value;
+    const lfoFreq = parseFloat(lfoRateInput.value) || 2.0;
+    const lfoDepthVal = parseFloat(lfoDepthInput.value) / 100;
 
-    // Dynamic Auto-Scaling math
+    // Scale the main high-frequency waves
+    const timeWindow = 0.01;
     let maxPeak = 0;
-    waves.forEach(w => {
-      if (w.f !== 0) maxPeak += Math.abs(w.a);
-    });
-
+    waves.forEach(w => { if (w.f !== 0) maxPeak += Math.abs(w.a); });
     const visualBoundary = Math.max(2.5, maxPeak);
     const usableHalfHeight = (canvas.height / 2) * 0.9;
     const dynamicScale = usableHalfHeight / visualBoundary;
 
-    const timeWindow = 0.01;
+    // We draw the LFO mapping across a full 1-second window so it's beautifully readable!
+    const lfoTimeWindow = 1.0;
+
+    // --- 1. DRAW THE GREY GHOST LFO WAVE ---
+    if (isLfoActive && lfoDepthVal > 0) {
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(136, 136, 136, 0.4)";
+      ctx.lineWidth = 3;
+      ctx.setLineDash([8, 8]);
+
+      for (let x = 0; x < canvas.width; x++) {
+        const t_lfo = (x / canvas.width) * lfoTimeWindow + visualTime;
+        const lfoVal = Math.sin(2 * Math.PI * lfoFreq * t_lfo);
+
+        if (lfoTarget === 'am') {
+          // AM Envelope (Top Boundary)
+          const amMod = 1.0 - (lfoDepthVal / 2) + ((lfoDepthVal / 2) * lfoVal);
+          const pixelY = (canvas.height / 2) - (visualBoundary * dynamicScale * amMod);
+          if (x === 0) ctx.moveTo(x, pixelY); else ctx.lineTo(x, pixelY);
+        } else if (lfoTarget === 'fm') {
+          // FM Center Wave
+          const pixelY = (canvas.height / 2) - (lfoVal * usableHalfHeight * lfoDepthVal * 0.5);
+          if (x === 0) ctx.moveTo(x, pixelY); else ctx.lineTo(x, pixelY);
+        }
+      }
+
+      // Draw Bottom boundary for AM
+      if (lfoTarget === 'am') {
+        ctx.moveTo(0, canvas.height / 2);
+        for (let x = 0; x < canvas.width; x++) {
+          const t_lfo = (x / canvas.width) * lfoTimeWindow + visualTime;
+          const lfoVal = Math.sin(2 * Math.PI * lfoFreq * t_lfo);
+          const amMod = 1.0 - (lfoDepthVal / 2) + ((lfoDepthVal / 2) * lfoVal);
+          const pixelY = (canvas.height / 2) + (visualBoundary * dynamicScale * amMod);
+          if (x === 0) ctx.moveTo(x, pixelY); else ctx.lineTo(x, pixelY);
+        }
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // --- 2. DRAW MAIN WAVES (Applying visual Slinky effect) ---
+    ctx.beginPath();
+    const waveColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-main').trim() || "#a9c191";
+    ctx.strokeStyle = waveColor;
+    ctx.lineWidth = 3;
 
     for (let x = 0; x < canvas.width; x++) {
       const t = (x / canvas.width) * timeWindow + timeOffset;
-      let combinedY = 0;
+      const t_lfo = (x / canvas.width) * lfoTimeWindow + visualTime;
+      const lfoVal = Math.sin(2 * Math.PI * lfoFreq * t_lfo);
 
+      let fmPhaseMod = 0;
+      let amMod = 1;
+
+      if (isLfoActive && lfoDepthVal > 0) {
+        if (lfoTarget === 'am') {
+          amMod = 1.0 - (lfoDepthVal / 2) + ((lfoDepthVal / 2) * lfoVal);
+        } else if (lfoTarget === 'fm') {
+          // Visually exaggerate the FM shift so the Slinky effect spans the screen
+          const visualFmDepth = 12 * lfoDepthVal;
+          fmPhaseMod = visualFmDepth * Math.cos(2 * Math.PI * lfoFreq * t_lfo);
+        }
+      }
+
+      let combinedY = 0;
       waves.forEach(w => {
         if (w.f === 0) return;
-        // Perfect radian physics math
-        combinedY += w.a * Math.sin(2 * Math.PI * w.f * t - w.phi);
+        combinedY += w.a * Math.sin(2 * Math.PI * w.f * t - w.phi - fmPhaseMod);
       });
 
-      const pixelY = (canvas.height / 2) - (combinedY * dynamicScale);
-
-      if (x === 0) ctx.moveTo(x, pixelY);
-      else ctx.lineTo(x, pixelY);
+      const pixelY = (canvas.height / 2) - (combinedY * dynamicScale * amMod);
+      if (x === 0) ctx.moveTo(x, pixelY); else ctx.lineTo(x, pixelY);
     }
 
     ctx.stroke();
-    if (isPlaying) timeOffset += 0.0001;
     requestAnimationFrame(drawCanvas);
   }
 
   drawCanvas();
   addWave();
 
-  // ==========================================
   // --- SEMITONE CALCULATOR ---
-  // ==========================================
   const calcBaseInput = document.getElementById('calc-base-freq');
   const calcNInput = document.getElementById('calc-semitones');
   const calcEqDisplay = document.getElementById('calc-equation');
 
   function updateCalculator() {
     if (!calcBaseInput || !calcNInput || !calcEqDisplay) return;
-
     const f0 = parseFloat(calcBaseInput.value) || 0;
     const n = parseFloat(calcNInput.value) || 0;
-
     const f = f0 * Math.pow(2, n / 12);
     const latexStr = `f = ${f0} \\times 2^{\\frac{${n}}{12}} = ${f.toFixed(2)}\\text{ Hz}`;
-
     katex.render(latexStr, calcEqDisplay, { throwOnError: false });
   }
 
