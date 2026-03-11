@@ -2227,6 +2227,29 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.15);
 }
 
+/* --- LFO Slider Layout & Stacking --- */
+#lfo-inputs {
+  display: flex;
+  gap: 20px;
+}
+
+/* Remove the boxy border and padding from the LFO slider containers */
+#lfo-inputs .wave-input-group {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  flex: 1; /* Forces them to share the row exactly 50/50 */
+}
+
+/* Stack them vertically on mobile screens */
+@media (max-width: 600px) {
+  #lfo-inputs {
+    flex-direction: column;
+    gap: 15px; /* Slightly tighter gap when stacked */
+  }
+}
+
 /* --- Reusable Toggle Switch (Matches Dark Mode) --- */
 .custom-toggle {
   position: relative;
