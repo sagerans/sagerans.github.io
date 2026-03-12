@@ -2324,3 +2324,47 @@ input[type="range"]::-moz-range-thumb:hover {
     margin-right: 0;
   }
 }
+
+/* =========================================
+   CUSTOM CURSOR & TRAIL
+   ========================================= */
+
+/* 1. Set the actual cursor for the whole page */
+body {
+  /* The 'auto' at the end is a mandatory fallback if the SVG fails to load */
+  cursor: url('../images/arrowhead-rounded-outline.svg'), auto;
+}
+
+/* Make sure links and buttons also get a custom cursor (maybe a pointing hand SVG?) */
+a, button, select, input, .gallery-img, .category-link {
+  cursor: url('../images/hand-pointer.svg'), pointer;
+}
+
+/* 2. The Ghost Trail Elements */
+.cursor-ghost {
+  position: absolute;
+  width: 24px; /* Change this to match the exact size of your SVG */
+  height: 24px;
+  background-image: url('../images/arrowhead-rounded-outline.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  /* CRITICAL: This ensures the ghosts don't accidentally block you from clicking links! */
+  pointer-events: none;
+  z-index: 9999; /* Keeps the trail on top of everything */
+
+  opacity: 0.6; /* Starting opacity of the ghost */
+
+  /* The fade-out animation */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Disable the custom cursor stuff entirely on mobile phones */
+@media (max-width: 768px) {
+  body, a, button, select, input, .gallery-img, .category-link {
+    cursor: auto;
+  }
+  .cursor-ghost {
+    display: none !important;
+  }
+}
