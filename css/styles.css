@@ -2329,37 +2329,37 @@ input[type="range"]::-moz-range-thumb:hover {
    CUSTOM CURSOR & TRAIL
    ========================================= */
 
-/* 1. Set the actual cursor for the whole page */
+/*
 body {
-  /* The 'auto' at the end is a mandatory fallback if the SVG fails to load */
+  /*
   cursor: url('../images/arrowhead-rounded-outline.svg'), auto;
 }
 
-/* Make sure links and buttons also get a custom cursor (maybe a pointing hand SVG?) */
+/*
 a, button, select, input, .gallery-img, .category-link {
   cursor: url('../images/hand-pointer.svg'), pointer;
 }
 
-/* 2. The Ghost Trail Elements */
+/*
 .cursor-ghost {
   position: absolute;
-  width: 24px; /* Change this to match the exact size of your SVG */
+  width: 24px; /*
   height: 24px;
   background-image: url('../images/arrowhead-rounded-outline.svg');
   background-size: contain;
   background-repeat: no-repeat;
 
-  /* CRITICAL: This ensures the ghosts don't accidentally block you from clicking links! */
+  /* CRITICAL: This ensures the ghosts don't accidentally block you from clicking links!
   pointer-events: none;
-  z-index: 9999; /* Keeps the trail on top of everything */
+  z-index: 9999; /* Keeps the trail on top of everything
 
-  opacity: 0.6; /* Starting opacity of the ghost */
+  opacity: 0.6; /* Starting opacity of the ghost
 
-  /* The fade-out animation */
+  /* The fade-out animation
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* Disable the custom cursor stuff entirely on mobile phones */
+/* Disable the custom cursor stuff entirely on mobile phones
 @media (max-width: 768px) {
   body, a, button, select, input, .gallery-img, .category-link {
     cursor: auto;
@@ -2367,4 +2367,206 @@ a, button, select, input, .gallery-img, .category-link {
   .cursor-ghost {
     display: none !important;
   }
+}
+*/
+
+/* =========================================
+   CONNECT 4 GAME
+   ========================================= */
+
+/* --- The Status Header --- */
+.c4-header-stats {
+  display: flex;
+  justify-content: center; /* Centered to prevent flexbox jitter! */
+  gap: 40px; /* Space between the two pills */
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  padding: 15px 30px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+}
+
+.c4-stat-pill {
+  font-weight: bold;
+  padding: 8px 24px;
+  border-radius: 25px;
+  font-size: 1.2em;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth UI animation */
+}
+
+/* Turn Indicator Animations */
+.active-turn {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 3px var(--text-main);
+  opacity: 1;
+}
+
+.inactive-turn {
+  transform: scale(0.95);
+  opacity: 0.4;
+}
+
+.p1-color { background-color: var(--accent-main); color: var(--bg-body); }
+.p2-color { background-color: #e76f51; color: white; }
+
+/* --- The Game Architecture --- */
+#c4-game-area {
+  max-width: 550px;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+}
+
+#c4-hover-zone {
+  height: 120px; /* Much taller allowed vertical space! */
+  position: relative;
+  z-index: 5; /* Keeps the hover piece strictly behind the board wrapper */
+}
+
+#c4-hover-piece {
+  position: absolute;
+  width: calc(100% / 7);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  left: calc((100% / 7) * 3);
+
+  /* We scale it to 85% to give it a nice gap, and use a CSS variable for the vertical tracking */
+  transform: translateY(var(--hover-y, 0px)) scale(0.85);
+  transition: left 0.1s ease-out, transform 0.05s linear, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+#c4-board-wrapper {
+  position: relative;
+  aspect-ratio: 7 / 6;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background: transparent;
+  z-index: 10; /* Sits ABOVE the hover zone, allowing pieces to slide behind it */
+}
+
+#c4-pieces-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 5;
+}
+
+#c4-board-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  z-index: 10; /* The white mask */
+  pointer-events: none;
+}
+
+.c4-cell {
+  background: radial-gradient(circle, transparent 43%, var(--bg-card) 44%);
+}
+
+/* --- Victory Overlay --- */
+#c4-victory-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px); /* Modern frosted glass effect */
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 30; /* Sits above absolutely everything in the game area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#c4-victory-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.c4-victory-card {
+  background: var(--bg-card);
+  padding: 30px 50px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+
+  /* Starts slightly lower so it can pop upward */
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy physics curve */
+}
+
+#c4-victory-overlay.show .c4-victory-card {
+  transform: translateY(0);
+}
+
+#c4-victory-msg {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 2.2em;
+  letter-spacing: 1px;
+}
+
+/*
+.c4-piece {
+  position: absolute;
+  width: calc(100% / 7);
+  height: calc(100% / 6);
+  border-radius: 50%;
+  top: calc(-100% / 6);
+
+  /* Scale 0.85 shrinks the piece slightly so it doesn't touch the board edges!
+  transform: translateY(var(--drop-y, 0%)) scale(0.85);
+  transition: transform 0.75s cubic-bezier(0.4, 1.2, 0.5, 0.95);
+}
+*/
+
+/* Update your existing .c4-piece rule to this: */
+.c4-piece {
+  position: absolute;
+  width: calc(100% / 7);
+  height: calc(100% / 6);
+  border-radius: 50%;
+  top: calc(-100% / 6);
+  transform: translateY(var(--drop-y, 0%)) scale(0.85);
+
+  /* Added 'left' and 'opacity' to the transitions for smooth chaos animations */
+  transition: transform 0.75s cubic-bezier(0.4, 1.2, 0.5, 0.95),
+    left 0.75s cubic-bezier(0.4, 1.2, 0.5, 0.95),
+    opacity 0.4s ease;
+}
+
+/* --- Chaos Event Glowing Rings --- */
+.c4-cell {
+  background: radial-gradient(circle, transparent 43%, var(--bg-card) 44%);
+  position: relative; /* Required for the glow overlay */
+}
+
+/* Creates a precise invisible ring just inside the cutout hole */
+.c4-cell::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 86%; height: 86%; /* Exact size of the transparent cutout */
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0px transparent;
+  transition: box-shadow 0.3s ease;
+  pointer-events: none;
+}
+
+.chaos-glow-green::after {
+  box-shadow: inset 0 0 15px var(--accent-main), 0 0 10px var(--accent-main);
+}
+
+.chaos-glow-red::after {
+  box-shadow: inset 0 0 15px var(--error-color), 0 0 10px var(--error-color);
 }

@@ -229,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/*
 document.addEventListener('DOMContentLoaded', () => {
   // check if mobile
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -269,3 +270,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 400);
   });
 });
+*/

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect 4 | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div id="leaves-container"></div>
+
+    <header>
+      <div class="theme-switch-wrapper">
+        <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
+      <h1><a href="index.html">Sage Ransom</a></h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="landing-container">
+      <section style="margin-bottom: 80px; padding-top: 20px;">
+
+        <div class="sim-header" style="max-width: 600px; margin: 0 auto 20px;">
+          <h2 style="color: var(--text-main); margin: 0;">Connectaotic 4</h2>
+          <!-- <button id="c4-reset-btn" class="menu-btn">New Game</button> -->
+        </div>
+
+        <div class="c4-header-stats">
+          <div class="c4-stat-pill p1-color active-turn" id="p1-counter">P1: 21</div>
+          <div class="c4-stat-pill p2-color inactive-turn" id="p2-counter">P2: 21</div>
+        </div>
+
+        <div id="c4-game-area">
+          <div id="c4-hover-zone">
+            <div id="c4-hover-piece" class="p1-color" style="opacity: 1;"></div>
+          </div>
+
+          <div id="c4-board-wrapper">
+            <div id="c4-pieces-layer"></div>
+            <div id="c4-board-layer"></div>
+          </div>
+
+          <div id="c4-victory-overlay">
+            <div class="c4-victory-card">
+              <h2 id="c4-victory-msg">Player 1 Wins!</h2>
+              <button id="c4-overlay-reset-btn" class="menu-btn" style="font-size: 1.1em; padding: 10px 24px;">Play Again</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+    <script src="scripts/connect4.js"></script>
+  </body>
+</html>
