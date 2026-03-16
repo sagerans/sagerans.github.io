@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (winner === 'Tie') {
       p1Counter.classList.remove('inactive-turn', 'active-turn');
       p2Counter.classList.remove('inactive-turn', 'active-turn');
-      victoryMsg.innerText = "It's a Tie!";
+      victoryMsg.innerText = "It's a Draw!";
       victoryMsg.style.color = "var(--text-main)";
     } else {
       if (winner === 1) {
