@@ -57,18 +57,22 @@
             </div>
 
             <div id="nbody-controls-content" class="floating-content">
+
               <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
                 <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Body Mass: <span id="nbody-mass-display">50</span></label>
                 <input type="range" id="nbody-mass" min="1" max="200" step="1" value="50">
               </div>
+
               <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
                 <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Gravity: <span id="nbody-gravity-display">0.5</span></label>
                 <input type="range" id="nbody-gravity" min="0.05" max="3.0" step="0.05" value="0.5">
               </div>
+
               <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
                 <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Max Bodies: <span id="nbody-max-display">40</span></label>
                 <input type="range" id="nbody-max-bodies" min="5" max="150" value="50">
               </div>
+
               <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0px;">
                   <label style="font-size: 0.7em; margin: 0; color: var(--text-main);">Trails</label>
@@ -80,6 +84,7 @@
                 <label style="margin-bottom: 0px; font-size: 0.7em; color: var(--text-muted); text-align: left;">Length: <span id="nbody-trail-display">40</span></label>
                 <input type="range" id="nbody-trail-length" min="0" max="150" step="1" value="40">
               </div>
+
               <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 15px;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <label style="font-size: 0.7em; margin: 0; color: var(--text-main);">Walls</label>
@@ -89,6 +94,17 @@
                   </label>
                 </div>
               </div>
+
+              <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <label style="font-size: 0.7em; margin: 0; color: var(--text-main);">Merge Collisions</label>
+                  <label class="custom-toggle">
+                    <input type="checkbox" id="nbody-merge-toggle">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
             </div>
           </div>
 

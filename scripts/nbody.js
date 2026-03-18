@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const maxBodiesInput = document.getElementById('nbody-max-bodies');
   const maxDisplay = document.getElementById('nbody-max-display');
   const wallsToggle = document.getElementById('nbody-walls-toggle');
+  const mergeToggle = document.getElementById('nbody-merge-toggle');
+  const countDisplay = document.getElementById('nbody-count-display');
 
   // ==========================================
   // --- CONFIGURATION & TWEAKS ---
@@ -24,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let DRAW_TRAILS = true;         // Easily toggle trails entirely on/off
   let GRAVITY_CONSTANT = 0.5;     // Global gravity strength
   let USE_WALLS = false;          // Toggle walls on/off
+  let MERGE_COLLISIONS = false;   // Mergers on/off
+  const BLACK_HOLE_MASS = 1000;   // threshold for turning into a black hole
   const WALL_DAMPING = 0.8;       // Energy retained when bouncing off walls (1.0 = perfect bounce)
   const CULLING_MARGIN = 3000;    // Where to delete stray bodies
 
@@ -118,6 +122,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cull the distant bodies
     // If walls are ON, the box is sealed. Delete anything outside immediately.
     const currentMargin = USE_WALLS ? 10 : CULLING_MARGIN;
+
+    // NEW: The Merge Engine
+    if (MERGE_COLLISIONS) {
+      // We iterate backward so that when we delete a body, it doesn't break the loop index
+      for (let i = bodies.length - 1; i >= 0; i--) {
+        for (let j = i - 1; j >= 0; j--) {
+          const b1 = bodies[i];
+          const b2 = bodies[j];
+          if (!b1 || !b2) continue;
+
+          const dx = b2.x - b1.x;
+          const dy = b2.y - b1.y;
+          const distSq = dx * dx + dy * dy;
+          const collisionDist = b1.radius + b2.radius;
+
+          // If their distance is less than their combined radii, they have collided
+          if (distSq < collisionDist * collisionDist) {
+
+            // 1. Conservation of Mass
+            const newMass = b1.mass + b2.mass;
+
+            // 2. Conservation of Momentum (m1v1 + m2v2 = mTotal * vFinal)
+            const newVx = ((b1.vx * b1.mass) + (b2.vx * b2.mass)) / newMass;
+            const newVy = ((b1.vy * b1.mass) + (b2.vy * b2.mass)) / newMass;
+
+            // 3. Center of Mass Position
+            const newX = ((b1.x * b1.mass) + (b2.x * b2.mass)) / newMass;
+            const newY = ((b1.y * b1.mass) + (b2.y * b2.mass)) / newMass;
+
+            const isBlackHole = newMass >= BLACK_HOLE_MASS;
+            let newRadius;
+
+            if (isBlackHole) {
+              newRadius = Math.max(3, Math.cbrt(newMass) * 0.33);
+            } else {
+              newRadius = Math.max(3, Math.sqrt(newMass) * 1.5);
+            }
+
+            // The larger body dictates the color of the new merged planet
+            const newColor = b1.mass > b2.mass ? b1.color : b2.color;
+
+            // Update the surviving body (b2) with the merged data
+            b2.mass = newMass;
+            b2.vx = newVx;
+            b2.vy = newVy;
+            b2.x = newX;
+            b2.y = newY;
+            b2.radius = newRadius;
+            b2.color = newColor;
+            b2.isBlackHole = isBlackHole;
+
+            // Delete the consumed body (b1) from the simulation
+            bodies.splice(i, 1);
+            break; // b1 is gone, break out of the inner loop and move to the next 'i'
+          }
+        }
+      }
+    }
 
     bodies = bodies.filter(b => {
       return (
@@ -248,6 +310,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bodies.length >= MAX_BODIES) {
       bodies.shift(); // FIFO: Destroy the oldest body
     }
+    const isBlackHole = mass >= BLACK_HOLE_MASS;
+    if (isBlackHole) {
+      radius = Math.max(3, Math.cbrt(mass) * 0.33);
+    }
     bodies.push({ x, y, vx, vy, mass, radius, color, history: [] });
   }
 
@@ -316,6 +382,16 @@ document.addEventListener('DOMContentLoaded', () => {
   wallsToggle.addEventListener('change', (e) => {
     USE_WALLS = e.target.checked;
   });
+
+  // Add this near your other toggle listeners at the bottom
+  mergeToggle.addEventListener('change', (e) => {
+    MERGE_COLLISIONS = e.target.checked;
+  });
+
+  // Inside your draw() function (right before requestAnimationFrame):
+  if (countDisplay) {
+    countDisplay.innerText = bodies.length;
+  }
 
   // Start the engine
   draw();
