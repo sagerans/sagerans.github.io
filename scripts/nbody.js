@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const gravityDisplay = document.getElementById('nbody-gravity-display');
   const maxBodiesInput = document.getElementById('nbody-max-bodies');
   const maxDisplay = document.getElementById('nbody-max-display');
+  const wallsToggle = document.getElementById('nbody-walls-toggle');
 
   // ==========================================
   // --- CONFIGURATION & TWEAKS ---
@@ -22,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let TRAIL_LENGTH = 40;          // How many historical frames to draw behind the body
   let DRAW_TRAILS = true;         // Easily toggle trails entirely on/off
   let GRAVITY_CONSTANT = 0.5;     // Global gravity strength
-  const WALL_DAMPING = 0.8;         // Energy retained when bouncing off walls (1.0 = perfect bounce)
+  let USE_WALLS = false;          // Toggle walls on/off
+  const WALL_DAMPING = 0.8;       // Energy retained when bouncing off walls (1.0 = perfect bounce)
+  const CULLING_MARGIN = 3000;    // Where to delete stray bodies
 
   // Your Site Aesthetic Palette
   const BODY_COLORS = [
@@ -100,12 +103,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Wall Bounces
-      if (b.x - b.radius < 0) { b.x = b.radius; b.vx *= -WALL_DAMPING; }
-      if (b.x + b.radius > canvas.width) { b.x = canvas.width - b.radius; b.vx *= -WALL_DAMPING; }
-      if (b.y - b.radius < 0) { b.y = b.radius; b.vy *= -WALL_DAMPING; }
-      if (b.y + b.radius > canvas.height) { b.y = canvas.height - b.radius; b.vy *= -WALL_DAMPING; }
+      if (USE_WALLS) {
+        // We add a 'maxDepth' so it only bounces bodies actively hitting the wall,
+        // completely ignoring bodies that are hundreds of pixels away.
+        const maxDepth = 200;
+
+        if (b.x - b.radius < 0 && b.x > -maxDepth) { b.x = b.radius; b.vx *= -WALL_DAMPING; }
+        if (b.x + b.radius > canvas.width && b.x < canvas.width + maxDepth) { b.x = canvas.width - b.radius; b.vx *= -WALL_DAMPING; }
+        if (b.y - b.radius < 0 && b.y > -maxDepth) { b.y = b.radius; b.vy *= -WALL_DAMPING; }
+        if (b.y + b.radius > canvas.height && b.y < canvas.height + maxDepth) { b.y = canvas.height - b.radius; b.vy *= -WALL_DAMPING; }
+      }
     }
+
+    // Cull the distant bodies
+    // If walls are ON, the box is sealed. Delete anything outside immediately.
+    const currentMargin = USE_WALLS ? 10 : CULLING_MARGIN;
+
+    bodies = bodies.filter(b => {
+      return (
+        b.x > -currentMargin &&
+        b.x < canvas.width + currentMargin &&
+        b.y > -currentMargin &&
+        b.y < canvas.height + currentMargin
+      );
+    });
   }
 
   // --- RENDER ENGINE ---
@@ -290,6 +311,10 @@ document.addEventListener('DOMContentLoaded', () => {
     while (bodies.length > MAX_BODIES) {
       bodies.shift();
     }
+  });
+
+  wallsToggle.addEventListener('change', (e) => {
+    USE_WALLS = e.target.checked;
   });
 
   // Start the engine
