@@ -229,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/*
 document.addEventListener('DOMContentLoaded', () => {
   // check if mobile
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -259,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // force browser to register element before fade (trigger a reflow)
     void ghost.offsetWidth;
 
-    // 5. Trigger the CSS transition to fade out and shrink slightly
     // trigger CSS fade out and shrinking
     ghost.style.opacity = '0';
     ghost.style.transform = 'scale(0.5)';
@@ -270,4 +268,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 400);
   });
 });
-*/

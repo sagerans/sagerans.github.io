@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>N-Body Sandbox | Sage Ransom</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div id="leaves-container"></div>
+
+    <header>
+      <div class="theme-switch-wrapper">
+        <span>☀️</span>
+        <label class="theme-switch" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" />
+          <span class="slider round"></span>
+        </label>
+        <span>🌙</span>
+      </div>
+      <h1><a href="index.html">Sage Ransom</a></h1>
+      <nav>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="interactive.html">Interactive</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="landing-container wide-sim-container">
+
+      <section id="nbody-sim" style="margin-bottom: 80px; padding-top: 20px; width: 100%;">
+
+        <div class="sim-header" style="max-width: 100%; margin: 0 auto 20px; text-align: left;">
+          <div>
+            <h3 style="color: var(--text-main); margin: 0 0 5px 0;">N-Body Sandbox</h3>
+            <p style="font-size: 0.9em; color: var(--text-muted); margin: 0;">Click and drag to slingshot a new celestial body.</p>
+          </div>
+
+          <div class="button-container" style="display: flex; gap: 10px;">
+            <button id="nbody-play-btn" class="menu-btn" style="background: var(--error-color); color: #fff; width: 44px; padding: 10px 0;">⏸</button>
+            <button id="nbody-reset-btn" class="menu-btn" style="width: 44px; padding: 10px 0;">⟲</button>
+          </div>
+        </div>
+
+        <div id="nbody-canvas-wrapper" class="nbody-canvas-container">
+          <canvas id="nbody-canvas"></canvas>
+
+          <div id="nbody-floating-controls" class="floating-card">
+            <div class="floating-header">
+              <h5 style="margin: 0; color: var(--text-main) 33%;">Settings</h5>
+              <button id="nbody-toggle-controls" class="menu-btn" style="padding: 2px 8px; font-size: 0.6em;">▲</button>
+            </div>
+
+            <div id="nbody-controls-content" class="floating-content">
+              <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
+                <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Body Mass: <span id="nbody-mass-display">50</span></label>
+                <input type="range" id="nbody-mass" min="1" max="200" step="1" value="50">
+              </div>
+              <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
+                <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Gravity: <span id="nbody-gravity-display">0.5</span></label>
+                <input type="range" id="nbody-gravity" min="0.05" max="3.0" step="0.05" value="0.5">
+              </div>
+              <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 12px;">
+                <label style="margin-bottom: 0px; font-size: 0.7em; text-align: left;">Max Bodies: <span id="nbody-max-display">40</span></label>
+                <input type="range" id="nbody-max-bodies" min="5" max="150" value="50">
+              </div>
+              <div class="wave-input-group" style="border: none; padding: 0; box-shadow: none; margin-top: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0px;">
+                  <label style="font-size: 0.7em; margin: 0; color: var(--text-main);">Trails</label>
+                  <label class="custom-toggle">
+                    <input type="checkbox" id="nbody-trails-toggle" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <label style="margin-bottom: 0px; font-size: 0.7em; color: var(--text-muted); text-align: left;">Length: <span id="nbody-trail-display">40</span></label>
+                <input type="range" id="nbody-trail-length" min="0" max="150" step="1" value="40">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Sage Ransom. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+    <script src="scripts/nbody.js"></script>
+  </body>
+</html>

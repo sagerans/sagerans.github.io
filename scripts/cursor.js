@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // force browser to register element before fade (trigger a reflow)
     void ghost.offsetWidth;
 
-    // 5. Trigger the CSS transition to fade out and shrink slightly
+    // Trigger the CSS transition to fade out and shrink slightly
     // trigger CSS fade out and shrinking
     ghost.style.opacity = '0';
     ghost.style.transform = 'scale(0.5)';
