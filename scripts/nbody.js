@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const wallsToggle = document.getElementById('nbody-walls-toggle');
   const mergeToggle = document.getElementById('nbody-merge-toggle');
   const countDisplay = document.getElementById('nbody-count-display');
+  const speedInput = document.getElementById('nbody-speed');
+  const speedDisplay = document.getElementById('nbody-speed-display');
 
   // ==========================================
   // --- CONFIGURATION & TWEAKS ---
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let GRAVITY_CONSTANT = 0.5;     // Global gravity strength
   let USE_WALLS = false;          // Toggle walls on/off
   let MERGE_COLLISIONS = false;   // Mergers on/off
+  let SIMULATION_SPEED = 1.0;     // For impatient users
   const BLACK_HOLE_MASS = 1000;   // threshold for turning into a black hole
   const WALL_DAMPING = 0.8;       // Energy retained when bouncing off walls (1.0 = perfect bounce)
   const CULLING_MARGIN = 3000;    // Where to delete stray bodies
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let bodies = [];
   let isPlaying = true;
   let animationFrameId;
+  let physicsAccumulator = 0;
 
   // Slingshot State
   let isDragging = false;
@@ -99,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
       b.x += b.vx;
       b.y += b.vy;
 
+      /* commenting out to work on sim speed
       // Update trail history
       if (DRAW_TRAILS) {
         b.history.push({ x: b.x, y: b.y });
@@ -106,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
           b.history.shift(); // Keep array size limited
         }
       }
+      */
 
       if (USE_WALLS) {
         // We add a 'maxDepth' so it only bounces bodies actively hitting the wall,
@@ -253,7 +259,30 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.setLineDash([]);
     }
 
-    updatePhysics();
+    // updatePhysics();
+    // NEW: The Time Accumulator Loop
+    if (isPlaying) {
+      physicsAccumulator += SIMULATION_SPEED;
+      let physicsStepped = false;
+
+      // If speed is 3.0, this loops 3 times. If speed is 0.5, it loops every other frame.
+      while (physicsAccumulator >= 1) {
+        updatePhysics();
+        physicsAccumulator -= 1;
+        physicsStepped = true;
+      }
+
+      // Record trail dots ONLY once per visual frame, so they stretch beautifully
+      if (physicsStepped && DRAW_TRAILS) {
+        bodies.forEach(b => {
+          b.history.push({ x: b.x, y: b.y });
+          if (b.history.length > TRAIL_LENGTH) {
+            b.history.shift();
+          }
+        });
+      }
+    }
+
     animationFrameId = requestAnimationFrame(draw);
   }
 
@@ -392,6 +421,77 @@ document.addEventListener('DOMContentLoaded', () => {
   if (countDisplay) {
     countDisplay.innerText = bodies.length;
   }
+
+  speedInput.addEventListener('input', (e) => {
+    SIMULATION_SPEED = parseFloat(e.target.value);
+    speedDisplay.innerText = SIMULATION_SPEED.toFixed(1);
+  });
+
+  // --- SCENARIO PRESETS ---
+  const presetDropdown = document.getElementById('nbody-presets');
+
+  // Helper to construct a body with proper radius and black hole tags
+  function spawnPresetBody(x, y, vx, vy, mass, color) {
+    const isBlackHole = mass >= BLACK_HOLE_MASS;
+    const radius = isBlackHole
+      ? Math.max(5, Math.sqrt(mass) * 0.5)
+      : Math.max(3, Math.sqrt(mass) * 1.5);
+    bodies.push({ x, y, vx, vy, mass, radius, color, isBlackHole, history: [] });
+  }
+
+  presetDropdown.addEventListener('change', (e) => {
+    const scenario = e.target.value;
+    if (scenario === 'none') return;
+
+    // Reset the board and standardize the physics so the math works!
+    bodies = [];
+    GRAVITY_CONSTANT = 0.5;
+    gravityInput.value = 0.5;
+    gravityDisplay.innerText = "0.5";
+
+    // Find the exact center of the user's current screen
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+
+    if (scenario === 'solar') {
+      // Massive central star
+      spawnPresetBody(cx, cy, 0, 0, 200, '#e9c46a');
+
+      // Keplerian Velocity: v = sqrt(G * M / r)
+      // Planet 1 (Close, Fast)
+      spawnPresetBody(cx + 150, cy, 0, 0.81, 10, '#2a9d8f');
+      // Planet 2 (Medium, Opposite direction)
+      spawnPresetBody(cx - 250, cy, 0, -0.63, 15, '#e76f51');
+      // Planet 3 (Far, Slow)
+      spawnPresetBody(cx, cy + 350, -0.53, 0, 5, '#a9c191');
+    }
+
+    else if (scenario === 'binary') {
+      // Two equal mass stars orbiting a common barycenter
+      spawnPresetBody(cx - 120, cy, 0, 0.4, 150, '#e76f51');
+      spawnPresetBody(cx + 120, cy, 0, -0.4, 150, '#f4a261');
+
+      // A small circumbinary planet orbiting BOTH stars from far away
+      spawnPresetBody(cx, cy - 400, 0.6, 0, 5, '#a9c191');
+    }
+
+    else if (scenario === 'trinary') {
+      // Three equal bodies in a symmetric triangle, pushing outward tangentially
+      const dist = 150;
+      const v = 0.45;
+      const m = 80;
+
+      // Top
+      spawnPresetBody(cx, cy - dist, v, 0, m, '#2a9d8f');
+      // Bottom Right
+      spawnPresetBody(cx + (dist * 0.866), cy + (dist * 0.5), -v * 0.5, v * 0.866, m, '#e76f51');
+      // Bottom Left
+      spawnPresetBody(cx - (dist * 0.866), cy + (dist * 0.5), -v * 0.5, -v * 0.866, m, '#e9c46a');
+    }
+
+    // Reset dropdown so user can click it again later
+    presetDropdown.value = 'none';
+  });
 
   // Start the engine
   draw();
